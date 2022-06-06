@@ -1,3 +1,5 @@
+//export PATH=/Users/crich/Documents/flutter/bin:$PATH
+
 import 'package:flutter/material.dart';
 
 void main() {
