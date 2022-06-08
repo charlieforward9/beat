@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sleep_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,6 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _textController = TextEditingController();
+    String percentage = "0";
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -73,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('Main Page'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -95,8 +98,23 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextField(
+              controller: _textController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                hintText: "Enter percentage value",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  percentage = _textController.text;
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SleepWidget(padValue: double.parse(percentage),)));
+                },
+                child: Text('I gotta pee')),
             const Text(
-              'You have pushed the button this many times:',
+              'You have pushed the button this many times - testing:',
             ),
             Text(
               '$_counter',
