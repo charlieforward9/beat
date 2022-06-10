@@ -12,7 +12,7 @@ class TaskCompletionRing extends StatelessWidget {
         aspectRatio: 1.0,
         child: CustomPaint(
             painter: RingPainter(
-                progress: 1,
+                progress: 0.5,
                 taskNotCompletedColor: themeData.taskRing(),
                 taskCompletedColor: themeData.accent())));
   }

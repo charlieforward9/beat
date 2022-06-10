@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-// =========== Sleep Bucket Widget ========== 
-class SleepWidget extends StatelessWidget{
+// =========== Sleep Bucket Widget ==========
+class SleepWidget extends StatelessWidget {
   final double padValue;
 
   const SleepWidget({Key? key, required this.padValue}) : super(key: key);
@@ -28,6 +28,14 @@ class SleepWidget extends StatelessWidget{
             Text('Fill Value: $padValue'),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //This is where the data should be sent to the EMR
+            Navigator.pop(context);
+          },
+          tooltip: 'Back to Home Screen',
+          child: const Icon(Icons.arrow_back_ios_new_rounded),
+        ),
       ),
     );
   }
@@ -39,14 +47,11 @@ class MyFillingContainer extends StatelessWidget {
   final Color backgroundColor;
   final Color progressColor;
   const MyFillingContainer(
-      {
-        this.progress = 0,
-        this.size = 0,
-        this.backgroundColor = Colors.grey,
-        this.progressColor = Colors.blue
-      }
-      );
-  
+      {this.progress = 0,
+      this.size = 0,
+      this.backgroundColor = Colors.grey,
+      this.progressColor = Colors.blue});
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -54,8 +59,7 @@ class MyFillingContainer extends StatelessWidget {
       child: SizedBox(
         height: size,
         width: size,
-        child: Stack(          
-          children: [
+        child: Stack(children: [
           Container(
             color: backgroundColor,
           ),
