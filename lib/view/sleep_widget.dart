@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '/models/sleep_widget_model.dart';
 
 // =========== Sleep Bucket Widget ========== 
 class SleepWidget extends StatelessWidget{
-  final double padValue;
 
-  const SleepWidget({Key? key, required this.padValue}) : super(key: key);
+  final double percentage;
+
+  const SleepWidget({Key? key, required this.percentage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +20,14 @@ class SleepWidget extends StatelessWidget{
             Expanded(
               child: Center(
                 child: MyFillingContainer(
-                  progress: padValue / 100,
+                  progress: percentage / 100,
                   size: 100,
                   backgroundColor: Colors.grey,
                   progressColor: Colors.blue,
                 ),
               ),
             ),
-            Text('Fill Value: $padValue'),
+            Text('Fill Value: $percentage'),
           ],
         ),
       ),
