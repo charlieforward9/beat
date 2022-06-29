@@ -1,4 +1,4 @@
-import 'package:beat/models/sleep_widget_model.dart';
+import 'package:beat/Recovery/models/sleep_widget_model.dart';
 import 'package:http/http.dart' as http;
 import 'Constants.dart';
 import 'dart:convert';

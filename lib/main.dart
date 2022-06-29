@@ -1,31 +1,40 @@
-import 'package:beat/models/sleep_widget_model.dart';
+import 'dart:developer';
+
+import 'package:beat/Features/Recovery/repository/RecoveryRepository.dart';
+import 'package:beat/Features/Recovery/services/RecoveryService.dart';
+import 'package:beat/models/ModelProvider.dart';
+// import 'package:beat/Recovery/models/sleep_widget_model.dart';
 import 'package:flutter/material.dart';
-import 'view/sleep_widget.dart';
-import '/models/sleep_widget_model.dart';
-import '/repository/API/API.dart';
+// import 'Common_Widgets/sleep_widget.dart';
+// import '/Features/Recovery/repository/API/API.dart';
+// import 'package:safeprint/safeprint.dart';
+
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:amplify_api/amplify_api.dart';
+
+
+import 'amplifyconfiguration.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  // This widget is the root of your application.
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _configureAmplify();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -35,45 +44,14 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
-// ========== calling the API method =========
- FutureBuilder<SleepWidgetModel> buildBucket(BuildContext context) {
-    final HttpService httpService = HttpService();
-    return FutureBuilder<SleepWidgetModel>(
- 
-      future: httpService.fetchData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final SleepWidgetModel? sleepBucket = snapshot.data;
-          return SleepWidget(percentage: sleepBucket!.percentage,);
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
-  }
-
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
  
   @override
   Widget build(BuildContext context) {
@@ -88,15 +66,41 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-                onPressed: () {
-                  //FutureBuilder<SleepWidgetModel> test = buildBucket(context); 
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => buildBucket(context)));
-                },
-                child: Text('I gotta pee')),
+              onPressed: () {
+                RecoveryService recoveryService = RecoveryService();
+                recoveryService.createRecovery(10.0);
+                //FutureBuilder<SleepWidgetModel> test = buildBucket(context); 
+                //Navigator.of(context).push(
+                //    MaterialPageRoute(builder: (context) => buildBucket(context)));
+              },
+              child: Text('create new recovery goal [goal: 10 hours]')),
+            ElevatedButton(
+              onPressed: () async {
+                RecoveryService recoveryService = RecoveryService();
+                RecoveryRepository recoveryRepository = RecoveryRepository();
+                var originalRecovery = await recoveryRepository.getRecoveryById("ffa68777-2e68-4595-995e-f384ed250937");
+                recoveryService.updateRecoveryPercentage(originalRecovery!,5.0);
+                //FutureBuilder<SleepWidgetModel> test = buildBucket(context); 
+                //Navigator.of(context).push(
+                //    MaterialPageRoute(builder: (context) => buildBucket(context)));
+              },
+              child: Text('update recovery percentage')),
           ],
         ),
       ),
     );
   }
 }
+
+
+Future<void> _configureAmplify() async {
+  final api = AmplifyAPI(modelProvider: ModelProvider.instance);
+  await Amplify.addPlugin(api);
+
+  try {
+    await Amplify.configure(amplifyconfig);
+  } on AmplifyAlreadyConfiguredException {
+    log('Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
+  }
+}
+

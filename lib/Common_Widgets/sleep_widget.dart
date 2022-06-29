@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/models/sleep_widget_model.dart';
+import '/Recovery/models/sleep_widget_model.dart';
 
 // =========== Sleep Bucket Widget ========== 
 class SleepWidget extends StatelessWidget{

@@ -1,0 +1,12 @@
+type Recovery @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  percentage: Float
+  goal: Float
+}
+
+type Todo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  description: String
+}
+ 
