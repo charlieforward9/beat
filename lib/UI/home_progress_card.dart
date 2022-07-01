@@ -49,8 +49,8 @@ class _HomeProgressCardState extends State<HomeProgressCard> {
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
+            children: const [
+               SizedBox(
                 width: 150,
                 height: 50,
                 child: Text(
