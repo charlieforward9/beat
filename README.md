@@ -2,15 +2,15 @@
 
 A new Flutter project.
 
-## Getting Started
+## Onboarding
 
-Refer to the information below to correctly clone the repository
+Refer to the information below to correctly clone the repository and contribute to the project
 
-A few resources to get you started if this is your first Flutter project:
+- [Clone the Beat repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+- [Follow these instructions](https://docs.flutter.dev/get-started/install) (skip the 'Create App' section)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+## Extra
+
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Flutter documentation](https://flutter.dev/docs) offers tutorials, samples, guidance on mobile development, and a full API reference.
