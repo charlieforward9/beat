@@ -1,4 +1,3 @@
-
 //export PATH=/Users/crich/Documents/flutter/bin:$PATH
 import 'dart:developer';
 
@@ -10,11 +9,8 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'amplifyconfiguration.dart';
 
-
-
 import 'package:beat/pages/home_page.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -31,12 +27,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _configureAmplify();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         //TODO: Color needs revision (Not urgent)
         primarySwatch: Colors.blue,
       ),
@@ -44,8 +40,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
 
 Future<void> _configureAmplify() async {
   final api = AmplifyAPI(modelProvider: ModelProvider.instance);
