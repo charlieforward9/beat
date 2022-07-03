@@ -2,6 +2,7 @@
 //export PATH=/Users/crich/Documents/flutter/bin:$PATH
 import 'dart:developer';
 
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:beat/Features/Recovery/repository/RecoveryRepository.dart';
 import 'package:beat/Features/Recovery/services/RecoveryService.dart';
 import 'package:beat/models/ModelProvider.dart';
@@ -47,13 +48,27 @@ class _MyAppState extends State<MyApp> {
 
 
 
-Future<void> _configureAmplify() async {
-  final api = AmplifyAPI(modelProvider: ModelProvider.instance);
-  await Amplify.addPlugin(api);
+// Future<void> _configureAmplify() async {
+//   final api = AmplifyAPI(modelProvider: ModelProvider.instance);
+//   await Amplify.addPlugin(api);
 
+//   try {
+//     await Amplify.configure(amplifyconfig);
+//   } on AmplifyAlreadyConfiguredException {
+//     log('Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
+//   }
+// }
+
+void _configureAmplify() async {
+  final datastorePlugin = AmplifyDataStore(
+    modelProvider: ModelProvider.instance,
+  );
+  // Add the following line and update your function call with `addPlugins`
+  final api = AmplifyAPI();
+  await Amplify.addPlugins([datastorePlugin, api]);
   try {
     await Amplify.configure(amplifyconfig);
   } on AmplifyAlreadyConfiguredException {
-    log('Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
+    debugPrint('Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
   }
 }
