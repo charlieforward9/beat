@@ -1,1 +1,0 @@
-String apiUrl = "https://61be3d6b-5ff0-4c90-a5a5-7c9c7e026242.mock.pstmn.io";
