@@ -1,23 +1,37 @@
-import 'dart:developer';
-
 import 'package:beat/Features/Recovery/models/Recovery.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:amplify_api/amplify_api.dart';
 
 class RecoveryRepository{
-  Future<Recovery?> getRecoveryById(String id) async {
-    try {
-        final request = ModelQueries.get(Recovery.classType, id);
-        final response = await Amplify.API.query(request: request).response;
-        final recovery = response.data;
-        if (recovery == null) {
-          log('errors: ${response.errors}');
-        }
-        log('get record by id completed');
-        return recovery;
-    } on ApiException catch (e) {
-        log('Query failed: $e');
-        return null;
-    }
+
+  Future<void> newRecoveryRecord() async {
+    final newRecoveryRecord = Recovery(
+      percentage: 0,
+      goal: 100,
+    );
+    await Amplify.DataStore.save(newRecoveryRecord);
+  }
+
+  Future<void> updateRecoveryPercentage(String id, double newPercentage) async {
+    final recoveryRecordWithId = await Amplify.DataStore.query(
+      Recovery.classType,
+      where: Recovery.ID.eq(id),
+    );
+
+    final oldRecoveryRecord = recoveryRecordWithId.first;
+    final newRecoveryRecordPercenatge = oldRecoveryRecord.copyWith(id: oldRecoveryRecord.id, percentage: newPercentage);
+
+    await Amplify.DataStore.save(newRecoveryRecordPercenatge);
+  }
+
+  Future<void> updateRecoveryGoal(String id, double newGoal) async {
+    final recoveryRecordWithId = await Amplify.DataStore.query(
+      Recovery.classType,
+      where: Recovery.ID.eq(id),
+    );
+
+    final oldRecoveryRecord = recoveryRecordWithId.first;
+    final newRecoveryRecordGoal = oldRecoveryRecord.copyWith(id: oldRecoveryRecord.id, goal: newGoal);
+
+    await Amplify.DataStore.save(newRecoveryRecordGoal);
   }
 }

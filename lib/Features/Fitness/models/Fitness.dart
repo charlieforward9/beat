@@ -23,13 +23,13 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the Todo type in your schema. */
+/** This is an auto generated class representing the Fitness type in your schema. */
 @immutable
-class Todo extends Model {
-  static const classType = const _TodoModelType();
+class Fitness extends Model {
+  static const classType = const _FitnessModelType();
   final String id;
-  final String? _name;
-  final String? _description;
+  final double? _percentage;
+  final double? _goal;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -41,21 +41,12 @@ class Todo extends Model {
     return id;
   }
   
-  String get name {
-    try {
-      return _name!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  double? get percentage {
+    return _percentage;
   }
   
-  String? get description {
-    return _description;
+  double? get goal {
+    return _goal;
   }
   
   TemporalDateTime? get createdAt {
@@ -66,13 +57,13 @@ class Todo extends Model {
     return _updatedAt;
   }
   
-  const Todo._internal({required this.id, required name, description, createdAt, updatedAt}): _name = name, _description = description, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Fitness._internal({required this.id, percentage, goal, createdAt, updatedAt}): _percentage = percentage, _goal = goal, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Todo({String? id, required String name, String? description}) {
-    return Todo._internal(
+  factory Fitness({String? id, double? percentage, double? goal}) {
+    return Fitness._internal(
       id: id == null ? UUID.getUUID() : id,
-      name: name,
-      description: description);
+      percentage: percentage,
+      goal: goal);
   }
   
   bool equals(Object other) {
@@ -82,10 +73,10 @@ class Todo extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Todo &&
+    return other is Fitness &&
       id == other.id &&
-      _name == other._name &&
-      _description == other._description;
+      _percentage == other._percentage &&
+      _goal == other._goal;
   }
   
   @override
@@ -95,10 +86,10 @@ class Todo extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Todo {");
+    buffer.write("Fitness {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("name=" + "$_name" + ", ");
-    buffer.write("description=" + "$_description" + ", ");
+    buffer.write("percentage=" + (_percentage != null ? _percentage!.toString() : "null") + ", ");
+    buffer.write("goal=" + (_goal != null ? _goal!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -106,30 +97,30 @@ class Todo extends Model {
     return buffer.toString();
   }
   
-  Todo copyWith({String? id, String? name, String? description}) {
-    return Todo._internal(
+  Fitness copyWith({String? id, double? percentage, double? goal}) {
+    return Fitness._internal(
       id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description);
+      percentage: percentage ?? this.percentage,
+      goal: goal ?? this.goal);
   }
   
-  Todo.fromJson(Map<String, dynamic> json)  
+  Fitness.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _name = json['name'],
-      _description = json['description'],
+      _percentage = (json['percentage'] as num?)?.toDouble(),
+      _goal = (json['goal'] as num?)?.toDouble(),
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name, 'description': _description, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'percentage': _percentage, 'goal': _goal, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "todo.id");
-  static final QueryField NAME = QueryField(fieldName: "name");
-  static final QueryField DESCRIPTION = QueryField(fieldName: "description");
+  static final QueryField ID = QueryField(fieldName: "fitness.id");
+  static final QueryField PERCENTAGE = QueryField(fieldName: "percentage");
+  static final QueryField GOAL = QueryField(fieldName: "goal");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Todo";
-    modelSchemaDefinition.pluralName = "Todos";
+    modelSchemaDefinition.name = "Fitness";
+    modelSchemaDefinition.pluralName = "Fitnesses";
     
     modelSchemaDefinition.authRules = [
       AuthRule(
@@ -145,15 +136,15 @@ class Todo extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Todo.NAME,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      key: Fitness.PERCENTAGE,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.double)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Todo.DESCRIPTION,
+      key: Fitness.GOAL,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.double)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -172,11 +163,11 @@ class Todo extends Model {
   });
 }
 
-class _TodoModelType extends ModelType<Todo> {
-  const _TodoModelType();
+class _FitnessModelType extends ModelType<Fitness> {
+  const _FitnessModelType();
   
   @override
-  Todo fromJson(Map<String, dynamic> jsonData) {
-    return Todo.fromJson(jsonData);
+  Fitness fromJson(Map<String, dynamic> jsonData) {
+    return Fitness.fromJson(jsonData);
   }
 }

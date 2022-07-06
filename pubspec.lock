@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   amplify_api:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: amplify_api
       url: "https://pub.dartlang.org"
@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.0"
+  amplify_datastore:
+    dependency: "direct main"
+    description:
+      name: amplify_datastore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   amplify_datastore_plugin_interface:
     dependency: transitive
     description:
@@ -37,7 +44,7 @@ packages:
     source: hosted
     version: "0.6.0"
   amplify_flutter:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: amplify_flutter
       url: "https://pub.dartlang.org"
