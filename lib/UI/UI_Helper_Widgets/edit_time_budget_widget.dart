@@ -10,12 +10,12 @@ class EditTimeBudget extends StatefulWidget {
 class _EditTimeBudgetState extends State<EditTimeBudget> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Maps Sample App'),
-        backgroundColor: Colors.green[700],
-      ),
-    ));
+    return Center(
+      child: ElevatedButton(
+          child: Text('Click To Go Back'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          }),
+    );
   }
 }
