@@ -32,6 +32,7 @@ export '../Features/Network/models/Network.dart';
 export '../Features/Productivity/models/Productivity.dart';
 export '../Features/Recovery/models/Recovery.dart';
 
+
 class ModelProvider implements ModelProviderInterface {
   @override
   String version = "4c01f1aaf3be9c4705ac44663970d546";
