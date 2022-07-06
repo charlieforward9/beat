@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:beat/Common_Widgets/edit_time_budget_widget.dart';
+import 'package:beat/UI/UI_Helper_Widgets/edit_time_budget_widget.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
