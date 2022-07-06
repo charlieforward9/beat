@@ -1,7 +1,7 @@
-import 'package:beat/UI/completion_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:beat/UI/home_progress_card.dart';
-import 'package:beat/pages/time_budget_page.dart';
+
+import '../UI/completion_widget.dart';
+import '../UI/home_progress_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,9 +30,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           const SizedBox(
@@ -58,16 +56,7 @@ class HomePage extends StatelessWidget {
               goalTitle: goal4, percentDone: goal4P, goalColor: goal4Color),
           HomeProgressCard(
               goalTitle: goal5, percentDone: goal5P, goalColor: goal5Color),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TimeBudgetPage()));
-              },
-              child: const Text('Edit Time Budget')),
         ]),
-      ),
-      //TODO get a nav bar going down here
-
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     //This is where the data should be sent to the EMR
@@ -76,6 +65,6 @@ class HomePage extends StatelessWidget {
       //   tooltip: 'Back to Home Screen',
       //   child: const Icon(Icons.arrow_back_ios_new_rounded),
       // ),
-    );
+      );
   }
 }

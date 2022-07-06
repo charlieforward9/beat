@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'completion_bucket.dart';
-import 'completion_ring.dart';
+import 'UI_Helper_Widgets/completion_bucket.dart';
+import 'UI_Helper_Widgets/completion_ring.dart';
 
 class CompletionWidget extends StatefulWidget {
   final double bucketProgress;
@@ -24,7 +24,6 @@ class CompletionWidget extends StatefulWidget {
 }
 
 class _CompletionWidgetState extends State<CompletionWidget> {
-  
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,7 +34,7 @@ class _CompletionWidgetState extends State<CompletionWidget> {
           //TODO: Make this entire child a widget, pass in the progress values and nothing else.
           children: [
             //TODO: The colors and goal titles should come from its own widget, not the parameters the completion widget.
-            
+
             CompletionRing(progress: widget.fourthRingProgress, level: 2),
             CompletionRing(progress: widget.thirdRingProgress, level: 2.5),
             CompletionRing(progress: widget.secondRingProgress, level: 3.3),
