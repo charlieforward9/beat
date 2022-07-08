@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:beat/UI/UI_Helper_Widgets/edit_time_budget_widget.dart';
+import '../pages/edit_time_budget_page.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -43,7 +43,7 @@ class _GoalCardState extends State<GoalCard> {
                   onPressed: () {
                     // Respond to button press
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EditTimeBudget()));
+                        builder: (context) => EditTimePage()));
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
