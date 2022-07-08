@@ -50,10 +50,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
-        //TODO: Color needs revision (Dillan)
         theme: ThemeData(
           brightness: Brightness.light,
           colorSchemeSeed: Colors.red,
+          //TODO: app wide color scheme set here
           fontFamily: 'Georgia',
         ),
         home: Scaffold(
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ],
             currentIndex: _selectedPage,
-            //selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.amber[800],
             onTap: _onNavBarTapped,
           ),
         ));
