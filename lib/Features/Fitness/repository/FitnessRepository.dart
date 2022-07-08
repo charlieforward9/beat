@@ -11,25 +11,23 @@ class FitnessRepository{
     await Amplify.DataStore.save(newRecord);
   }
 
-  Future<void> updateFitnessPercentage(String id, double newPercentage) async {
+  Future<Fitness> getRecordById(String id) async {
     final recordWithId = await Amplify.DataStore.query(
       Fitness.classType,
       where: Fitness.ID.eq(id),
     );
+    return recordWithId.first;
+  }
 
-    final oldRecord = recordWithId.first;
+  Future<void> updateFitnessPercentage(String id, double newPercentage) async {
+    Fitness oldRecord = await getRecordById(id);
     final newRecordPercenatge = oldRecord.copyWith(id: oldRecord.id, percentage: newPercentage);
 
     await Amplify.DataStore.save(newRecordPercenatge);
   }
 
   Future<void> updateFitnessGoal(String id, double newGoal) async {
-    final recordWithId = await Amplify.DataStore.query(
-      Fitness.classType,
-      where: Fitness.ID.eq(id),
-    );
-
-    final oldRecord = recordWithId.first;
+    Fitness oldRecord = await getRecordById(id);
     final newRecordGoal = oldRecord.copyWith(id: oldRecord.id, goal: newGoal);
 
     await Amplify.DataStore.save(newRecordGoal);

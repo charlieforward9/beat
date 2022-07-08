@@ -7,6 +7,10 @@ class FitnessService{
     fitnessRepository.newFitnessRecord();
   }
 
+  void getRecordById(String id){
+    fitnessRepository.getRecordById(id);
+  }
+
   void updateProgress(String id, double percentage){
     fitnessRepository.updateFitnessPercentage(id, percentage);
   }

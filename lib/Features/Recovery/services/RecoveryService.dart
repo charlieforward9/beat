@@ -7,6 +7,10 @@ class RecoveryService{
     recoveryRepository.newRecoveryRecord();
   }
 
+  void getRecordById(String id){
+    recoveryRepository.getRecordById(id);
+  }
+
   void updateProgress(String id, double percentage){
     recoveryRepository.updateRecoveryPercentage(id, percentage);
   }

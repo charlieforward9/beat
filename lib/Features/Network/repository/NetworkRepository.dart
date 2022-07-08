@@ -11,25 +11,23 @@ class NetworkRepository{
     await Amplify.DataStore.save(newRecord);
   }
 
-  Future<void> updateNetworkPercentage(String id, double newPercentage) async {
+  Future<Network> getRecordById(String id) async {
     final recordWithId = await Amplify.DataStore.query(
       Network.classType,
       where: Network.ID.eq(id),
     );
+    return recordWithId.first;
+  }
 
-    final oldRecord = recordWithId.first;
+  Future<void> updateNetworkPercentage(String id, double newPercentage) async {
+    Network oldRecord = await getRecordById(id);
     final newRecordPercenatge = oldRecord.copyWith(id: oldRecord.id, percentage: newPercentage);
 
     await Amplify.DataStore.save(newRecordPercenatge);
   }
 
   Future<void> updateNetworkGoal(String id, double newGoal) async {
-    final recordWithId = await Amplify.DataStore.query(
-      Productivity.classType,
-      where: Productivity.ID.eq(id),
-    );
-
-    final oldRecord = recordWithId.first;
+    Network oldRecord = await getRecordById(id);
     final newRecordGoal = oldRecord.copyWith(id: oldRecord.id, goal: newGoal);
 
     await Amplify.DataStore.save(newRecordGoal);
