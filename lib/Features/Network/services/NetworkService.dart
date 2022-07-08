@@ -7,6 +7,10 @@ class NetworkService{
     networkRepository.newNetworkRecord();
   }
 
+  void getRecordById(String id){
+    networkRepository.getRecordById(id);
+  }
+
   void updateProgress(String id, double percentage){
     networkRepository.updateNetworkPercentage(id, percentage);
   }

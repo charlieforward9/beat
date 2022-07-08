@@ -7,6 +7,10 @@ class ProductivityService{
     productivityRepository.newProductivityRecord();
   }
 
+  void getRecordById(String id){
+    productivityRepository.getRecordById(id);
+  }
+
   void updateProgress(String id, double percentage){
     productivityRepository.updateProductivityPercentage(id, percentage);
   }

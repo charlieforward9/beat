@@ -7,6 +7,10 @@ class FuelService{
     fuelRepository.newFuelRecord();
   }
 
+  void getRecordById(String id){
+    fuelRepository.getRecordById(id);
+  }
+
   void updateProgress(String id, double percentage){
     fuelRepository.updateFuelPercentage(id, percentage);
   }
