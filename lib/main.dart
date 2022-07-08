@@ -50,12 +50,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+        //TODO: Color needs revision (Dillan)
         theme: ThemeData(
-          //TODO: Color needs revision (Dillan)
-          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
+          colorSchemeSeed: Colors.red,
+          fontFamily: 'Georgia',
         ),
         home: Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
+          //backgroundColor: Theme.of(context).primaryColor,
           body: Center(
             child: _widgetOptions.elementAt(_selectedPage),
           ),
@@ -75,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ],
             currentIndex: _selectedPage,
-            selectedItemColor: Colors.amber[800],
+            //selectedItemColor: Colors.amber[800],
             onTap: _onNavBarTapped,
           ),
         ));
