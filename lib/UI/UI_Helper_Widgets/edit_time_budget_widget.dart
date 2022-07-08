@@ -8,6 +8,7 @@ import '../../amplifyconfiguration.dart';
 import '../../models/ModelProvider.dart';
 
 import '../../Features/Fitness/services/FitnessService.dart';
+import '../../Features/Recovery/services/RecoveryService.dart';
 
 class EditTimeBudget extends StatefulWidget {
   const EditTimeBudget({Key? key}) : super(key: key);
@@ -23,7 +24,11 @@ class _EditTimeBudgetState extends State<EditTimeBudget> {
 
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
 
+  final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
+
   FitnessService fitnessService = FitnessService();
+
+  RecoveryService recoveryService = RecoveryService();
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +40,16 @@ class _EditTimeBudgetState extends State<EditTimeBudget> {
           TextFormField(
             controller: myController,
             decoration: const InputDecoration(
-              hintText: 'Enter your email',
+              hintText: 'Update Fitness Screen',
             ),
           ),
           FloatingActionButton(
             // When the user presses the button, show an alert dialog containing
             // the text that the user has entered into the text field.
             onPressed: () {
-              fitnessService.resetGoal(fitnessID, 99);
+              fitnessService.resetGoal(
+                  fitnessID, double.parse(myController.text));
+              //recoveryService.resetGoal(recoveryID, 6789999);
               // showDialog(
               //   context: context,
               //   builder: (context) {
