@@ -25,32 +25,47 @@ class TimeBudgetPage extends StatelessWidget {
   final goal5P = 3.0;
 //****************************** */
 
+//*************** ID FOR TESTING *************** */
+  final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
+  final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
+//*********************************************** */
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: const <Widget>[
+        children: <Widget>[
           Spacer(),
           GoalCard(
-              cardName: "Fitness",
-              cardGoal: "1.5hr",
-              passedColor: Color.fromARGB(255, 255, 99, 99)),
+            cardName: "Fitness",
+            cardGoal: "1.5hr",
+            passedColor: Color.fromARGB(255, 255, 99, 99),
+            ID: "c6a235e6-a42f-49f7-b9d2-0656c91d0880",
+          ),
           GoalCard(
-              cardName: "Fueling",
-              cardGoal: "2000cal",
-              passedColor: Color.fromARGB(255, 255, 255, 87)),
+            cardName: "Fueling",
+            cardGoal: "2000cal",
+            passedColor: Color.fromARGB(255, 255, 255, 87),
+            ID: "c6a235e6-a42f-49f7-b9d2-0656c91d0880",
+          ),
           GoalCard(
-              cardName: "Rest",
-              cardGoal: "8hr",
-              passedColor: Color.fromARGB(255, 162, 108, 255)),
+            cardName: "Rest",
+            cardGoal: "8hr",
+            passedColor: Color.fromARGB(255, 162, 108, 255),
+            ID: "c6a235e6-a42f-49f7-b9d2-0656c91d0880",
+          ),
           GoalCard(
-              cardName: "Social",
-              cardGoal: "1hr",
-              passedColor: Color.fromARGB(255, 169, 200, 255)),
+            cardName: "Social",
+            cardGoal: "1hr",
+            passedColor: Color.fromARGB(255, 169, 200, 255),
+            ID: "c6a235e6-a42f-49f7-b9d2-0656c91d0880",
+          ),
           GoalCard(
-              cardName: "Work",
-              cardGoal: "8hr",
-              passedColor: Color.fromARGB(255, 110, 255, 141)),
+            cardName: "Work",
+            cardGoal: "8hr",
+            passedColor: Color.fromARGB(255, 110, 255, 141),
+            ID: "c6a235e6-a42f-49f7-b9d2-0656c91d0880",
+          ),
           SizedBox(height: 125),
           ButtonRow(buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
           Spacer(),
