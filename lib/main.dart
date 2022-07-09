@@ -51,11 +51,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          //TODO: Color needs revision (Dillan)
-          primarySwatch: Colors.blue,
+          brightness: Brightness.light,
+          colorSchemeSeed: Colors.red,
+          //TODO: app wide color scheme set here
+          fontFamily: 'Georgia',
         ),
         home: Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
+          //backgroundColor: Theme.of(context).primaryColor,
           body: Center(
             child: _widgetOptions.elementAt(_selectedPage),
           ),

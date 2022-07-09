@@ -11,25 +11,23 @@ class FuelRepository{
     await Amplify.DataStore.save(newRecord);
   }
 
-  Future<void> updateFuelPercentage(String id, double newPercentage) async {
+  Future<Fuel> getRecordById(String id) async {
     final recordWithId = await Amplify.DataStore.query(
       Fuel.classType,
       where: Fuel.ID.eq(id),
     );
+    return recordWithId.first;
+  }
 
-    final oldRecord = recordWithId.first;
+  Future<void> updateFuelPercentage(String id, double newPercentage) async {
+    Fuel oldRecord = await getRecordById(id);
     final newRecordPercenatge = oldRecord.copyWith(id: oldRecord.id, percentage: newPercentage);
 
     await Amplify.DataStore.save(newRecordPercenatge);
   }
 
   Future<void> updateFuelGoal(String id, double newGoal) async {
-    final recordWithId = await Amplify.DataStore.query(
-      Fuel.classType,
-      where: Fuel.ID.eq(id),
-    );
-
-    final oldRecord = recordWithId.first;
+    Fuel oldRecord = await getRecordById(id);
     final newRecordGoal = oldRecord.copyWith(id: oldRecord.id, goal: newGoal);
 
     await Amplify.DataStore.save(newRecordGoal);
