@@ -1,5 +1,5 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:beat/models/ModelProvider.dart';
+import 'package:beat/Features/Productivity/models/Productivity.dart';
 
 class ProductivityRepository{
 

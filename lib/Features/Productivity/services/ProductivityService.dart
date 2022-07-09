@@ -1,3 +1,4 @@
+import 'package:beat/Features/Productivity/models/Productivity.dart';
 import 'package:beat/Features/Productivity/repository/ProductivityRepository.dart';
 
 class ProductivityService{
@@ -7,8 +8,8 @@ class ProductivityService{
     productivityRepository.newProductivityRecord();
   }
 
-  void getRecordById(String id){
-    productivityRepository.getRecordById(id);
+  Future<Productivity> getRecordById(String id) async {
+    return await productivityRepository.getRecordById(id);
   }
 
   void updateProgress(String id, double percentage){

@@ -41,9 +41,6 @@ class GoalCard extends StatefulWidget {
 class _GoalCardState extends State<GoalCard> {
   @override
   Widget build(BuildContext context) {
-    // Future<Recovery> record = new Recovery();
-    // record = widget.recoveryService.getRecordById(widget.fitnessID);
-
     return Center(
       child: Card(
         color: widget.passedColor,
@@ -66,8 +63,18 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () {
+
+                    // ========= EXAMPLE ===========
+                    widget.recoveryService.getRecordById(widget.recoveryID).then((value) =>
                     openDialog(
-                        69, 1000, "CAL", '${widget.ID}', '${widget.cardName}');
+                        value.percentage.toString(),
+                        value.goal.toString(),
+                        "CAL",
+                        '${widget.ID}', '${widget.cardName}')
+                    );
+
+                    // openDialog(
+                    //     (69.0).toString(), (1000.0).toString(), "CAL", '${widget.ID}', '${widget.cardName}');
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -89,14 +96,14 @@ class _GoalCardState extends State<GoalCard> {
               children: <Widget>[
                 if (_type == "Fitness") ...[
                   TextFormField(
-                    decoration: InputDecoration(prefixText: "Percentage:"),
-                    initialValue: "55%",
+                    decoration: InputDecoration(prefixText: "Goal:"),
+                    initialValue: _goal,
                   ),
                   TextFormField(
                     decoration: InputDecoration(prefixText: "Percentage:"),
                     //initialValue: "69%",
-                    initialValue:
-                        widget.recoveryService.getRecordById(_id) as String,
+                    initialValue:_percentage
+                        //widget.recoveryService.getRecordById(_id) as String,
                   ),
                 ]
               ],

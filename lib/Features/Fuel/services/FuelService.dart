@@ -1,4 +1,5 @@
 import 'package:beat/Features/Fuel/repository/FuelRepository.dart';
+import '../../../models/Fuel.dart';
 
 class FuelService{
   FuelRepository fuelRepository = FuelRepository();
@@ -7,8 +8,8 @@ class FuelService{
     fuelRepository.newFuelRecord();
   }
 
-  void getRecordById(String id){
-    fuelRepository.getRecordById(id);
+  Future<Fuel> getRecordById(String id){
+    return fuelRepository.getRecordById(id);
   }
 
   void updateProgress(String id, double percentage){

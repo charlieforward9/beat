@@ -1,5 +1,7 @@
 import 'package:beat/Features/Fitness/repository/FitnessRepository.dart';
 
+import '../../../models/Fitness.dart';
+
 class FitnessService{
   FitnessRepository fitnessRepository = FitnessRepository();
 
@@ -7,8 +9,8 @@ class FitnessService{
     fitnessRepository.newFitnessRecord();
   }
 
-  void getRecordById(String id){
-    fitnessRepository.getRecordById(id);
+  Future<Fitness> getRecordById(String id){
+    return fitnessRepository.getRecordById(id);
   }
 
   void updateProgress(String id, double percentage){
