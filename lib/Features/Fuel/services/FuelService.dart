@@ -12,11 +12,11 @@ class FuelService{
     return fuelRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage){
-    fuelRepository.updateFuelPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return fuelRepository.updateFuelPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal){
-    fuelRepository.updateFuelGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return fuelRepository.updateFuelGoal(id, goal);
   }
 }

@@ -12,11 +12,11 @@ class ProductivityService {
     return await productivityRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage) {
-    productivityRepository.updateProductivityPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return productivityRepository.updateProductivityPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal) {
-    productivityRepository.updateProductivityGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return productivityRepository.updateProductivityGoal(id, goal);
   }
 }

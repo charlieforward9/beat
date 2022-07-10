@@ -176,21 +176,19 @@ class _GoalCardState extends State<GoalCard> {
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {
-      await Future.wait([
-        widget.recoveryService.resetGoal(widget.recoveryID, _goal),
-        widget.recoveryService.updateProgress(widget.recoveryID, _progress)
-      ]);
+      await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
+       widget.recoveryService.updateProgress(widget.recoveryID, _progress);
     } else if (widget.cardName == "Fitness") {
-      widget.fitnessService.resetGoal(widget.fitnessID, _goal);
+      await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
       widget.fitnessService.updateProgress(widget.fitnessID, _progress);
     } else if (widget.cardName == "Network") {
-      widget.networkService.resetGoal(widget.networkID, _goal);
+      await widget.networkService.resetGoal(widget.networkID, _goal);
       widget.networkService.updateProgress(widget.networkID, _progress);
     } else if (widget.cardName == "Fuel") {
-      widget.fuelService.resetGoal(widget.fuelID, _goal);
+      await widget.fuelService.resetGoal(widget.fuelID, _goal);
       widget.fuelService.updateProgress(widget.fuelID, _progress);
     } else if (widget.cardName == "Productivity") {
-      widget.productivityService.resetGoal(widget.productivityID, _goal);
+      await widget.productivityService.resetGoal(widget.productivityID, _goal);
       widget.productivityService
           .updateProgress(widget.productivityID, _progress);
     }

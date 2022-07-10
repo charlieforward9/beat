@@ -13,10 +13,10 @@ class RecoveryService {
   }
 
   Future<void> updateProgress(String id, double percentage) async {
-    recoveryRepository.updateRecoveryPercentage(id, percentage);
+    return recoveryRepository.updateRecoveryPercentage(id, percentage);
   }
 
   Future<void> resetGoal(String id, double goal) async {
-    recoveryRepository.updateRecoveryGoal(id, goal);
+    return recoveryRepository.updateRecoveryGoal(id, goal);
   }
 }

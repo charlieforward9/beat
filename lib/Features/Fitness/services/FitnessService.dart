@@ -13,11 +13,11 @@ class FitnessService{
     return fitnessRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage){
-    fitnessRepository.updateFitnessPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return fitnessRepository.updateFitnessPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal){
-    fitnessRepository.updateFitnessGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return fitnessRepository.updateFitnessGoal(id, goal);
   }
 }

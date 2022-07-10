@@ -12,11 +12,11 @@ class NetworkService{
     return networkRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage){
-    networkRepository.updateNetworkPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return networkRepository.updateNetworkPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal){
-    networkRepository.updateNetworkGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return networkRepository.updateNetworkGoal(id, goal);
   }
 }
