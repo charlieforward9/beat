@@ -4,7 +4,7 @@ import 'package:beat/Features/Recovery/repository/RecoveryRepository.dart';
 class RecoveryService {
   RecoveryRepository recoveryRepository = RecoveryRepository();
 
-  void createRecord() {
+  Future<void> createRecord() async {
     recoveryRepository.newRecoveryRecord();
   }
 
@@ -12,11 +12,11 @@ class RecoveryService {
     return recoveryRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage) {
+  Future<void> updateProgress(String id, double percentage) async {
     recoveryRepository.updateRecoveryPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal) {
+  Future<void> resetGoal(String id, double goal) async {
     recoveryRepository.updateRecoveryGoal(id, goal);
   }
 }

@@ -9,11 +9,17 @@ import '../../Features/Recovery/services/RecoveryService.dart';
 import '../Features/Fitness/models/Fitness.dart';
 import '../Features/Recovery/models/Recovery.dart';
 
+// sleep
+import 'dart:io';
+
 class GoalCard extends StatefulWidget {
   final String cardName;
   final String cardGoal;
   final Color passedColor;
   final String ID;
+
+  final TextEditingController updatedGoal = TextEditingController();
+  final TextEditingController updatedPercentage = TextEditingController();
 
   FitnessService fitnessService = FitnessService();
   RecoveryService recoveryService = RecoveryService();
@@ -24,6 +30,9 @@ class GoalCard extends StatefulWidget {
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
+  final fuelID = "b403bc49-60dd-4b82-aa9c-2c2c6ac99765";
+  final networkID = "57863e60-1f20-4bf9-89a5-c05968475a29";
+  final productivityID = "ffbdee44-436e-4560-8d30-562235986c85";
   //*********************************************** */
 
   GoalCard(
@@ -63,16 +72,52 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () {
-
                     // ========= EXAMPLE ===========
-                    widget.recoveryService.getRecordById(widget.recoveryID).then((value) =>
-                    openDialog(
-                        value.percentage.toString(),
-                        value.goal.toString(),
-                        "CAL",
-                        '${widget.ID}', '${widget.cardName}')
-                    );
-
+                    if (widget.cardName == "Recovery") {
+                      widget.recoveryService
+                          .getRecordById(widget.recoveryID)
+                          .then((value) => openDialog(
+                              value.percentage.toString(),
+                              value.goal.toString(),
+                              "CAL",
+                              '${widget.ID}',
+                              '${widget.cardName}'));
+                    } else if (widget.cardName == "Fitness") {
+                      widget.fitnessService
+                          .getRecordById(widget.fitnessID)
+                          .then((value) => openDialog(
+                              value.percentage.toString(),
+                              value.goal.toString(),
+                              "CAL",
+                              '${widget.ID}',
+                              '${widget.cardName}'));
+                    } else if (widget.cardName == "Network") {
+                      widget.networkService
+                          .getRecordById(widget.networkID)
+                          .then((value) => openDialog(
+                              value.percentage.toString(),
+                              value.goal.toString(),
+                              "CAL",
+                              '${widget.ID}',
+                              '${widget.cardName}'));
+                    } else if (widget.cardName == "Fuel") {
+                      widget.fuelService.getRecordById(widget.fuelID).then(
+                          (value) => openDialog(
+                              value.percentage.toString(),
+                              value.goal.toString(),
+                              "CAL",
+                              '${widget.ID}',
+                              '${widget.cardName}'));
+                    } else if (widget.cardName == "Productivity") {
+                      widget.productivityService
+                          .getRecordById(widget.productivityID)
+                          .then((value) => openDialog(
+                              value.percentage.toString(),
+                              value.goal.toString(),
+                              "CAL",
+                              '${widget.ID}',
+                              '${widget.cardName}'));
+                    }
                     // openDialog(
                     //     (69.0).toString(), (1000.0).toString(), "CAL", '${widget.ID}', '${widget.cardName}');
                   },
@@ -94,38 +139,61 @@ class _GoalCardState extends State<GoalCard> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                if (_type == "Fitness") ...[
-                  TextFormField(
-                    decoration: InputDecoration(prefixText: "Goal:"),
-                    initialValue: _goal,
+                Text("Goal: "),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: _goal,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(prefixText: "Percentage:"),
-                    //initialValue: "69%",
-                    initialValue:_percentage
-                        //widget.recoveryService.getRecordById(_id) as String,
+                  controller: widget.updatedGoal,
+
+                  //initialValue: _goal,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: _percentage,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
-                ]
+                  controller: widget.updatedPercentage,
+                ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
                 onPressed: () {
+                  double _progress =
+                      double.parse(widget.updatedPercentage.text);
+                  double _goal = double.parse(widget.updatedGoal.text);
+                  _updatedSpecificGoal(_goal, _progress);
+
                   Navigator.of(context).pop();
                 },
                 child: Text('Update Goals')),
           ],
         ),
       );
-}
 
-class TestPoop extends StatelessWidget {
-  const TestPoop({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog();
+  void _updatedSpecificGoal(_goal, _progress) async {
+    if (widget.cardName == "Recovery") {
+      await Future.wait([
+        widget.recoveryService.resetGoal(widget.recoveryID, _goal),
+        widget.recoveryService.updateProgress(widget.recoveryID, _progress)
+      ]);
+    } else if (widget.cardName == "Fitness") {
+      widget.fitnessService.resetGoal(widget.fitnessID, _goal);
+      widget.fitnessService.updateProgress(widget.fitnessID, _progress);
+    } else if (widget.cardName == "Network") {
+      widget.networkService.resetGoal(widget.networkID, _goal);
+      widget.networkService.updateProgress(widget.networkID, _progress);
+    } else if (widget.cardName == "Fuel") {
+      widget.fuelService.resetGoal(widget.fuelID, _goal);
+      widget.fuelService.updateProgress(widget.fuelID, _progress);
+    } else if (widget.cardName == "Productivity") {
+      widget.productivityService.resetGoal(widget.productivityID, _goal);
+      widget.productivityService
+          .updateProgress(widget.productivityID, _progress);
+    }
   }
 }
 
