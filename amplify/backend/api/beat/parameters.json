@@ -2,5 +2,5 @@
   "AppSyncApiName": "beat",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2022-07-01T22:28:39.034Z"
+  "AuthModeLastUpdated": "2022-06-26T23:55:47.259Z"
 }

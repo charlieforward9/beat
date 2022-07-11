@@ -1,3 +1,4 @@
+import 'package:beat/models/Network.dart';
 import 'package:beat/Features/Network/repository/NetworkRepository.dart';
 
 class NetworkService{
@@ -7,15 +8,15 @@ class NetworkService{
     networkRepository.newNetworkRecord();
   }
 
-  void getRecordById(String id){
-    networkRepository.getRecordById(id);
+  Future<Network> getRecordById(String id){
+    return networkRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage){
-    networkRepository.updateNetworkPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return networkRepository.updateNetworkPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal){
-    networkRepository.updateNetworkGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return networkRepository.updateNetworkGoal(id, goal);
   }
 }

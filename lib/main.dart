@@ -34,7 +34,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   //Pages in the navBar, in order of display from left to right
-  static const List<Widget> _widgetOptions = <Widget>[
+  // removed const from this function
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),

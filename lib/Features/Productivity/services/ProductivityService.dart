@@ -1,21 +1,22 @@
+import 'package:beat/Features/Productivity/models/Productivity.dart';
 import 'package:beat/Features/Productivity/repository/ProductivityRepository.dart';
 
-class ProductivityService{
+class ProductivityService {
   ProductivityRepository productivityRepository = ProductivityRepository();
 
-  void createRecord(){
+  void createRecord() {
     productivityRepository.newProductivityRecord();
   }
 
-  void getRecordById(String id){
-    productivityRepository.getRecordById(id);
+  Future<Productivity> getRecordById(String id) async {
+    return await productivityRepository.getRecordById(id);
   }
 
-  void updateProgress(String id, double percentage){
-    productivityRepository.updateProductivityPercentage(id, percentage);
+  Future<void> updateProgress(String id, double percentage) async {
+    return productivityRepository.updateProductivityPercentage(id, percentage);
   }
 
-  void resetGoal(String id, double goal){
-    productivityRepository.updateProductivityGoal(id, goal);
+  Future<void> resetGoal(String id, double goal) async {
+    return productivityRepository.updateProductivityGoal(id, goal);
   }
 }
