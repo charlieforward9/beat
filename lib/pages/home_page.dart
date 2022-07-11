@@ -1,3 +1,6 @@
+import 'package:beat/UI/UI_Helper_Widgets/completion_ring.dart';
+import 'package:beat/UI/app_theme.dart';
+import 'package:beat/UI/appcolors.dart';
 import 'package:flutter/material.dart';
 
 import '../UI/completion_widget.dart';
@@ -48,23 +51,23 @@ class HomePage extends StatelessWidget {
         HomeProgressCard(
             goalTitle: goal1,
             percentDone: goal1P,
-            goalColor: Theme.of(context).colorScheme.secondary),
+            goalColor: const AppColors().fitnessColor),
         HomeProgressCard(
             goalTitle: goal2,
             percentDone: goal2P,
-            goalColor: Theme.of(context).colorScheme.tertiary),
+            goalColor: const AppColors().fuelingColor),
         HomeProgressCard(
             goalTitle: goal3,
             percentDone: goal3P,
-            goalColor: Theme.of(context).colorScheme.secondary),
+            goalColor: const AppColors().restColor),
         HomeProgressCard(
             goalTitle: goal4,
             percentDone: goal4P,
-            goalColor: Theme.of(context).colorScheme.primary),
+            goalColor: const AppColors().socialColor),
         HomeProgressCard(
             goalTitle: goal5,
             percentDone: goal5P,
-            goalColor: Theme.of(context).colorScheme.primary),
+            goalColor: const AppColors().workColor)
       ]),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
