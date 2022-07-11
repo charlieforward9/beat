@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 import '../UI/completion_widget.dart';
 import '../UI/home_progress_card.dart';
 
+//*************** Services Import *************** */
+import '../Features/Fitness/services/FitnessService.dart';
+import '../Features/Recovery/services/RecoveryService.dart';
+import '../Features/Fuel/services/FuelService.dart';
+import '../Features/Network/services/NetworkService.dart';
+import '../Features/Productivity/services/ProductivityService.dart';
+
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   //TODO Create a storage unit for this good stuff
   //************************* */
@@ -28,8 +35,30 @@ class HomePage extends StatelessWidget {
   final goal5P = 3.0;
 //****************************** */
 
+//*************** Services *************** */
+  FitnessService fitnessService = FitnessService();
+  RecoveryService recoveryService = RecoveryService();
+  FuelService fuelService = FuelService();
+  NetworkService networkService = NetworkService();
+  ProductivityService productivityService = ProductivityService();
+  //*************** ID FOR TESTING *************** */
+  final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
+  final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
+  final fuelID = "b403bc49-60dd-4b82-aa9c-2c2c6ac99765";
+  final networkID = "57863e60-1f20-4bf9-89a5-c05968475a29";
+  final productivityID = "ffbdee44-436e-4560-8d30-562235986c85";
+  //*********************************************** */
+
+  double test = 0.0;
+
   @override
   Widget build(BuildContext context) {
+    this.recoveryService.getRecordById(this.recoveryID).then(
+      (value) {
+        test = value.percentage!;
+      },
+    );
+
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const SizedBox(

@@ -1,13 +1,11 @@
-import 'package:beat/Features/Fuel/services/FuelService.dart';
-import 'package:beat/Features/Network/services/NetworkService.dart';
-import 'package:beat/Features/Productivity/services/ProductivityService.dart';
 import 'package:flutter/material.dart';
-import '../pages/edit_time_budget_page.dart';
 
+//*************** Services Import *************** */
 import '../../Features/Fitness/services/FitnessService.dart';
 import '../../Features/Recovery/services/RecoveryService.dart';
-import '../Features/Fitness/models/Fitness.dart';
-import '../Features/Recovery/models/Recovery.dart';
+import '../../Features/Fuel/services/FuelService.dart';
+import '../../Features/Network/services/NetworkService.dart';
+import '../../Features/Productivity/services/ProductivityService.dart';
 
 // sleep
 import 'dart:io';
@@ -21,12 +19,12 @@ class GoalCard extends StatefulWidget {
   final TextEditingController updatedGoal = TextEditingController();
   final TextEditingController updatedPercentage = TextEditingController();
 
+  //*************** Services *************** */
   FitnessService fitnessService = FitnessService();
   RecoveryService recoveryService = RecoveryService();
   FuelService fuelService = FuelService();
   NetworkService networkService = NetworkService();
   ProductivityService productivityService = ProductivityService();
-
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
@@ -177,7 +175,7 @@ class _GoalCardState extends State<GoalCard> {
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {
       await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
-       widget.recoveryService.updateProgress(widget.recoveryID, _progress);
+      widget.recoveryService.updateProgress(widget.recoveryID, _progress);
     } else if (widget.cardName == "Fitness") {
       await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
       widget.fitnessService.updateProgress(widget.fitnessID, _progress);
