@@ -131,6 +131,7 @@ class _GoalCardState extends State<GoalCard> {
   }
 
   Future openDialog(_percentage, _goal, _metric, _id, _type) => showDialog(
+        // TODO: Need to do error handeling for empty feilds.
         context: context,
         builder: (context) => AlertDialog(
           title: Text("Goal Info:"),
@@ -147,6 +148,7 @@ class _GoalCardState extends State<GoalCard> {
 
                   //initialValue: _goal,
                 ),
+                Text("Percentage: "),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: _percentage,
