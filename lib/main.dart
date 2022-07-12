@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   //Pages in the navBar, in order of display from left to right
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),
@@ -76,9 +76,9 @@ class _MyAppState extends State<MyApp> {
                 label: 'Edit',
               ),
             ],
-            currentIndex: _selectedPage,
             selectedItemColor: Colors.amber[800],
             onTap: _onNavBarTapped,
+            currentIndex: _selectedPage,
           ),
         ));
   }

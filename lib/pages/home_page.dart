@@ -35,7 +35,6 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-        //TODO COMPLETION WIDGET GOES HERE
         CompletionWidget(
             bucketProgress: goal1P,
             firstRingProgress: goal2P,
@@ -44,7 +43,7 @@ class HomePage extends StatelessWidget {
             fourthRingProgress: goal5P),
 
         //TODO: Order by percentDone aescending, when at 100, push to bottom
-
+        //TODO: Fix these colors (dillan)
         HomeProgressCard(
             goalTitle: goal1,
             percentDone: goal1P,
