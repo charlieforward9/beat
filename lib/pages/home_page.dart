@@ -47,27 +47,28 @@ class HomePage extends StatelessWidget {
             fourthRingProgress: goal5P),
 
         //TODO: Order by percentDone aescending, when at 100, push to bottom
-
         HomeProgressCard(
-            goalTitle: goal1,
-            percentDone: goal1P,
-            goalColor: const AppColors().fitnessColor),
+          goalTitle: goal1,
+          percentDone: goal1P,
+          goalColor: AppTheme1.colors
+              .fitnessColor, //clash with current AppTheme class in completion_ring.dart
+        ),
         HomeProgressCard(
             goalTitle: goal2,
             percentDone: goal2P,
-            goalColor: const AppColors().fuelingColor),
+            goalColor: AppTheme1.colors.fuelingColor),
         HomeProgressCard(
             goalTitle: goal3,
             percentDone: goal3P,
-            goalColor: const AppColors().restColor),
+            goalColor: AppTheme1.colors.restColor),
         HomeProgressCard(
             goalTitle: goal4,
             percentDone: goal4P,
-            goalColor: const AppColors().socialColor),
+            goalColor: AppTheme1.colors.socialColor),
         HomeProgressCard(
             goalTitle: goal5,
             percentDone: goal5P,
-            goalColor: const AppColors().workColor)
+            goalColor: AppTheme1.colors.workColor)
       ]),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
