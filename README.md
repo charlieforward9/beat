@@ -8,6 +8,7 @@ Refer to the information below to correctly clone the repository and contribute 
 
 - [Clone the Beat repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 - [Follow these instructions](https://docs.flutter.dev/get-started/install) (skip the 'Create App' section)
+- TODO: Explain Amplify installation and synchronization
 
 ## Extra
 
