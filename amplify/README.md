@@ -5,58 +5,61 @@ Ex. User schema, password field = userPassword.
 
 ## User
 ### Basic user data - Multiple users on application, TODO created by user through interface 
-* userEmail: ==Example (example@provider.com)==
-* userGoals: == Goal instances belonging to the user == 
-* userName: ==UI display name==
-* userPassword: ==For secure login==
 ```graphql
 type User @model @auth(rules: [{allow: public}]) {
-  id: ID! 
+  id: ID!
+  
+  #Ex. (example@provider.com)
   userEmail: AWSURL! 
+  #Goal instances belonging to the user
   userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"]) 
+  #UI display name
   userName: String!
+  #For secure login
   userPassword: String!
 }
 ```
 
 ## Goal
 ### Basic goal data - Multiple goals per user, there should be 5 goals per day, one per category.
-* goalStart: ==Time which activity contrubutions begin for the day (12AM for most) == (Minus sleep, potentially need custom schema for sleep)
-* goalEnd: ==Time which activity contrubutions begin for the day (11:59PM for most) ==
-* goalCategory: == (TODO enum?): fitness, productivity, fuel, social, rest ==
-* goalCurrentDuration: == Summation of respective Activity.activityDuration == (TODO may be better as a service) 
-* goalTargetDuration: == User defined daily target for the respective category ==
-* goalPercentage:== CurrentDuration divided by TargetDuration == (Rethought for non-duration categories, maybe make custom datatypes based on category)
-* goalActivities: == Activity instances belonging to the day and category goal == 
-```
+```graphql
 type Goal @model @auth(rules: [{allow: public}]) {
   id: ID!
-  goalStart: AWSDateTime!
-  goalEnd: AWSDateTime!
-  goalCategory: String!
-  goalCurrentDuration: Duration!
-  goalTargetDuration: Duration!
-  goalPercentage: Float
-  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
   userID: ID! @index(name: "byUser")
+  
+  #Time which activity contrubutions begin for the day (12AM for most) (Minus sleep, potentially need custom schema for sleep)
+  goalStart: AWSDateTime!
+  #Time which activity contrubutions begin for the day (11:59PM for most)
+  goalEnd: AWSDateTime!
+  #(TODO enum?): fitness, productivity, fuel, social, rest
+  goalCategory: String!
+  #Summation of respective Activity.activityDuration (TODO may be better as a service) 
+  goalCurrentDuration: Duration!
+  #User defined daily target for the respective category
+  goalTargetDuration: Duration!
+  #CurrentDuration divided by TargetDuration == (Rethought for non-duration categories, maybe make custom datatypes based on category
+  goalPercentage: Float
+  #Activity instances belonging to the day and category goal
+  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
 }
 ```
 
 ## Activity
 ### Basic activity data - Multiple activities per goal and multiple metrics per activity. 
-* activityStart: == timestamp indicating start of activity ==
-* activityStart: == timestamp indicating end of activity ==
-* activityCategory: == (TODO enum?): fitness, productivity, fuel, social, rest ==
-* activityDuration: == elapsed time of activity (assuming no small breaks in between, yet) ==
-* activityMetrics: == Metric instances belonging to the activity ==
-```
+```graphql
 type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
-  activityStart: AWSDateTime!
-  activityEnd: AWSDateTime!
-  activtyCategory: String!
-  activityDuration: Duration
   goalID: ID! @index(name: "byGoal")
+  
+  #timestamp indicating start of activity
+  activityStart: AWSDateTime!
+  #timestamp indicating end of activity
+  activityEnd: AWSDateTime!
+  #(TODO enum?): fitness, productivity, fuel, social, rest
+  activtyCategory: String!
+  #elapsed time of activity (assuming no small breaks in between, yet)
+  activityDuration: Duration
+  #Metric instances belonging to the activity
   activityMetrics: [Metric] @manyToMany(relationName: "MetricActivity")
 }
 
@@ -64,23 +67,23 @@ type Activity @model @auth(rules: [{allow: public}]) {
 
 ## Metric
 ### Detailed storage for anayltics relating to activity, multiple actvities can belong to the same metric (if activities overlap timestamp)
-timestamp: == Time the metric was sampled ==
-activities: == Activity instances belonging to the metric ==
-heartrate: == A health metric pulled from wearable tracker ==
-location: == A physcial metric pulled from mobile tracker ==
-```
+```graphql
 type Metric @model @auth(rules: [{allow: public}]) {
   id: ID!
-  timestamp: AWSDateTime!
+  #Time the metric was sampled
+  timestamp: AWSDateTime! 
+  #Activity instances belonging to the metric
   activities: [Activity] @manyToMany(relationName: "MetricActivity")
-  heartRate: Int
+  #A physcial metric pulled from mobile tracker
   location: String
+  #A health metric pulled from wearable tracker
+  heartRate: Int
 }
 ```
 
 ## Custom Types (this should probably be modularized elsewhere)
 ### Facilitate storage and manipulation
-```
+```graphql
 type Duration {
   durationSeconds: Int
   durationMinutes: Int
