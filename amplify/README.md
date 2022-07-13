@@ -19,7 +19,10 @@ type User @model @auth(rules: [{allow: public}]) {
   userName: String!
   userPassword: String!
 }
+```
 
+## Goal
+```
 '''
 Multiple goals per user, there should be 5 goals per day, one per category.
 goalStart: ==Time which activity contrubutions begin for the day (12AM for most) == (Minus sleep, potentially need custom schema for sleep)
@@ -41,7 +44,10 @@ type Goal @model @auth(rules: [{allow: public}]) {
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
   userID: ID! @index(name: "byUser")
 }
+```
 
+## Activity
+```
 '''
 activityStart: == timestamp indicating start of activity ==
 activityStart: == timestamp indicating end of activity ==
@@ -60,6 +66,10 @@ type Activity @model @auth(rules: [{allow: public}]) {
   activityMetrics: [Metric] @manyToMany(relationName: "MetricActivity")
 }
 
+```
+
+## Metric
+```
 '''
 timestamp: == Time the metric was sampled ==
 activities: == Activity instances belonging to the metric ==
@@ -73,6 +83,11 @@ type Metric @model @auth(rules: [{allow: public}]) {
   heartRate: Int
   location: String
 }
+
+```
+
+## Custom Types (this should probably be modularized elsewhere)
+```
 '''
 A custom datatype to facilitate data storage and manipulation
 '''
