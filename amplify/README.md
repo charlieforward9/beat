@@ -20,6 +20,7 @@ type User @model @auth(rules: [{allow: public}]) {
 }
 ```
 
+
 ## Goal
 ### Basic goal data - Multiple goals per user, there should be 5 goals per day, one per category.
 ```graphql
@@ -44,6 +45,7 @@ type Goal @model @auth(rules: [{allow: public}]) {
 }
 ```
 
+
 ## Activity
 ### Basic activity data - Multiple activities per goal and multiple metrics per activity. 
 ```graphql
@@ -65,6 +67,7 @@ type Activity @model @auth(rules: [{allow: public}]) {
 
 ```
 
+
 ## Metric
 ### Detailed storage for anayltics relating to activity, multiple actvities can belong to the same metric (if activities overlap timestamp)
 ```graphql
@@ -80,6 +83,7 @@ type Metric @model @auth(rules: [{allow: public}]) {
   heartRate: Int
 }
 ```
+
 
 ## Custom Types (this should probably be modularized elsewhere)
 ### Facilitate storage and manipulation
