@@ -9,7 +9,7 @@ Ex. User schema, password field = userPassword.
 * userGoals: == Goal instances belonging to the user == 
 * userName: ==UI display name==
 * userPassword: ==For secure login==
-```
+```graphql
 type User @model @auth(rules: [{allow: public}]) {
   id: ID! 
   userEmail: AWSURL! 
