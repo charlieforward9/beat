@@ -50,25 +50,25 @@ class HomePage extends StatelessWidget {
         HomeProgressCard(
           goalTitle: goal1,
           percentDone: goal1P,
-          goalColor: AppTheme1.colors
+          goalColor: BeatTheme.colors
               .fitnessColor, //clash with current AppTheme class in completion_ring.dart
         ),
         HomeProgressCard(
             goalTitle: goal2,
             percentDone: goal2P,
-            goalColor: AppTheme1.colors.fuelingColor),
+            goalColor: BeatTheme.colors.fuelingColor),
         HomeProgressCard(
             goalTitle: goal3,
             percentDone: goal3P,
-            goalColor: AppTheme1.colors.restColor),
+            goalColor: BeatTheme.colors.restColor),
         HomeProgressCard(
             goalTitle: goal4,
             percentDone: goal4P,
-            goalColor: AppTheme1.colors.socialColor),
+            goalColor: BeatTheme.colors.socialColor),
         HomeProgressCard(
             goalTitle: goal5,
             percentDone: goal5P,
-            goalColor: AppTheme1.colors.workColor)
+            goalColor: BeatTheme.colors.workColor)
       ]),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {

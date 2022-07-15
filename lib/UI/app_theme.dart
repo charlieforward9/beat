@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:beat/UI/appcolors.dart';
 
 @immutable
-class AppTheme1 {
+class BeatTheme {
   static const colors = AppColors();
 
   const AppTheme1._();
