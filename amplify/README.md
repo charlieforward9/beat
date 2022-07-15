@@ -10,13 +10,14 @@ type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   
   #Ex. (example@provider.com)
-  userEmail: AWSURL! 
-  #Goal instances belonging to the user
-  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"]) 
+  userEmail: AWSEmail! 
   #UI display name
   userName: String!
   #For secure login
   userPassword: String!
+  
+  #Goal instances belonging to the user
+  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"]) 
 }
 ```
 
@@ -40,6 +41,7 @@ type Goal @model @auth(rules: [{allow: public}]) {
   goalTargetDuration: Duration!
   #CurrentDuration divided by TargetDuration == (Rethought for non-duration categories, maybe make custom datatypes based on category
   goalPercentage: Float
+  
   #Activity instances belonging to the day and category goal
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
 }
@@ -58,9 +60,10 @@ type Activity @model @auth(rules: [{allow: public}]) {
   #timestamp indicating end of activity
   activityEnd: AWSDateTime!
   #(TODO enum?): fitness, productivity, fuel, social, rest
-  activtyCategory: String!
+  activityCategory: String!
   #elapsed time of activity (assuming no small breaks in between, yet)
   activityDuration: Duration
+  
   #Metric instances belonging to the activity
   activityMetrics: [Metric] @manyToMany(relationName: "MetricActivity")
 }
@@ -73,14 +76,16 @@ type Activity @model @auth(rules: [{allow: public}]) {
 ```graphql
 type Metric @model @auth(rules: [{allow: public}]) {
   id: ID!
+  
   #Time the metric was sampled
-  timestamp: AWSDateTime! 
-  #Activity instances belonging to the metric
-  activities: [Activity] @manyToMany(relationName: "MetricActivity")
+  metricTimestamp: AWSDateTime!
   #A physcial metric pulled from mobile tracker
-  location: String
+  metricLocation: String
   #A health metric pulled from wearable tracker
-  heartRate: Int
+  metricHeartRate: Int
+  
+  #Activity instances belonging to the metric
+  metricActivities: [Activity] @manyToMany(relationName: "MetricActivity")
 }
 ```
 
