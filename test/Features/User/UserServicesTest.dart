@@ -1,7 +1,7 @@
-import 'package:beat/Features/User/services/UserServices.dart';
+import 'package:beat/Features/User/services/UserService.dart';
 
 class UserServicesTest{
-  UserServices userServices = UserServices();
+  UserService userServices = UserService();
 
   void testCreateUser(){
     String email= "email", name = "name", password = "psswd";
