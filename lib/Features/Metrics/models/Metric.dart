@@ -24,7 +24,6 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** This is an auto generated class representing the Metric type in your schema. */
 @immutable
 class Metric extends Model {
@@ -32,192 +31,235 @@ class Metric extends Model {
   final String id;
   final TemporalDateTime? _metricTimestamp;
   final String? _metricLocation;
-  final List<MetricActivity>? _metricActivities;
+  final List<ActivityMetric>? _activities;
   final int? _metricHeartRate;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
   @override
   getInstanceType() => classType;
-  
+
   @override
   String getId() {
     return id;
   }
-  
+
   TemporalDateTime get metricTimestamp {
     try {
       return _metricTimestamp!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   String? get metricLocation {
     return _metricLocation;
   }
-  
-  List<MetricActivity>? get metricActivities {
-    return _metricActivities;
+
+  List<ActivityMetric>? get activities {
+    return _activities;
   }
-  
+
   int? get metricHeartRate {
     return _metricHeartRate;
   }
-  
+
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
-  
+
   TemporalDateTime? get updatedAt {
     return _updatedAt;
   }
-  
-  const Metric._internal({required this.id, required metricTimestamp, metricLocation, metricActivities, metricHeartRate, createdAt, updatedAt}): _metricTimestamp = metricTimestamp, _metricLocation = metricLocation, _metricActivities = metricActivities, _metricHeartRate = metricHeartRate, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory Metric({String? id, required TemporalDateTime metricTimestamp, String? metricLocation, List<MetricActivity>? metricActivities, int? metricHeartRate}) {
+
+  const Metric._internal(
+      {required this.id,
+      required metricTimestamp,
+      metricLocation,
+      activities,
+      metricHeartRate,
+      createdAt,
+      updatedAt})
+      : _metricTimestamp = metricTimestamp,
+        _metricLocation = metricLocation,
+        _activities = activities,
+        _metricHeartRate = metricHeartRate,
+        _createdAt = createdAt,
+        _updatedAt = updatedAt;
+
+  factory Metric(
+      {String? id,
+      required TemporalDateTime metricTimestamp,
+      String? metricLocation,
+      List<ActivityMetric>? activities,
+      int? metricHeartRate}) {
     return Metric._internal(
-      id: id == null ? UUID.getUUID() : id,
-      metricTimestamp: metricTimestamp,
-      metricLocation: metricLocation,
-      metricActivities: metricActivities != null ? List<MetricActivity>.unmodifiable(metricActivities) : metricActivities,
-      metricHeartRate: metricHeartRate);
+        id: id == null ? UUID.getUUID() : id,
+        metricTimestamp: metricTimestamp,
+        metricLocation: metricLocation,
+        activities: activities != null
+            ? List<ActivityMetric>.unmodifiable(activities)
+            : activities,
+        metricHeartRate: metricHeartRate);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Metric &&
-      id == other.id &&
-      _metricTimestamp == other._metricTimestamp &&
-      _metricLocation == other._metricLocation &&
-      DeepCollectionEquality().equals(_metricActivities, other._metricActivities) &&
-      _metricHeartRate == other._metricHeartRate;
+        id == other.id &&
+        _metricTimestamp == other._metricTimestamp &&
+        _metricLocation == other._metricLocation &&
+        DeepCollectionEquality().equals(_activities, other._activities) &&
+        _metricHeartRate == other._metricHeartRate;
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("Metric {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("metricTimestamp=" + (_metricTimestamp != null ? _metricTimestamp!.format() : "null") + ", ");
+    buffer.write("metricTimestamp=" +
+        (_metricTimestamp != null ? _metricTimestamp!.format() : "null") +
+        ", ");
     buffer.write("metricLocation=" + "$_metricLocation" + ", ");
-    buffer.write("metricHeartRate=" + (_metricHeartRate != null ? _metricHeartRate!.toString() : "null") + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("metricHeartRate=" +
+        (_metricHeartRate != null ? _metricHeartRate!.toString() : "null") +
+        ", ");
+    buffer.write("createdAt=" +
+        (_createdAt != null ? _createdAt!.format() : "null") +
+        ", ");
+    buffer.write(
+        "updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  Metric copyWith({String? id, TemporalDateTime? metricTimestamp, String? metricLocation, List<MetricActivity>? metricActivities, int? metricHeartRate}) {
+
+  Metric copyWith(
+      {String? id,
+      TemporalDateTime? metricTimestamp,
+      String? metricLocation,
+      List<ActivityMetric>? activities,
+      int? metricHeartRate}) {
     return Metric._internal(
-      id: id ?? this.id,
-      metricTimestamp: metricTimestamp ?? this.metricTimestamp,
-      metricLocation: metricLocation ?? this.metricLocation,
-      metricActivities: metricActivities ?? this.metricActivities,
-      metricHeartRate: metricHeartRate ?? this.metricHeartRate);
+        id: id ?? this.id,
+        metricTimestamp: metricTimestamp ?? this.metricTimestamp,
+        metricLocation: metricLocation ?? this.metricLocation,
+        activities: activities ?? this.activities,
+        metricHeartRate: metricHeartRate ?? this.metricHeartRate);
   }
-  
-  Metric.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _metricTimestamp = json['metricTimestamp'] != null ? TemporalDateTime.fromString(json['metricTimestamp']) : null,
-      _metricLocation = json['metricLocation'],
-      _metricActivities = json['metricActivities'] is List
-        ? (json['metricActivities'] as List)
-          .where((e) => e?['serializedData'] != null)
-          .map((e) => MetricActivity.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
-          .toList()
-        : null,
-      _metricHeartRate = (json['metricHeartRate'] as num?)?.toInt(),
-      _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
-  
+
+  Metric.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _metricTimestamp = json['metricTimestamp'] != null
+            ? TemporalDateTime.fromString(json['metricTimestamp'])
+            : null,
+        _metricLocation = json['metricLocation'],
+        _activities = json['activities'] is List
+            ? (json['activities'] as List)
+                .where((e) => e?['serializedData'] != null)
+                .map((e) => ActivityMetric.fromJson(
+                    new Map<String, dynamic>.from(e['serializedData'])))
+                .toList()
+            : null,
+        _metricHeartRate = (json['metricHeartRate'] as num?)?.toInt(),
+        _createdAt = json['createdAt'] != null
+            ? TemporalDateTime.fromString(json['createdAt'])
+            : null,
+        _updatedAt = json['updatedAt'] != null
+            ? TemporalDateTime.fromString(json['updatedAt'])
+            : null;
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'metricTimestamp': _metricTimestamp?.format(), 'metricLocation': _metricLocation, 'metricActivities': _metricActivities?.map((MetricActivity? e) => e?.toJson()).toList(), 'metricHeartRate': _metricHeartRate, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
-  };
+        'id': id,
+        'metricTimestamp': _metricTimestamp?.format(),
+        'metricLocation': _metricLocation,
+        'activities':
+            _activities?.map((ActivityMetric? e) => e?.toJson()).toList(),
+        'metricHeartRate': _metricHeartRate,
+        'createdAt': _createdAt?.format(),
+        'updatedAt': _updatedAt?.format()
+      };
 
   static final QueryField ID = QueryField(fieldName: "metric.id");
-  static final QueryField METRICTIMESTAMP = QueryField(fieldName: "metricTimestamp");
-  static final QueryField METRICLOCATION = QueryField(fieldName: "metricLocation");
-  static final QueryField METRICACTIVITIES = QueryField(
-    fieldName: "metricActivities",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (MetricActivity).toString()));
-  static final QueryField METRICHEARTRATE = QueryField(fieldName: "metricHeartRate");
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+  static final QueryField METRICTIMESTAMP =
+      QueryField(fieldName: "metricTimestamp");
+  static final QueryField METRICLOCATION =
+      QueryField(fieldName: "metricLocation");
+  static final QueryField ACTIVITIES = QueryField(
+      fieldName: "activities",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (ActivityMetric).toString()));
+  static final QueryField METRICHEARTRATE =
+      QueryField(fieldName: "metricHeartRate");
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Metric";
     modelSchemaDefinition.pluralName = "Metrics";
-    
+
     modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
+        ModelOperation.CREATE,
+        ModelOperation.UPDATE,
+        ModelOperation.DELETE,
+        ModelOperation.READ
+      ])
     ];
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Metric.METRICTIMESTAMP,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        key: Metric.METRICTIMESTAMP,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Metric.METRICLOCATION,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Metric.METRICLOCATION,
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Metric.METRICACTIVITIES,
-      isRequired: false,
-      ofModelName: (MetricActivity).toString(),
-      associatedKey: MetricActivity.METRIC
-    ));
-    
+        key: Metric.ACTIVITIES,
+        isRequired: false,
+        ofModelName: (ActivityMetric).toString(),
+        associatedKey: ActivityMetric.METRIC));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Metric.METRICHEARTRATE,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
-    ));
-    
+        key: Metric.METRICHEARTRATE,
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.int)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        fieldName: 'createdAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
+        fieldName: 'updatedAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
   });
 }
 
 class _MetricModelType extends ModelType<Metric> {
   const _MetricModelType();
-  
+
   @override
   Metric fromJson(Map<String, dynamic> jsonData) {
     return Metric.fromJson(jsonData);

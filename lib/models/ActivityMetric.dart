@@ -19,15 +19,15 @@
 
 // ignore_for_file: public_member_api_docs, annotate_overrides, dead_code, dead_codepublic_member_api_docs, depend_on_referenced_packages, file_names, library_private_types_in_public_api, no_leading_underscores_for_library_prefixes, no_leading_underscores_for_local_identifiers, non_constant_identifier_names, null_check_on_nullable_type_parameter, prefer_adjacent_string_concatenation, prefer_const_constructors, prefer_if_null_operators, prefer_interpolation_to_compose_strings, slash_for_doc_comments, sort_child_properties_last, unnecessary_const, unnecessary_constructor_name, unnecessary_late, unnecessary_new, unnecessary_null_aware_assignments, unnecessary_nullable_for_final_variable_declarations, unnecessary_string_interpolations, use_build_context_synchronously
 
-import '../../../models/ModelProvider.dart';
+import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the MetricActivity type in your schema. */
+/** This is an auto generated class representing the ActivityMetric type in your schema. */
 @immutable
-class MetricActivity extends Model {
-  static const classType = const _MetricActivityModelType();
+class ActivityMetric extends Model {
+  static const classType = const _ActivityMetricModelType();
   final String id;
   final Activity? _activity;
   final Metric? _metric;
@@ -76,10 +76,10 @@ class MetricActivity extends Model {
     return _updatedAt;
   }
   
-  const MetricActivity._internal({required this.id, required activity, required metric, createdAt, updatedAt}): _activity = activity, _metric = metric, _createdAt = createdAt, _updatedAt = updatedAt;
+  const ActivityMetric._internal({required this.id, required activity, required metric, createdAt, updatedAt}): _activity = activity, _metric = metric, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory MetricActivity({String? id, required Activity activity, required Metric metric}) {
-    return MetricActivity._internal(
+  factory ActivityMetric({String? id, required Activity activity, required Metric metric}) {
+    return ActivityMetric._internal(
       id: id == null ? UUID.getUUID() : id,
       activity: activity,
       metric: metric);
@@ -92,7 +92,7 @@ class MetricActivity extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is MetricActivity &&
+    return other is ActivityMetric &&
       id == other.id &&
       _activity == other._activity &&
       _metric == other._metric;
@@ -105,7 +105,7 @@ class MetricActivity extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("MetricActivity {");
+    buffer.write("ActivityMetric {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("activity=" + (_activity != null ? _activity!.toString() : "null") + ", ");
     buffer.write("metric=" + (_metric != null ? _metric!.toString() : "null") + ", ");
@@ -116,14 +116,14 @@ class MetricActivity extends Model {
     return buffer.toString();
   }
   
-  MetricActivity copyWith({String? id, Activity? activity, Metric? metric}) {
-    return MetricActivity._internal(
+  ActivityMetric copyWith({String? id, Activity? activity, Metric? metric}) {
+    return ActivityMetric._internal(
       id: id ?? this.id,
       activity: activity ?? this.activity,
       metric: metric ?? this.metric);
   }
   
-  MetricActivity.fromJson(Map<String, dynamic> json)  
+  ActivityMetric.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _activity = json['activity']?['serializedData'] != null
         ? Activity.fromJson(new Map<String, dynamic>.from(json['activity']['serializedData']))
@@ -138,7 +138,7 @@ class MetricActivity extends Model {
     'id': id, 'activity': _activity?.toJson(), 'metric': _metric?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "metricActivity.id");
+  static final QueryField ID = QueryField(fieldName: "activityMetric.id");
   static final QueryField ACTIVITY = QueryField(
     fieldName: "activity",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Activity).toString()));
@@ -146,20 +146,20 @@ class MetricActivity extends Model {
     fieldName: "metric",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Metric).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "MetricActivity";
-    modelSchemaDefinition.pluralName = "MetricActivities";
+    modelSchemaDefinition.name = "ActivityMetric";
+    modelSchemaDefinition.pluralName = "ActivityMetrics";
     
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-      key: MetricActivity.ACTIVITY,
+      key: ActivityMetric.ACTIVITY,
       isRequired: true,
       targetName: "activityID",
       ofModelName: (Activity).toString()
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-      key: MetricActivity.METRIC,
+      key: ActivityMetric.METRIC,
       isRequired: true,
       targetName: "metricID",
       ofModelName: (Metric).toString()
@@ -181,11 +181,11 @@ class MetricActivity extends Model {
   });
 }
 
-class _MetricActivityModelType extends ModelType<MetricActivity> {
-  const _MetricActivityModelType();
+class _ActivityMetricModelType extends ModelType<ActivityMetric> {
+  const _ActivityMetricModelType();
   
   @override
-  MetricActivity fromJson(Map<String, dynamic> jsonData) {
-    return MetricActivity.fromJson(jsonData);
+  ActivityMetric fromJson(Map<String, dynamic> jsonData) {
+    return ActivityMetric.fromJson(jsonData);
   }
 }
