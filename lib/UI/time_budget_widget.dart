@@ -4,8 +4,8 @@ import 'package:beat/UI/UI_Helper_Widgets/edit_time_budget_widget.dart';
 class GoalCard extends StatefulWidget {
   final String cardName;
   final String cardGoal;
-  final Color passedColor;
-  const GoalCard(
+  Color passedColor;
+  GoalCard(
       {Key? key,
       required this.cardName,
       required this.cardGoal,

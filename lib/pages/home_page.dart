@@ -1,6 +1,5 @@
 import 'package:beat/UI/UI_Helper_Widgets/completion_ring.dart';
 import 'package:beat/UI/app_theme.dart';
-import 'package:beat/UI/appcolors.dart';
 import 'package:flutter/material.dart';
 
 import '../UI/completion_widget.dart';
@@ -11,17 +10,11 @@ class HomePage extends StatelessWidget {
 
   //TODO Create a storage unit for this good stuff
   //************************* */
-  final goal1 = "";
+  final goal1 = "Rest";
   final goal2 = "Fitness";
   final goal3 = "Social";
   final goal4 = "Fueling";
   final goal5 = "Work";
-
-  //final goal1Color = const Color.fromARGB(255, 162, 108, 255);
-  //final goal2Color = const Color.fromARGB(255, 255, 99, 99);
-  //final goal3Color = const Color.fromARGB(255, 169, 200, 255);
-  //final goal4Color = const Color.fromARGB(255, 255, 255, 87);
-  //final goal5Color = const Color.fromARGB(255, 110, 255, 141);
 
 //This is just for testing
   final goal1P = 90.0;

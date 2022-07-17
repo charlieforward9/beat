@@ -5,7 +5,7 @@ import 'package:beat/UI/appcolors.dart';
 class BeatTheme {
   static const colors = AppColors();
 
-  const AppTheme1._();
+  const BeatTheme._();
 
   static ThemeData define() {
     return ThemeData(fontFamily: "Georgia");

@@ -23,8 +23,9 @@ class _CompletionRingState extends State<CompletionRing> {
         child: CustomPaint(
             painter: RingPainter(
                 progress: widget.progress,
-                taskNotCompletedColor: themeData.taskRing(),
-                taskCompletedColor: themeData.accent(),
+                taskNotCompletedColor: themeData.taskRing(), //TODO: SEE BELOW
+                taskCompletedColor:
+                    themeData.accent(), //TODO: change these to beat themes
                 radiusController: widget.level)));
   }
 }
