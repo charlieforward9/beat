@@ -21,5 +21,17 @@
         }
       }
     }
+  },
+  "function": {
+    "beatserviceTests": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
+    },
+    "testUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
   }
 }

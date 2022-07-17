@@ -3,15 +3,21 @@
   "serviceConfiguration": {
     "apiName": "beat",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "C:\\Users\\Camer\\Documents\\GitHub\\beat\\amplify\\backend\\api\\beat\\schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-04ffb325-7317-4e5c-a804-012e7cbd8677/amplify/backend/api/beat/schema.graphql",
     "defaultAuthType": {
-      "mode": "AWS_IAM"
+      "mode": "API_KEY",
+      "keyDescription": "api key description",
+      "expirationTime": 30
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
       }
     },
-    "additionalAuthTypes": []
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      }
+    ]
   }
 }

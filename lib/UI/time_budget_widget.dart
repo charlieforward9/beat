@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 //*************** Services Import *************** */
-import '../../Features/Fitness/services/FitnessService.dart';
-import '../../Features/Recovery/services/RecoveryService.dart';
-import '../../Features/Fuel/services/FuelService.dart';
-import '../../Features/Network/services/NetworkService.dart';
-import '../../Features/Productivity/services/ProductivityService.dart';
+// import '../../Features/Fitness/services/FitnessService.dart';
+// import '../../Features/Recovery/services/RecoveryService.dart';
+// import '../../Features/Fuel/services/FuelService.dart';
+// import '../../Features/Network/services/NetworkService.dart';
+// import '../../Features/Productivity/services/ProductivityService.dart';
 
 // sleep
 import 'dart:io';
@@ -20,11 +20,11 @@ class GoalCard extends StatefulWidget {
   final TextEditingController updatedPercentage = TextEditingController();
 
   //*************** Services *************** */
-  FitnessService fitnessService = FitnessService();
-  RecoveryService recoveryService = RecoveryService();
-  FuelService fuelService = FuelService();
-  NetworkService networkService = NetworkService();
-  ProductivityService productivityService = ProductivityService();
+  // FitnessService fitnessService = FitnessService();
+  // RecoveryService recoveryService = RecoveryService();
+  // FuelService fuelService = FuelService();
+  // NetworkService networkService = NetworkService();
+  // ProductivityService productivityService = ProductivityService();
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
@@ -70,52 +70,52 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () {
-                    // ========= EXAMPLE ===========
-                    if (widget.cardName == "Recovery") {
-                      widget.recoveryService
-                          .getRecordById(widget.recoveryID)
-                          .then((value) => openDialog(
-                              value.percentage.toString(),
-                              value.goal.toString(),
-                              "CAL",
-                              '${widget.ID}',
-                              '${widget.cardName}'));
-                    } else if (widget.cardName == "Fitness") {
-                      widget.fitnessService
-                          .getRecordById(widget.fitnessID)
-                          .then((value) => openDialog(
-                              value.percentage.toString(),
-                              value.goal.toString(),
-                              "CAL",
-                              '${widget.ID}',
-                              '${widget.cardName}'));
-                    } else if (widget.cardName == "Network") {
-                      widget.networkService
-                          .getRecordById(widget.networkID)
-                          .then((value) => openDialog(
-                              value.percentage.toString(),
-                              value.goal.toString(),
-                              "CAL",
-                              '${widget.ID}',
-                              '${widget.cardName}'));
-                    } else if (widget.cardName == "Fuel") {
-                      widget.fuelService.getRecordById(widget.fuelID).then(
-                          (value) => openDialog(
-                              value.percentage.toString(),
-                              value.goal.toString(),
-                              "CAL",
-                              '${widget.ID}',
-                              '${widget.cardName}'));
-                    } else if (widget.cardName == "Productivity") {
-                      widget.productivityService
-                          .getRecordById(widget.productivityID)
-                          .then((value) => openDialog(
-                              value.percentage.toString(),
-                              value.goal.toString(),
-                              "CAL",
-                              '${widget.ID}',
-                              '${widget.cardName}'));
-                    }
+                    // // ========= EXAMPLE ===========
+                    // if (widget.cardName == "Recovery") {
+                    //   widget.recoveryService
+                    //       .getRecordById(widget.recoveryID)
+                    //       .then((value) => openDialog(
+                    //           value.percentage.toString(),
+                    //           value.goal.toString(),
+                    //           "CAL",
+                    //           '${widget.ID}',
+                    //           '${widget.cardName}'));
+                    // } else if (widget.cardName == "Fitness") {
+                    //   widget.fitnessService
+                    //       .getRecordById(widget.fitnessID)
+                    //       .then((value) => openDialog(
+                    //           value.percentage.toString(),
+                    //           value.goal.toString(),
+                    //           "CAL",
+                    //           '${widget.ID}',
+                    //           '${widget.cardName}'));
+                    // } else if (widget.cardName == "Network") {
+                    //   widget.networkService
+                    //       .getRecordById(widget.networkID)
+                    //       .then((value) => openDialog(
+                    //           value.percentage.toString(),
+                    //           value.goal.toString(),
+                    //           "CAL",
+                    //           '${widget.ID}',
+                    //           '${widget.cardName}'));
+                    // } else if (widget.cardName == "Fuel") {
+                    //   widget.fuelService.getRecordById(widget.fuelID).then(
+                    //       (value) => openDialog(
+                    //           value.percentage.toString(),
+                    //           value.goal.toString(),
+                    //           "CAL",
+                    //           '${widget.ID}',
+                    //           '${widget.cardName}'));
+                    // } else if (widget.cardName == "Productivity") {
+                    //   widget.productivityService
+                    //       .getRecordById(widget.productivityID)
+                    //       .then((value) => openDialog(
+                    //           value.percentage.toString(),
+                    //           value.goal.toString(),
+                    //           "CAL",
+                    //           '${widget.ID}',
+                    //           '${widget.cardName}'));
+                    // }
                     // openDialog(
                     //     (69.0).toString(), (1000.0).toString(), "CAL", '${widget.ID}', '${widget.cardName}');
                   },
@@ -176,66 +176,66 @@ class _GoalCardState extends State<GoalCard> {
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {
-      await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
-      widget.recoveryService.updateProgress(widget.recoveryID, _progress);
-    } else if (widget.cardName == "Fitness") {
-      await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
-      widget.fitnessService.updateProgress(widget.fitnessID, _progress);
-    } else if (widget.cardName == "Network") {
-      await widget.networkService.resetGoal(widget.networkID, _goal);
-      widget.networkService.updateProgress(widget.networkID, _progress);
-    } else if (widget.cardName == "Fuel") {
-      await widget.fuelService.resetGoal(widget.fuelID, _goal);
-      widget.fuelService.updateProgress(widget.fuelID, _progress);
-    } else if (widget.cardName == "Productivity") {
-      await widget.productivityService.resetGoal(widget.productivityID, _goal);
-      widget.productivityService
-          .updateProgress(widget.productivityID, _progress);
-    }
+    //   await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
+    //   widget.recoveryService.updateProgress(widget.recoveryID, _progress);
+    // } else if (widget.cardName == "Fitness") {
+    //   await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
+    //   widget.fitnessService.updateProgress(widget.fitnessID, _progress);
+    // } else if (widget.cardName == "Network") {
+    //   await widget.networkService.resetGoal(widget.networkID, _goal);
+    //   widget.networkService.updateProgress(widget.networkID, _progress);
+    // } else if (widget.cardName == "Fuel") {
+    //   await widget.fuelService.resetGoal(widget.fuelID, _goal);
+    //   widget.fuelService.updateProgress(widget.fuelID, _progress);
+    // } else if (widget.cardName == "Productivity") {
+    //   await widget.productivityService.resetGoal(widget.productivityID, _goal);
+    //   widget.productivityService
+    //       .updateProgress(widget.productivityID, _progress);
+    // }
   }
 }
 
-class ButtonRow extends StatefulWidget {
-  final buttonOneName;
-  final buttonTwoName;
-  const ButtonRow({
-    Key? key,
-    required this.buttonOneName,
-    required this.buttonTwoName,
-  }) : super(key: key);
+// class ButtonRow extends StatefulWidget {
+//   final buttonOneName;
+//   final buttonTwoName;
+//   const ButtonRow({
+//     Key? key,
+//     required this.buttonOneName,
+//     required this.buttonTwoName,
+//   }) : super(key: key);
 
-  @override
-  State<ButtonRow> createState() => _ButtonRowState();
-}
+//   @override
+//   State<ButtonRow> createState() => _ButtonRowState();
+// }
 
-class _ButtonRowState extends State<ButtonRow> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(width: 25),
-        Expanded(
-            child: ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                },
-                child: Text('${widget.buttonOneName}'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepOrangeAccent,
-                ))),
-        SizedBox(width: 25),
-        Expanded(
-            child: ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                },
-                child: Text('${widget.buttonTwoName}'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.deepOrangeAccent,
-                ))),
-        SizedBox(width: 25),
-      ],
-    );
-  }
+// class _ButtonRowState extends State<ButtonRow> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         SizedBox(width: 25),
+//         Expanded(
+//             child: ElevatedButton(
+//                 onPressed: () {
+//                   // Respond to button press
+//                 },
+//                 child: Text('${widget.buttonOneName}'),
+//                 style: ElevatedButton.styleFrom(
+//                   primary: Colors.deepOrangeAccent,
+//                 ))),
+//         SizedBox(width: 25),
+//         Expanded(
+//             child: ElevatedButton(
+//                 onPressed: () {
+//                   // Respond to button press
+//                 },
+//                 child: Text('${widget.buttonTwoName}'),
+//                 style: ElevatedButton.styleFrom(
+//                   primary: Colors.deepOrangeAccent,
+//                 ))),
+//         SizedBox(width: 25),
+//       ],
+//     );
+//   }
 }
