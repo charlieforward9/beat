@@ -4,11 +4,11 @@ import '../UI/completion_widget.dart';
 import '../UI/home_progress_card.dart';
 
 //*************** Services Import *************** */
-import '../Features/Fitness/services/FitnessService.dart';
-import '../Features/Recovery/services/RecoveryService.dart';
-import '../Features/Fuel/services/FuelService.dart';
-import '../Features/Network/services/NetworkService.dart';
-import '../Features/Productivity/services/ProductivityService.dart';
+// import '../Features/Fitness/services/FitnessService.dart';
+// import '../Features/Recovery/services/RecoveryService.dart';
+// import '../Features/Fuel/services/FuelService.dart';
+// import '../Features/Network/services/NetworkService.dart';
+// import '../Features/Productivity/services/ProductivityService.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -36,11 +36,11 @@ class HomePage extends StatelessWidget {
 //****************************** */
 
 //*************** Services *************** */
-  FitnessService fitnessService = FitnessService();
-  RecoveryService recoveryService = RecoveryService();
-  FuelService fuelService = FuelService();
-  NetworkService networkService = NetworkService();
-  ProductivityService productivityService = ProductivityService();
+  // FitnessService fitnessService = FitnessService();
+  // RecoveryService recoveryService = RecoveryService();
+  // FuelService fuelService = FuelService();
+  // NetworkService networkService = NetworkService();
+  // ProductivityService productivityService = ProductivityService();
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
