@@ -23,16 +23,16 @@ type Activity @model @auth(rules: [{allow: public}]) {
   activityStart: AWSDateTime!
   activityEnd: AWSDateTime!
   activtyCategory: String!
-  activityDuration: DurationBeat
+  activityDuration: DurationBeat!
   goalID: ID! @index(name: "byGoal")
-  activityMetrics: [Metric] @manyToMany(relationName: "MetricActivity")
+  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
 }
 
 type Metric @model @auth(rules: [{allow: public}]) {
   id: ID!
   metricTimestamp: AWSDateTime!
   metricLocation: String
-  metricActivities: [Activity] @manyToMany(relationName: "MetricActivity")
+  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
   metricHeartRate: Int
 }
 

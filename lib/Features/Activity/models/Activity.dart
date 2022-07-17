@@ -24,7 +24,6 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** This is an auto generated class representing the Activity type in your schema. */
 @immutable
 class Activity extends Model {
@@ -35,252 +34,310 @@ class Activity extends Model {
   final String? _activtyCategory;
   final DurationBeat? _activityDuration;
   final String? _goalID;
-  final List<MetricActivity>? _activityMetrics;
+  final List<ActivityMetric>? _activityMetrics;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
   @override
   getInstanceType() => classType;
-  
+
   @override
   String getId() {
     return id;
   }
-  
+
   TemporalDateTime get activityStart {
     try {
       return _activityStart!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   TemporalDateTime get activityEnd {
     try {
       return _activityEnd!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   String get activtyCategory {
     try {
       return _activtyCategory!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   DurationBeat? get activityDuration {
     return _activityDuration;
   }
-  
+
   String get goalID {
     try {
       return _goalID!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
-  List<MetricActivity>? get activityMetrics {
+
+  List<ActivityMetric>? get activityMetrics {
     return _activityMetrics;
   }
-  
+
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
-  
+
   TemporalDateTime? get updatedAt {
     return _updatedAt;
   }
-  
-  const Activity._internal({required this.id, required activityStart, required activityEnd, required activtyCategory, activityDuration, required goalID, activityMetrics, createdAt, updatedAt}): _activityStart = activityStart, _activityEnd = activityEnd, _activtyCategory = activtyCategory, _activityDuration = activityDuration, _goalID = goalID, _activityMetrics = activityMetrics, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory Activity({String? id, required TemporalDateTime activityStart, required TemporalDateTime activityEnd, required String activtyCategory, DurationBeat? activityDuration, required String goalID, List<MetricActivity>? activityMetrics}) {
+
+  const Activity._internal(
+      {required this.id,
+      required activityStart,
+      required activityEnd,
+      required activtyCategory,
+      activityDuration,
+      required goalID,
+      activityMetrics,
+      createdAt,
+      updatedAt})
+      : _activityStart = activityStart,
+        _activityEnd = activityEnd,
+        _activtyCategory = activtyCategory,
+        _activityDuration = activityDuration,
+        _goalID = goalID,
+        _activityMetrics = activityMetrics,
+        _createdAt = createdAt,
+        _updatedAt = updatedAt;
+
+  factory Activity(
+      {String? id,
+      required TemporalDateTime activityStart,
+      required TemporalDateTime activityEnd,
+      required String activtyCategory,
+      DurationBeat? activityDuration,
+      required String goalID,
+      List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
-      id: id == null ? UUID.getUUID() : id,
-      activityStart: activityStart,
-      activityEnd: activityEnd,
-      activtyCategory: activtyCategory,
-      activityDuration: activityDuration,
-      goalID: goalID,
-      activityMetrics: activityMetrics != null ? List<MetricActivity>.unmodifiable(activityMetrics) : activityMetrics);
+        id: id == null ? UUID.getUUID() : id,
+        activityStart: activityStart,
+        activityEnd: activityEnd,
+        activtyCategory: activtyCategory,
+        activityDuration: activityDuration,
+        goalID: goalID,
+        activityMetrics: activityMetrics != null
+            ? List<ActivityMetric>.unmodifiable(activityMetrics)
+            : activityMetrics);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Activity &&
-      id == other.id &&
-      _activityStart == other._activityStart &&
-      _activityEnd == other._activityEnd &&
-      _activtyCategory == other._activtyCategory &&
-      _activityDuration == other._activityDuration &&
-      _goalID == other._goalID &&
-      DeepCollectionEquality().equals(_activityMetrics, other._activityMetrics);
+        id == other.id &&
+        _activityStart == other._activityStart &&
+        _activityEnd == other._activityEnd &&
+        _activtyCategory == other._activtyCategory &&
+        _activityDuration == other._activityDuration &&
+        _goalID == other._goalID &&
+        DeepCollectionEquality()
+            .equals(_activityMetrics, other._activityMetrics);
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("Activity {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("activityStart=" + (_activityStart != null ? _activityStart!.format() : "null") + ", ");
-    buffer.write("activityEnd=" + (_activityEnd != null ? _activityEnd!.format() : "null") + ", ");
+    buffer.write("activityStart=" +
+        (_activityStart != null ? _activityStart!.format() : "null") +
+        ", ");
+    buffer.write("activityEnd=" +
+        (_activityEnd != null ? _activityEnd!.format() : "null") +
+        ", ");
     buffer.write("activtyCategory=" + "$_activtyCategory" + ", ");
-    buffer.write("activityDuration=" + (_activityDuration != null ? _activityDuration!.toString() : "null") + ", ");
+    buffer.write("activityDuration=" +
+        (_activityDuration != null ? _activityDuration!.toString() : "null") +
+        ", ");
     buffer.write("goalID=" + "$_goalID" + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("createdAt=" +
+        (_createdAt != null ? _createdAt!.format() : "null") +
+        ", ");
+    buffer.write(
+        "updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  Activity copyWith({String? id, TemporalDateTime? activityStart, TemporalDateTime? activityEnd, String? activtyCategory, DurationBeat? activityDuration, String? goalID, List<MetricActivity>? activityMetrics}) {
+
+  Activity copyWith(
+      {String? id,
+      TemporalDateTime? activityStart,
+      TemporalDateTime? activityEnd,
+      String? activtyCategory,
+      DurationBeat? activityDuration,
+      String? goalID,
+      List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
-      id: id ?? this.id,
-      activityStart: activityStart ?? this.activityStart,
-      activityEnd: activityEnd ?? this.activityEnd,
-      activtyCategory: activtyCategory ?? this.activtyCategory,
-      activityDuration: activityDuration ?? this.activityDuration,
-      goalID: goalID ?? this.goalID,
-      activityMetrics: activityMetrics ?? this.activityMetrics);
+        id: id ?? this.id,
+        activityStart: activityStart ?? this.activityStart,
+        activityEnd: activityEnd ?? this.activityEnd,
+        activtyCategory: activtyCategory ?? this.activtyCategory,
+        activityDuration: activityDuration ?? this.activityDuration,
+        goalID: goalID ?? this.goalID,
+        activityMetrics: activityMetrics ?? this.activityMetrics);
   }
-  
-  Activity.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _activityStart = json['activityStart'] != null ? TemporalDateTime.fromString(json['activityStart']) : null,
-      _activityEnd = json['activityEnd'] != null ? TemporalDateTime.fromString(json['activityEnd']) : null,
-      _activtyCategory = json['activtyCategory'],
-      _activityDuration = json['activityDuration']?['serializedData'] != null
-        ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['activityDuration']['serializedData']))
-        : null,
-      _goalID = json['goalID'],
-      _activityMetrics = json['activityMetrics'] is List
-        ? (json['activityMetrics'] as List)
-          .where((e) => e?['serializedData'] != null)
-          .map((e) => MetricActivity.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
-          .toList()
-        : null,
-      _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
-  
+
+  Activity.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _activityStart = json['activityStart'] != null
+            ? TemporalDateTime.fromString(json['activityStart'])
+            : null,
+        _activityEnd = json['activityEnd'] != null
+            ? TemporalDateTime.fromString(json['activityEnd'])
+            : null,
+        _activtyCategory = json['activtyCategory'],
+        _activityDuration = json['activityDuration']?['serializedData'] != null
+            ? DurationBeat.fromJson(new Map<String, dynamic>.from(
+                json['activityDuration']['serializedData']))
+            : null,
+        _goalID = json['goalID'],
+        _activityMetrics = json['activityMetrics'] is List
+            ? (json['activityMetrics'] as List)
+                .where((e) => e?['serializedData'] != null)
+                .map((e) => ActivityMetric.fromJson(
+                    new Map<String, dynamic>.from(e['serializedData'])))
+                .toList()
+            : null,
+        _createdAt = json['createdAt'] != null
+            ? TemporalDateTime.fromString(json['createdAt'])
+            : null,
+        _updatedAt = json['updatedAt'] != null
+            ? TemporalDateTime.fromString(json['updatedAt'])
+            : null;
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': _activtyCategory, 'activityDuration': _activityDuration?.toJson(), 'goalID': _goalID, 'activityMetrics': _activityMetrics?.map((MetricActivity? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
-  };
+        'id': id,
+        'activityStart': _activityStart?.format(),
+        'activityEnd': _activityEnd?.format(),
+        'activtyCategory': _activtyCategory,
+        'activityDuration': _activityDuration?.toJson(),
+        'goalID': _goalID,
+        'activityMetrics':
+            _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(),
+        'createdAt': _createdAt?.format(),
+        'updatedAt': _updatedAt?.format()
+      };
 
   static final QueryField ID = QueryField(fieldName: "activity.id");
-  static final QueryField ACTIVITYSTART = QueryField(fieldName: "activityStart");
+  static final QueryField ACTIVITYSTART =
+      QueryField(fieldName: "activityStart");
   static final QueryField ACTIVITYEND = QueryField(fieldName: "activityEnd");
-  static final QueryField ACTIVTYCATEGORY = QueryField(fieldName: "activtyCategory");
-  static final QueryField ACTIVITYDURATION = QueryField(fieldName: "activityDuration");
+  static final QueryField ACTIVTYCATEGORY =
+      QueryField(fieldName: "activtyCategory");
+  static final QueryField ACTIVITYDURATION =
+      QueryField(fieldName: "activityDuration");
   static final QueryField GOALID = QueryField(fieldName: "goalID");
   static final QueryField ACTIVITYMETRICS = QueryField(
-    fieldName: "activityMetrics",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (MetricActivity).toString()));
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+      fieldName: "activityMetrics",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (ActivityMetric).toString()));
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Activity";
     modelSchemaDefinition.pluralName = "Activities";
-    
+
     modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
+        ModelOperation.CREATE,
+        ModelOperation.UPDATE,
+        ModelOperation.DELETE,
+        ModelOperation.READ
+      ])
     ];
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYSTART,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        key: Activity.ACTIVITYSTART,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYEND,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        key: Activity.ACTIVITYEND,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVTYCATEGORY,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Activity.ACTIVTYCATEGORY,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(
-      fieldName: 'activityDuration',
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.embedded, ofCustomTypeName: 'DurationBeat')
-    ));
-    
+        fieldName: 'activityDuration',
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.embedded,
+            ofCustomTypeName: 'DurationBeat')));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.GOALID,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Activity.GOALID,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Activity.ACTIVITYMETRICS,
-      isRequired: false,
-      ofModelName: (MetricActivity).toString(),
-      associatedKey: MetricActivity.ACTIVITY
-    ));
-    
+        key: Activity.ACTIVITYMETRICS,
+        isRequired: false,
+        ofModelName: (ActivityMetric).toString(),
+        associatedKey: ActivityMetric.ACTIVITY));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        fieldName: 'createdAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
+        fieldName: 'updatedAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
   });
 }
 
 class _ActivityModelType extends ModelType<Activity> {
   const _ActivityModelType();
-  
+
   @override
   Activity fromJson(Map<String, dynamic> jsonData) {
     return Activity.fromJson(jsonData);
