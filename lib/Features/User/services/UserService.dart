@@ -1,7 +1,7 @@
 import 'package:beat/Features/User/repository/UserRepository.dart';
 import '../../../models/ModelProvider.dart';
 
-class UserServices{
+class UserService{
   UserRepository userRepository = UserRepository();
 
   void createUser(String email, String name, String password){
