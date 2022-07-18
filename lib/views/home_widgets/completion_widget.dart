@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'UI_Helper_Widgets/completion_bucket.dart';
-import 'UI_Helper_Widgets/completion_ring.dart';
+import 'home_helper_widgets/completion_bucket.dart';
+import 'home_helper_widgets/completion_ring.dart';
 
 class CompletionWidget extends StatefulWidget {
   final double bucketProgress;

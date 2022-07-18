@@ -1,4 +1,4 @@
-import '../UI/time_budget_widget.dart';
+import 'time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
 
 // //*************** Services Import *************** */

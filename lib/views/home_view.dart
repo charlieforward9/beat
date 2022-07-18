@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../UI/completion_widget.dart';
-import '../UI/home_progress_card.dart';
+import 'home_widgets/completion_widget.dart';
+import 'home_widgets/home_progress_card.dart';
 
 //*************** Services Import *************** */
 // import '../Features/Fitness/services/FitnessService.dart';
@@ -15,24 +15,24 @@ class HomePage extends StatelessWidget {
 
   //TODO Create a storage unit for this good stuff
   //************************* */
-  final goal1 = "";
+  final goal1 = "Rest";
   final goal2 = "Fitness";
   final goal3 = "Social";
-  final goal4 = "Fueling";
+  final goal4 = "Fuel";
   final goal5 = "Work";
 
-  //final goal1Color = const Color.fromARGB(255, 162, 108, 255);
-  //final goal2Color = const Color.fromARGB(255, 255, 99, 99);
-  //final goal3Color = const Color.fromARGB(255, 169, 200, 255);
-  //final goal4Color = const Color.fromARGB(255, 255, 255, 87);
-  //final goal5Color = const Color.fromARGB(255, 110, 255, 141);
+  final goal1Color = const Color.fromARGB(255, 162, 108, 255);
+  final goal2Color = const Color.fromARGB(255, 255, 99, 99);
+  final goal3Color = const Color.fromARGB(255, 169, 200, 255);
+  final goal4Color = const Color.fromARGB(255, 255, 255, 87);
+  final goal5Color = const Color.fromARGB(255, 110, 255, 141);
 
 //This is just for testing
-  double goal1P = 0.0;
-  double goal2P = 0.0;
-  double goal3P = 0.0;
-  double goal4P = 0.0;
-  double goal5P = 0.0;
+  double goal1P = 40.0;
+  double goal2P = 20.0;
+  double goal3P = 23.0;
+  double goal4P = 90.0;
+  double goal5P = 74.0;
 //****************************** */
 
 //*************** Services *************** */
@@ -85,7 +85,6 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-        //TODO COMPLETION WIDGET GOES HERE
         CompletionWidget(
             bucketProgress: goal1P,
             firstRingProgress: goal2P,
@@ -94,36 +93,34 @@ class HomePage extends StatelessWidget {
             fourthRingProgress: goal5P),
 
         //TODO: Order by percentDone aescending, when at 100, push to bottom
-
+        //TODO: Fix these colors (dillan)
+        Padding(padding: EdgeInsets.symmetric(vertical: 10)),
         HomeProgressCard(
-            goalTitle: goal1,
-            percentDone: goal1P,
-            goalColor: Theme.of(context).colorScheme.secondary),
+          goalTitle: goal1,
+          percentDone: goal1P,
+          goalColor: goal1Color,
+        ),
         HomeProgressCard(
-            goalTitle: goal2,
-            percentDone: goal2P,
-            goalColor: Theme.of(context).colorScheme.tertiary),
+          goalTitle: goal2,
+          percentDone: goal2P,
+          goalColor: goal2Color,
+        ),
         HomeProgressCard(
-            goalTitle: goal3,
-            percentDone: goal3P,
-            goalColor: Theme.of(context).colorScheme.secondary),
+          goalTitle: goal3,
+          percentDone: goal3P,
+          goalColor: goal3Color,
+        ),
         HomeProgressCard(
-            goalTitle: goal4,
-            percentDone: goal4P,
-            goalColor: Theme.of(context).colorScheme.primary),
+          goalTitle: goal4,
+          percentDone: goal4P,
+          goalColor: goal4Color,
+        ),
         HomeProgressCard(
-            goalTitle: goal5,
-            percentDone: goal5P,
-            goalColor: Theme.of(context).colorScheme.primary),
+          goalTitle: goal5,
+          percentDone: goal5P,
+          goalColor: goal5Color,
+        ),
       ]),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     //This is where the data should be sent to the EMR
-      //     Navigator.pop(context);
-      //   },
-      //   tooltip: 'Back to Home Screen',
-      //   child: const Icon(Icons.arrow_back_ios_new_rounded),
-      // ),
     );
   }
 }
