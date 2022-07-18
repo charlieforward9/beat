@@ -1,3 +1,5 @@
+import 'package:beat/Features/User/services/UserService.dart';
+import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter/material.dart';
 
 //*************** Services Import *************** */
@@ -6,6 +8,10 @@ import 'package:flutter/material.dart';
 // import '../../Features/Fuel/services/FuelService.dart';
 // import '../../Features/Network/services/NetworkService.dart';
 // import '../../Features/Productivity/services/ProductivityService.dart';
+
+import '../Features/Goal/services/GoalService.dart';
+import '../Features/User/services/UserService.dart';
+import '../Features/Activity/services/ActivityService.dart';
 
 // sleep
 import 'dart:io';
@@ -25,6 +31,9 @@ class GoalCard extends StatefulWidget {
   // FuelService fuelService = FuelService();
   // NetworkService networkService = NetworkService();
   // ProductivityService productivityService = ProductivityService();
+  GoalService goalService = GoalService();
+  UserService userService = UserService();
+  ActivityService activityService = ActivityService();
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
@@ -70,6 +79,7 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () {
+                    createActivity();
                     // // ========= EXAMPLE ===========
                     // if (widget.cardName == "Recovery") {
                     //   widget.recoveryService
@@ -162,11 +172,6 @@ class _GoalCardState extends State<GoalCard> {
           actions: <Widget>[
             TextButton(
                 onPressed: () {
-                  double _progress =
-                      double.parse(widget.updatedPercentage.text);
-                  double _goal = double.parse(widget.updatedGoal.text);
-                  _updatedSpecificGoal(_goal, _progress);
-
                   Navigator.of(context).pop();
                 },
                 child: Text('Update Goals')),
@@ -176,24 +181,45 @@ class _GoalCardState extends State<GoalCard> {
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {
-    //   await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
-    //   widget.recoveryService.updateProgress(widget.recoveryID, _progress);
-    // } else if (widget.cardName == "Fitness") {
-    //   await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
-    //   widget.fitnessService.updateProgress(widget.fitnessID, _progress);
-    // } else if (widget.cardName == "Network") {
-    //   await widget.networkService.resetGoal(widget.networkID, _goal);
-    //   widget.networkService.updateProgress(widget.networkID, _progress);
-    // } else if (widget.cardName == "Fuel") {
-    //   await widget.fuelService.resetGoal(widget.fuelID, _goal);
-    //   widget.fuelService.updateProgress(widget.fuelID, _progress);
-    // } else if (widget.cardName == "Productivity") {
-    //   await widget.productivityService.resetGoal(widget.productivityID, _goal);
-    //   widget.productivityService
-    //       .updateProgress(widget.productivityID, _progress);
-    // }
+      //   await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
+      //   widget.recoveryService.updateProgress(widget.recoveryID, _progress);
+      // } else if (widget.cardName == "Fitness") {
+      //   await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
+      //   widget.fitnessService.updateProgress(widget.fitnessID, _progress);
+      // } else if (widget.cardName == "Network") {
+      //   await widget.networkService.resetGoal(widget.networkID, _goal);
+      //   widget.networkService.updateProgress(widget.networkID, _progress);
+      // } else if (widget.cardName == "Fuel") {
+      //   await widget.fuelService.resetGoal(widget.fuelID, _goal);
+      //   widget.fuelService.updateProgress(widget.fuelID, _progress);
+      // } else if (widget.cardName == "Productivity") {
+      //   await widget.productivityService.resetGoal(widget.productivityID, _goal);
+      //   widget.productivityService
+      //       .updateProgress(widget.productivityID, _progress);
+      // }
+    }
   }
-}
+
+  void createGoal() async {
+    String category = "Fitness";
+    int hours = 10, minutes = 10;
+    String userId = await widget.userService.getUserId("cameron@keenefl.com");
+
+    widget.goalService.createGoal(category, userId, hours, minutes);
+  }
+
+  void createActivity() async {
+    String _category = "Fitness";
+    String userID = await widget.userService.getUserId("cameron@keenefl.com");
+    DateTime date = DateTime.now();
+    String goalID = await widget.goalService.getGoalId(_category, userID, date);
+    widget.activityService.createRecord(_category, goalID, 1, 1, 1);
+    // link activity to goal
+    DurationBeat _duration =
+        DurationBeat(durationHours: 4, durationMinutes: 0, durationSeconds: 0);
+    widget.goalService.updateGoalDuration(_category, userID, date, _duration);
+    // update the goal percentage
+  }
 
 // class ButtonRow extends StatefulWidget {
 //   final buttonOneName;

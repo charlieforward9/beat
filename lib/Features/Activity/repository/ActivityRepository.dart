@@ -4,29 +4,29 @@ import '../../../models/ModelProvider.dart';
 class ActivityRepository {
   DateTime now = DateTime.now();
   Duration durationclass = Duration();
-  Future<void> newActivityRecord(String _category, String userId, int _hours,
+
+  Future<void> newActivityRecord(String _category, String _goalId, int _hours,
       int _minutes, int _seconds) async {
     final newActivity = Activity(
-      activityStart:
-          TemporalDateTime(DateTime(now.year, now.month, now.day, 0, 0, 0, 0)),
-      activityEnd: TemporalDateTime(
-          DateTime(now.year, now.month, now.day, 23, 59, 59, 59)),
+      activityStart: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
+      activityEnd: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
       activtyCategory: _category, // 'Fitness',
       activityDuration: DurationBeat(
-          durationHours: _hours,
-          durationMinutes: _minutes,
-          durationSeconds: _seconds), //DurationBeat(durationHours: 2),
-      goalID: userId,
+          durationHours: 0,
+          durationMinutes: 0,
+          durationSeconds: 0), //DurationBeat(durationHours: 2),
+      goalID: _goalId,
     );
     await Amplify.DataStore.save(newActivity);
+    // TODO: Activities Stored in AmplifyDataStore not in Activity ??? Maybe ok.
   }
 
   Future<Activity> getActivityRecordById(
-      String _category, String userId, DateTime _now) async {
+      String _category, String _goalId, DateTime _now) async {
     final activityRecord = await Amplify.DataStore.query(
       Activity.classType,
       where: Activity.ID
-          .eq(userId)
+          .eq(_goalId)
           .and(Activity.ACTIVTYCATEGORY.eq(_category))
           .and(Activity.ACTIVITYSTART.lt(now))
           .and(Activity.ACTIVITYSTART.gt(now)),
@@ -36,19 +36,19 @@ class ActivityRepository {
   }
 
   Future<void> updateActivityCategory(
-      String _category, String userId, DateTime _now) async {
+      String _category, String _goalId, DateTime _now) async {
     // TODO: this may return the oldest element if you have more than one element
     Activity oldActivity =
-        (await getActivityRecordById(_category, userId, _now));
+        (await getActivityRecordById(_category, _goalId, _now));
     final newActivity =
         oldActivity.copyWith(id: oldActivity.id, activtyCategory: _category);
     await Amplify.DataStore.save(newActivity);
   }
 
-  Future<void> updateActivityDuration(String _category, String userId,
+  Future<void> updateActivityDuration(String _category, String _goalId,
       DateTime _now, DurationBeat _duration) async {
     Activity oldActivity =
-        (await getActivityRecordById(_category, userId, _now));
+        (await getActivityRecordById(_category, _goalId, _now));
     final newActivity = oldActivity.copyWith(
         id: oldActivity.id,
         activtyCategory: _category,
