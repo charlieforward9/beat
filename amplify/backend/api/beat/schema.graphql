@@ -1,30 +1,44 @@
-type Fuel @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  percentage: Float
-  goal: Float
+  userEmail: AWSEmail!
+  userName: String!
+  userPassword: String!
+  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-type Network @model @auth(rules: [{allow: public}]) {
+type Goal @model @auth(rules: [{allow: public}]) {
   id: ID!
-  percentage: Float
-  goal: Float
+  goalStart: AWSDateTime!
+  goalEnd: AWSDateTime!
+  goalCategory: String!
+  goalCurrentDuration: DurationBeat!
+  goalTargetDuration: DurationBeat!
+  goalPercentage: Float
+  userID: ID! @index(name: "byUser")
+  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
 }
 
-type Productivity @model @auth(rules: [{allow: public}]) {
+type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
-  percentage: Float
-  goal: Float
+  activityStart: AWSDateTime!
+  activityEnd: AWSDateTime!
+  activtyCategory: String!
+  activityDuration: DurationBeat!
+  goalID: ID! @index(name: "byGoal")
+  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
 }
 
-type Fitness @model @auth(rules: [{allow: public}]) {
+type Metric @model @auth(rules: [{allow: public}]) {
   id: ID!
-  percentage: Float
-  goal: Float
+  metricTimestamp: AWSDateTime!
+  metricLocation: String
+  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
+  metricHeartRate: Int
 }
 
-type Recovery @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  percentage: Float
-  goal: Float
+type DurationBeat {
+  durationSeconds: Int
+  durationMinutes: Int
+  durationHours: Int
 }
  

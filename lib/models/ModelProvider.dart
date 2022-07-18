@@ -20,41 +20,43 @@
 // ignore_for_file: public_member_api_docs, annotate_overrides, dead_code, dead_codepublic_member_api_docs, depend_on_referenced_packages, file_names, library_private_types_in_public_api, no_leading_underscores_for_library_prefixes, no_leading_underscores_for_local_identifiers, non_constant_identifier_names, null_check_on_nullable_type_parameter, prefer_adjacent_string_concatenation, prefer_const_constructors, prefer_if_null_operators, prefer_interpolation_to_compose_strings, slash_for_doc_comments, sort_child_properties_last, unnecessary_const, unnecessary_constructor_name, unnecessary_late, unnecessary_new, unnecessary_null_aware_assignments, unnecessary_nullable_for_final_variable_declarations, unnecessary_string_interpolations, use_build_context_synchronously
 
 import 'package:amplify_core/amplify_core.dart';
-import 'Fitness.dart';
-import 'Fuel.dart';
-import 'Network.dart';
-import 'Productivity.dart';
-import 'Recovery.dart';
+import 'Activity.dart';
+import 'ActivityMetric.dart';
+import 'Goal.dart';
+import 'Metric.dart';
+import 'User.dart';
+import 'DurationBeat.dart';
 
-export 'Fitness.dart';
-export 'Fuel.dart';
-export 'Network.dart';
-export 'Productivity.dart';
-export 'Recovery.dart';
+export 'Activity.dart';
+export 'ActivityMetric.dart';
+export 'DurationBeat.dart';
+export 'Goal.dart';
+export 'Metric.dart';
+export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "4c01f1aaf3be9c4705ac44663970d546";
+  String version = "d5fa23a72f5a54aa49b8eb5d740cd42e";
   @override
-  List<ModelSchema> modelSchemas = [Fitness.schema, Fuel.schema, Network.schema, Productivity.schema, Recovery.schema];
+  List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, Goal.schema, Metric.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
-  List<ModelSchema> customTypeSchemas = [];
+  List<ModelSchema> customTypeSchemas = [DurationBeat.schema];
 
   static ModelProvider get instance => _instance;
   
   ModelType getModelTypeByModelName(String modelName) {
     switch(modelName) {
-      case "Fitness":
-        return Fitness.classType;
-      case "Fuel":
-        return Fuel.classType;
-      case "Network":
-        return Network.classType;
-      case "Productivity":
-        return Productivity.classType;
-      case "Recovery":
-        return Recovery.classType;
+      case "Activity":
+        return Activity.classType;
+      case "ActivityMetric":
+        return ActivityMetric.classType;
+      case "Goal":
+        return Goal.classType;
+      case "Metric":
+        return Metric.classType;
+      case "User":
+        return User.classType;
       default:
         throw Exception("Failed to find model in model provider for model name: " + modelName);
     }

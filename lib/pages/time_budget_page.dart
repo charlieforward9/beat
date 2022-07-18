@@ -1,14 +1,14 @@
 import '../UI/time_budget_widget.dart';
 import 'package:flutter/material.dart';
 
-//*************** Services Import *************** */
-import '../Features/Fitness/services/FitnessService.dart';
-import '../Features/Recovery/services/RecoveryService.dart';
-import '../Features/Fuel/services/FuelService.dart';
-import '../Features/Network/services/NetworkService.dart';
-import '../Features/Productivity/services/ProductivityService.dart';
+// //*************** Services Import *************** */
+// import '../Features/Fitness/services/FitnessService.dart';
+// import '../Features/Recovery/services/RecoveryService.dart';
+// import '../Features/Fuel/services/FuelService.dart';
+// import '../Features/Network/services/NetworkService.dart';
+// import '../Features/Productivity/services/ProductivityService.dart';
 //*************** Model Import *************** */
-import '../Features/Recovery/models/Recovery.dart';
+// import '../Features/Recovery/models/Recovery.dart';
 
 class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
@@ -34,12 +34,12 @@ class TimeBudgetPage extends StatelessWidget {
   final goal5P = 3.0;
 //****************************** */
 
-  //*************** Services *************** */
-  final FitnessService fitnessService = FitnessService();
-  final RecoveryService recoveryService = RecoveryService();
-  final FuelService fuelService = FuelService();
-  final NetworkService networkService = NetworkService();
-  final ProductivityService productivityService = ProductivityService();
+  // //*************** Services *************** */
+  // final FitnessService fitnessService = FitnessService();
+  // final RecoveryService recoveryService = RecoveryService();
+  // final FuelService fuelService = FuelService();
+  // final NetworkService networkService = NetworkService();
+  // final ProductivityService productivityService = ProductivityService();
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
   final recoveryID = "c460788a-7519-49f6-baa0-81624b4d0748";
@@ -50,7 +50,7 @@ class TimeBudgetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Recovery> testRecovery = recoveryService.getRecordById(recoveryID);
+    // Future<Recovery> testRecovery = recoveryService.getRecordById(recoveryID);
     //Recovery test = await recoveryService.getRecordById(recoveryID);
 
     return Center(
@@ -88,7 +88,7 @@ class TimeBudgetPage extends StatelessWidget {
             ID: recoveryID,
           ),
           SizedBox(height: 125),
-          ButtonRow(buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
+          // ButtonRow(buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
           Spacer(),
         ],
       ),
