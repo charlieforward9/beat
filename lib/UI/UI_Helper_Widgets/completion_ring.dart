@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:beat/UI/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CompletionRing extends StatefulWidget {
@@ -17,32 +17,14 @@ class CompletionRing extends StatefulWidget {
 class _CompletionRingState extends State<CompletionRing> {
   @override
   Widget build(BuildContext context) {
-    final themeData = AppTheme.of(context);
     return AspectRatio(
         aspectRatio: 1.0,
         child: CustomPaint(
             painter: RingPainter(
                 progress: widget.progress,
-                taskNotCompletedColor: themeData.taskRing(), //TODO: SEE BELOW
-                taskCompletedColor:
-                    themeData.accent(), //TODO: change these to beat themes
+                taskNotCompletedColor: BeatTheme.colors.fitnessColor,
+                taskCompletedColor: BeatTheme.colors.workColor,
                 radiusController: widget.level)));
-  }
-}
-
-class AppTheme {
-  final BuildContext context;
-  AppTheme._(this.context); // make this constructor private
-
-  static AppTheme of(BuildContext context) =>
-      AppTheme._(context); // pass context to above constructor
-
-  Color taskRing() {
-    return Theme.of(context).primaryColor;
-  }
-
-  Color accent() {
-    return Theme.of(context).primaryColorDark;
   }
 }
 
