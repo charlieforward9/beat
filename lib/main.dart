@@ -11,9 +11,9 @@ import 'package:beat/UI/app_theme.dart';
 import 'models/ModelProvider.dart';
 
 //***********Frontend-related Imports***********//
-import 'pages/home_page.dart';
-import 'pages/weekly_log_page.dart';
-import 'pages/time_budget_page.dart';
+import 'views/home_view.dart';
+import 'views/weekly_progress_view.dart';
+import 'views/time_budget_view.dart';
 
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   //Pages in the navBar, in order of display from left to right
-  static const List<Widget> _widgetOptions = <Widget>[
+  // removed const from this function
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),
