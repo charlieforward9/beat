@@ -24,7 +24,6 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** This is an auto generated class representing the Goal type in your schema. */
 @immutable
 class Goal extends Model {
@@ -32,7 +31,7 @@ class Goal extends Model {
   final String id;
   final TemporalDateTime? _goalStart;
   final TemporalDateTime? _goalEnd;
-  final String? _goalCategory;
+  final CategoryTypes? _goalCategory;
   final DurationBeat? _goalCurrentDuration;
   final DurationBeat? _goalTargetDuration;
   final double? _goalPercentage;
@@ -43,298 +42,377 @@ class Goal extends Model {
 
   @override
   getInstanceType() => classType;
-  
+
   @override
   String getId() {
     return id;
   }
-  
+
   TemporalDateTime get goalStart {
     try {
       return _goalStart!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   TemporalDateTime get goalEnd {
     try {
       return _goalEnd!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
-  String get goalCategory {
+
+  CategoryTypes get goalCategory {
     try {
       return _goalCategory!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   DurationBeat get goalCurrentDuration {
     try {
       return _goalCurrentDuration!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   DurationBeat get goalTargetDuration {
     try {
       return _goalTargetDuration!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   double? get goalPercentage {
     return _goalPercentage;
   }
-  
+
   String get userID {
     try {
       return _userID!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   List<Activity>? get goalActivities {
     return _goalActivities;
   }
-  
+
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
-  
+
   TemporalDateTime? get updatedAt {
     return _updatedAt;
   }
-  
-  const Goal._internal({required this.id, required goalStart, required goalEnd, required goalCategory, required goalCurrentDuration, required goalTargetDuration, goalPercentage, required userID, goalActivities, createdAt, updatedAt}): _goalStart = goalStart, _goalEnd = goalEnd, _goalCategory = goalCategory, _goalCurrentDuration = goalCurrentDuration, _goalTargetDuration = goalTargetDuration, _goalPercentage = goalPercentage, _userID = userID, _goalActivities = goalActivities, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory Goal({String? id, required TemporalDateTime goalStart, required TemporalDateTime goalEnd, required String goalCategory, required DurationBeat goalCurrentDuration, required DurationBeat goalTargetDuration, double? goalPercentage, required String userID, List<Activity>? goalActivities}) {
+
+  const Goal._internal(
+      {required this.id,
+      required goalStart,
+      required goalEnd,
+      required goalCategory,
+      required goalCurrentDuration,
+      required goalTargetDuration,
+      goalPercentage,
+      required userID,
+      goalActivities,
+      createdAt,
+      updatedAt})
+      : _goalStart = goalStart,
+        _goalEnd = goalEnd,
+        _goalCategory = goalCategory,
+        _goalCurrentDuration = goalCurrentDuration,
+        _goalTargetDuration = goalTargetDuration,
+        _goalPercentage = goalPercentage,
+        _userID = userID,
+        _goalActivities = goalActivities,
+        _createdAt = createdAt,
+        _updatedAt = updatedAt;
+
+  factory Goal(
+      {String? id,
+      required TemporalDateTime goalStart,
+      required TemporalDateTime goalEnd,
+      required CategoryTypes goalCategory,
+      required DurationBeat goalCurrentDuration,
+      required DurationBeat goalTargetDuration,
+      double? goalPercentage,
+      required String userID,
+      List<Activity>? goalActivities}) {
     return Goal._internal(
-      id: id == null ? UUID.getUUID() : id,
-      goalStart: goalStart,
-      goalEnd: goalEnd,
-      goalCategory: goalCategory,
-      goalCurrentDuration: goalCurrentDuration,
-      goalTargetDuration: goalTargetDuration,
-      goalPercentage: goalPercentage,
-      userID: userID,
-      goalActivities: goalActivities != null ? List<Activity>.unmodifiable(goalActivities) : goalActivities);
+        id: id == null ? UUID.getUUID() : id,
+        goalStart: goalStart,
+        goalEnd: goalEnd,
+        goalCategory: goalCategory,
+        goalCurrentDuration: goalCurrentDuration,
+        goalTargetDuration: goalTargetDuration,
+        goalPercentage: goalPercentage,
+        userID: userID,
+        goalActivities: goalActivities != null
+            ? List<Activity>.unmodifiable(goalActivities)
+            : goalActivities);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Goal &&
-      id == other.id &&
-      _goalStart == other._goalStart &&
-      _goalEnd == other._goalEnd &&
-      _goalCategory == other._goalCategory &&
-      _goalCurrentDuration == other._goalCurrentDuration &&
-      _goalTargetDuration == other._goalTargetDuration &&
-      _goalPercentage == other._goalPercentage &&
-      _userID == other._userID &&
-      DeepCollectionEquality().equals(_goalActivities, other._goalActivities);
+        id == other.id &&
+        _goalStart == other._goalStart &&
+        _goalEnd == other._goalEnd &&
+        _goalCategory == other._goalCategory &&
+        _goalCurrentDuration == other._goalCurrentDuration &&
+        _goalTargetDuration == other._goalTargetDuration &&
+        _goalPercentage == other._goalPercentage &&
+        _userID == other._userID &&
+        DeepCollectionEquality().equals(_goalActivities, other._goalActivities);
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("Goal {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("goalStart=" + (_goalStart != null ? _goalStart!.format() : "null") + ", ");
-    buffer.write("goalEnd=" + (_goalEnd != null ? _goalEnd!.format() : "null") + ", ");
-    buffer.write("goalCategory=" + "$_goalCategory" + ", ");
-    buffer.write("goalCurrentDuration=" + (_goalCurrentDuration != null ? _goalCurrentDuration!.toString() : "null") + ", ");
-    buffer.write("goalTargetDuration=" + (_goalTargetDuration != null ? _goalTargetDuration!.toString() : "null") + ", ");
-    buffer.write("goalPercentage=" + (_goalPercentage != null ? _goalPercentage!.toString() : "null") + ", ");
+    buffer.write("goalStart=" +
+        (_goalStart != null ? _goalStart!.format() : "null") +
+        ", ");
+    buffer.write(
+        "goalEnd=" + (_goalEnd != null ? _goalEnd!.format() : "null") + ", ");
+    buffer.write("goalCategory=" +
+        (_goalCategory != null ? enumToString(_goalCategory)! : "null") +
+        ", ");
+    buffer.write("goalCurrentDuration=" +
+        (_goalCurrentDuration != null
+            ? _goalCurrentDuration!.toString()
+            : "null") +
+        ", ");
+    buffer.write("goalTargetDuration=" +
+        (_goalTargetDuration != null
+            ? _goalTargetDuration!.toString()
+            : "null") +
+        ", ");
+    buffer.write("goalPercentage=" +
+        (_goalPercentage != null ? _goalPercentage!.toString() : "null") +
+        ", ");
     buffer.write("userID=" + "$_userID" + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("createdAt=" +
+        (_createdAt != null ? _createdAt!.format() : "null") +
+        ", ");
+    buffer.write(
+        "updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  Goal copyWith({String? id, TemporalDateTime? goalStart, TemporalDateTime? goalEnd, String? goalCategory, DurationBeat? goalCurrentDuration, DurationBeat? goalTargetDuration, double? goalPercentage, String? userID, List<Activity>? goalActivities}) {
+
+  Goal copyWith(
+      {String? id,
+      TemporalDateTime? goalStart,
+      TemporalDateTime? goalEnd,
+      CategoryTypes? goalCategory,
+      DurationBeat? goalCurrentDuration,
+      DurationBeat? goalTargetDuration,
+      double? goalPercentage,
+      String? userID,
+      List<Activity>? goalActivities}) {
     return Goal._internal(
-      id: id ?? this.id,
-      goalStart: goalStart ?? this.goalStart,
-      goalEnd: goalEnd ?? this.goalEnd,
-      goalCategory: goalCategory ?? this.goalCategory,
-      goalCurrentDuration: goalCurrentDuration ?? this.goalCurrentDuration,
-      goalTargetDuration: goalTargetDuration ?? this.goalTargetDuration,
-      goalPercentage: goalPercentage ?? this.goalPercentage,
-      userID: userID ?? this.userID,
-      goalActivities: goalActivities ?? this.goalActivities);
+        id: id ?? this.id,
+        goalStart: goalStart ?? this.goalStart,
+        goalEnd: goalEnd ?? this.goalEnd,
+        goalCategory: goalCategory ?? this.goalCategory,
+        goalCurrentDuration: goalCurrentDuration ?? this.goalCurrentDuration,
+        goalTargetDuration: goalTargetDuration ?? this.goalTargetDuration,
+        goalPercentage: goalPercentage ?? this.goalPercentage,
+        userID: userID ?? this.userID,
+        goalActivities: goalActivities ?? this.goalActivities);
   }
-  
-  Goal.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _goalStart = json['goalStart'] != null ? TemporalDateTime.fromString(json['goalStart']) : null,
-      _goalEnd = json['goalEnd'] != null ? TemporalDateTime.fromString(json['goalEnd']) : null,
-      _goalCategory = json['goalCategory'],
-      _goalCurrentDuration = json['goalCurrentDuration']?['serializedData'] != null
-        ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['goalCurrentDuration']['serializedData']))
-        : null,
-      _goalTargetDuration = json['goalTargetDuration']?['serializedData'] != null
-        ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['goalTargetDuration']['serializedData']))
-        : null,
-      _goalPercentage = (json['goalPercentage'] as num?)?.toDouble(),
-      _userID = json['userID'],
-      _goalActivities = json['goalActivities'] is List
-        ? (json['goalActivities'] as List)
-          .where((e) => e?['serializedData'] != null)
-          .map((e) => Activity.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
-          .toList()
-        : null,
-      _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
-  
+
+  Goal.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _goalStart = json['goalStart'] != null
+            ? TemporalDateTime.fromString(json['goalStart'])
+            : null,
+        _goalEnd = json['goalEnd'] != null
+            ? TemporalDateTime.fromString(json['goalEnd'])
+            : null,
+        _goalCategory = enumFromString<CategoryTypes>(
+            json['goalCategory'], CategoryTypes.values),
+        _goalCurrentDuration =
+            json['goalCurrentDuration']?['serializedData'] != null
+                ? DurationBeat.fromJson(new Map<String, dynamic>.from(
+                    json['goalCurrentDuration']['serializedData']))
+                : null,
+        _goalTargetDuration =
+            json['goalTargetDuration']?['serializedData'] != null
+                ? DurationBeat.fromJson(new Map<String, dynamic>.from(
+                    json['goalTargetDuration']['serializedData']))
+                : null,
+        _goalPercentage = (json['goalPercentage'] as num?)?.toDouble(),
+        _userID = json['userID'],
+        _goalActivities = json['goalActivities'] is List
+            ? (json['goalActivities'] as List)
+                .where((e) => e?['serializedData'] != null)
+                .map((e) => Activity.fromJson(
+                    new Map<String, dynamic>.from(e['serializedData'])))
+                .toList()
+            : null,
+        _createdAt = json['createdAt'] != null
+            ? TemporalDateTime.fromString(json['createdAt'])
+            : null,
+        _updatedAt = json['updatedAt'] != null
+            ? TemporalDateTime.fromString(json['updatedAt'])
+            : null;
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': _goalCategory, 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
-  };
+        'id': id,
+        'goalStart': _goalStart?.format(),
+        'goalEnd': _goalEnd?.format(),
+        'goalCategory': enumToString(_goalCategory),
+        'goalCurrentDuration': _goalCurrentDuration?.toJson(),
+        'goalTargetDuration': _goalTargetDuration?.toJson(),
+        'goalPercentage': _goalPercentage,
+        'userID': _userID,
+        'goalActivities':
+            _goalActivities?.map((Activity? e) => e?.toJson()).toList(),
+        'createdAt': _createdAt?.format(),
+        'updatedAt': _updatedAt?.format()
+      };
 
   static final QueryField ID = QueryField(fieldName: "goal.id");
   static final QueryField GOALSTART = QueryField(fieldName: "goalStart");
   static final QueryField GOALEND = QueryField(fieldName: "goalEnd");
   static final QueryField GOALCATEGORY = QueryField(fieldName: "goalCategory");
-  static final QueryField GOALCURRENTDURATION = QueryField(fieldName: "goalCurrentDuration");
-  static final QueryField GOALTARGETDURATION = QueryField(fieldName: "goalTargetDuration");
-  static final QueryField GOALPERCENTAGE = QueryField(fieldName: "goalPercentage");
+  static final QueryField GOALCURRENTDURATION =
+      QueryField(fieldName: "goalCurrentDuration");
+  static final QueryField GOALTARGETDURATION =
+      QueryField(fieldName: "goalTargetDuration");
+  static final QueryField GOALPERCENTAGE =
+      QueryField(fieldName: "goalPercentage");
   static final QueryField USERID = QueryField(fieldName: "userID");
   static final QueryField GOALACTIVITIES = QueryField(
-    fieldName: "goalActivities",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Activity).toString()));
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+      fieldName: "goalActivities",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (Activity).toString()));
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Goal";
     modelSchemaDefinition.pluralName = "Goals";
-    
+
     modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
+        ModelOperation.CREATE,
+        ModelOperation.UPDATE,
+        ModelOperation.DELETE,
+        ModelOperation.READ
+      ])
     ];
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Goal.GOALSTART,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        key: Goal.GOALSTART,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Goal.GOALEND,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        key: Goal.GOALEND,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Goal.GOALCATEGORY,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Goal.GOALCATEGORY,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(
-      fieldName: 'goalCurrentDuration',
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.embedded, ofCustomTypeName: 'DurationBeat')
-    ));
-    
+        fieldName: 'goalCurrentDuration',
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.embedded,
+            ofCustomTypeName: 'DurationBeat')));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(
-      fieldName: 'goalTargetDuration',
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.embedded, ofCustomTypeName: 'DurationBeat')
-    ));
-    
+        fieldName: 'goalTargetDuration',
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.embedded,
+            ofCustomTypeName: 'DurationBeat')));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Goal.GOALPERCENTAGE,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.double)
-    ));
-    
+        key: Goal.GOALPERCENTAGE,
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.double)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Goal.USERID,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Goal.USERID,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Goal.GOALACTIVITIES,
-      isRequired: false,
-      ofModelName: (Activity).toString(),
-      associatedKey: Activity.GOALID
-    ));
-    
+        key: Goal.GOALACTIVITIES,
+        isRequired: false,
+        ofModelName: (Activity).toString(),
+        associatedKey: Activity.GOALID));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        fieldName: 'createdAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
+        fieldName: 'updatedAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
   });
 }
 
 class _GoalModelType extends ModelType<Goal> {
   const _GoalModelType();
-  
+
   @override
   Goal fromJson(Map<String, dynamic> jsonData) {
     return Goal.fromJson(jsonData);

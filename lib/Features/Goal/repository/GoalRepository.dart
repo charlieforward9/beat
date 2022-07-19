@@ -6,9 +6,9 @@ import 'package:beat/models/ModelProvider.dart';
 class GoalRepository {
   DateTime now = DateTime.now();
   Duration durationclass = Duration();
-  
+
   Future<void> newGoalRecord(
-      String category, String userId, int _hours, int _minutes) async {
+      CategoryTypes category, String userId, int _hours, int _minutes) async {
     final newGoal = Goal(
         goalStart: TemporalDateTime(DateTime(now.year, now.month, now.day)),
         goalEnd: TemporalDateTime(DateTime(now.year, now.month, now.day)),
@@ -23,7 +23,8 @@ class GoalRepository {
   }
   // TODO: Create new goal every day from previous goal, unless goal is modified.
 
-  Future<Goal> getGoal(String category, String userId, DateTime now) async {
+  Future<Goal> getGoal(
+      CategoryTypes category, String userId, DateTime now) async {
     final record = await Amplify.DataStore.query(Goal.classType,
         where: Goal.USERID
             .eq(userId)
@@ -33,8 +34,8 @@ class GoalRepository {
     return record.first;
   }
 
-  Future<void> updateDuration(String category, String userId, DateTime now,
-      DurationBeat duration) async {
+  Future<void> updateDuration(CategoryTypes category, String userId,
+      DateTime now, DurationBeat duration) async {
     Goal oldRecord = await getGoal(category, userId, now);
     DurationBeat targetBeat = oldRecord.goalTargetDuration;
     Duration target = Duration(

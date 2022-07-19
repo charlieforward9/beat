@@ -32,7 +32,7 @@ class Activity extends Model {
   final String id;
   final TemporalDateTime? _activityStart;
   final TemporalDateTime? _activityEnd;
-  final String? _activtyCategory;
+  final CategoryTypes? _activtyCategory;
   final DurationBeat? _activityDuration;
   final String? _goalID;
   final List<ActivityMetric>? _activityMetrics;
@@ -73,7 +73,7 @@ class Activity extends Model {
     }
   }
   
-  String get activtyCategory {
+  CategoryTypes get activtyCategory {
     try {
       return _activtyCategory!;
     } catch(e) {
@@ -126,7 +126,7 @@ class Activity extends Model {
   
   const Activity._internal({required this.id, required activityStart, required activityEnd, required activtyCategory, required activityDuration, required goalID, activityMetrics, createdAt, updatedAt}): _activityStart = activityStart, _activityEnd = activityEnd, _activtyCategory = activtyCategory, _activityDuration = activityDuration, _goalID = goalID, _activityMetrics = activityMetrics, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Activity({String? id, required TemporalDateTime activityStart, required TemporalDateTime activityEnd, required String activtyCategory, required DurationBeat activityDuration, required String goalID, List<ActivityMetric>? activityMetrics}) {
+  factory Activity({String? id, required TemporalDateTime activityStart, required TemporalDateTime activityEnd, required CategoryTypes activtyCategory, required DurationBeat activityDuration, required String goalID, List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
       id: id == null ? UUID.getUUID() : id,
       activityStart: activityStart,
@@ -165,7 +165,7 @@ class Activity extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("activityStart=" + (_activityStart != null ? _activityStart!.format() : "null") + ", ");
     buffer.write("activityEnd=" + (_activityEnd != null ? _activityEnd!.format() : "null") + ", ");
-    buffer.write("activtyCategory=" + "$_activtyCategory" + ", ");
+    buffer.write("activtyCategory=" + (_activtyCategory != null ? enumToString(_activtyCategory)! : "null") + ", ");
     buffer.write("activityDuration=" + (_activityDuration != null ? _activityDuration!.toString() : "null") + ", ");
     buffer.write("goalID=" + "$_goalID" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
@@ -175,7 +175,7 @@ class Activity extends Model {
     return buffer.toString();
   }
   
-  Activity copyWith({String? id, TemporalDateTime? activityStart, TemporalDateTime? activityEnd, String? activtyCategory, DurationBeat? activityDuration, String? goalID, List<ActivityMetric>? activityMetrics}) {
+  Activity copyWith({String? id, TemporalDateTime? activityStart, TemporalDateTime? activityEnd, CategoryTypes? activtyCategory, DurationBeat? activityDuration, String? goalID, List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
       id: id ?? this.id,
       activityStart: activityStart ?? this.activityStart,
@@ -190,7 +190,7 @@ class Activity extends Model {
     : id = json['id'],
       _activityStart = json['activityStart'] != null ? TemporalDateTime.fromString(json['activityStart']) : null,
       _activityEnd = json['activityEnd'] != null ? TemporalDateTime.fromString(json['activityEnd']) : null,
-      _activtyCategory = json['activtyCategory'],
+      _activtyCategory = enumFromString<CategoryTypes>(json['activtyCategory'], CategoryTypes.values),
       _activityDuration = json['activityDuration']?['serializedData'] != null
         ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['activityDuration']['serializedData']))
         : null,
@@ -205,7 +205,7 @@ class Activity extends Model {
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': _activtyCategory, 'activityDuration': _activityDuration?.toJson(), 'goalID': _goalID, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': enumToString(_activtyCategory), 'activityDuration': _activityDuration?.toJson(), 'goalID': _goalID, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "activity.id");
@@ -249,7 +249,7 @@ class Activity extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Activity.ACTIVTYCATEGORY,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(

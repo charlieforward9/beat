@@ -1,3 +1,11 @@
+enum CategoryTypes {
+  FITNESS
+  FUEL
+  PRODUCTIVITY
+  NETWORK
+  REST
+}
+
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   userEmail: AWSEmail!
@@ -10,7 +18,7 @@ type Goal @model @auth(rules: [{allow: public}]) {
   id: ID!
   goalStart: AWSDateTime!
   goalEnd: AWSDateTime!
-  goalCategory: String!
+  goalCategory: CategoryTypes!
   goalCurrentDuration: DurationBeat!
   goalTargetDuration: DurationBeat!
   goalPercentage: Float
@@ -22,7 +30,7 @@ type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
   activityStart: AWSDateTime!
   activityEnd: AWSDateTime!
-  activtyCategory: String!
+  activtyCategory: CategoryTypes!
   activityDuration: DurationBeat!
   goalID: ID! @index(name: "byGoal")
   activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")

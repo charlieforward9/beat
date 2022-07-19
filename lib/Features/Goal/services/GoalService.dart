@@ -6,46 +6,48 @@ import '../repository/GoalRepository.dart';
 class GoalService {
   GoalRepository goalRepository = GoalRepository();
 
-  void createGoal(String category, String userId, int hours, int minutes) {
+  void createGoal(
+      CategoryTypes category, String userId, int hours, int minutes) {
     goalRepository.newGoalRecord(category, userId, hours, minutes);
   }
 
-  Future<Goal> getGoalRecord(String category, String userId, DateTime date) {
+  Future<Goal> getGoalRecord(
+      CategoryTypes category, String userId, DateTime date) {
     return goalRepository.getGoal(category, userId, date);
   }
 
   Future<double> getPercentage(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalPercentage!;
   }
 
   Future<DurationBeat> getCurrentDurationBeat(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalCurrentDuration;
   }
 
   Future<DurationBeat> getTargetDurationBeat(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalTargetDuration;
   }
 
-  Future<String> getCategory(
-      String category, String userId, DateTime date) async {
+  Future<CategoryTypes> getCategory(
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalCategory;
   }
 
   Future<TemporalDateTime> getStart(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalStart;
   }
 
   Future<TemporalDateTime> getEnd(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.goalEnd;
   }
@@ -57,13 +59,13 @@ class GoalService {
   // }
 
   Future<String> getGoalId(
-      String category, String userId, DateTime date) async {
+      CategoryTypes category, String userId, DateTime date) async {
     Goal record = await getGoalRecord(category, userId, date);
     return record.id;
   }
 
-  Future<void> updateGoalDuration(
-      String category, String userId, DateTime date, DurationBeat duration) {
+  Future<void> updateGoalDuration(CategoryTypes category, String userId,
+      DateTime date, DurationBeat duration) {
     return goalRepository.updateDuration(category, userId, date, duration);
   }
 }

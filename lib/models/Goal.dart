@@ -32,7 +32,7 @@ class Goal extends Model {
   final String id;
   final TemporalDateTime? _goalStart;
   final TemporalDateTime? _goalEnd;
-  final String? _goalCategory;
+  final CategoryTypes? _goalCategory;
   final DurationBeat? _goalCurrentDuration;
   final DurationBeat? _goalTargetDuration;
   final double? _goalPercentage;
@@ -75,7 +75,7 @@ class Goal extends Model {
     }
   }
   
-  String get goalCategory {
+  CategoryTypes get goalCategory {
     try {
       return _goalCategory!;
     } catch(e) {
@@ -145,7 +145,7 @@ class Goal extends Model {
   
   const Goal._internal({required this.id, required goalStart, required goalEnd, required goalCategory, required goalCurrentDuration, required goalTargetDuration, goalPercentage, required userID, goalActivities, createdAt, updatedAt}): _goalStart = goalStart, _goalEnd = goalEnd, _goalCategory = goalCategory, _goalCurrentDuration = goalCurrentDuration, _goalTargetDuration = goalTargetDuration, _goalPercentage = goalPercentage, _userID = userID, _goalActivities = goalActivities, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Goal({String? id, required TemporalDateTime goalStart, required TemporalDateTime goalEnd, required String goalCategory, required DurationBeat goalCurrentDuration, required DurationBeat goalTargetDuration, double? goalPercentage, required String userID, List<Activity>? goalActivities}) {
+  factory Goal({String? id, required TemporalDateTime goalStart, required TemporalDateTime goalEnd, required CategoryTypes goalCategory, required DurationBeat goalCurrentDuration, required DurationBeat goalTargetDuration, double? goalPercentage, required String userID, List<Activity>? goalActivities}) {
     return Goal._internal(
       id: id == null ? UUID.getUUID() : id,
       goalStart: goalStart,
@@ -188,7 +188,7 @@ class Goal extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("goalStart=" + (_goalStart != null ? _goalStart!.format() : "null") + ", ");
     buffer.write("goalEnd=" + (_goalEnd != null ? _goalEnd!.format() : "null") + ", ");
-    buffer.write("goalCategory=" + "$_goalCategory" + ", ");
+    buffer.write("goalCategory=" + (_goalCategory != null ? enumToString(_goalCategory)! : "null") + ", ");
     buffer.write("goalCurrentDuration=" + (_goalCurrentDuration != null ? _goalCurrentDuration!.toString() : "null") + ", ");
     buffer.write("goalTargetDuration=" + (_goalTargetDuration != null ? _goalTargetDuration!.toString() : "null") + ", ");
     buffer.write("goalPercentage=" + (_goalPercentage != null ? _goalPercentage!.toString() : "null") + ", ");
@@ -200,7 +200,7 @@ class Goal extends Model {
     return buffer.toString();
   }
   
-  Goal copyWith({String? id, TemporalDateTime? goalStart, TemporalDateTime? goalEnd, String? goalCategory, DurationBeat? goalCurrentDuration, DurationBeat? goalTargetDuration, double? goalPercentage, String? userID, List<Activity>? goalActivities}) {
+  Goal copyWith({String? id, TemporalDateTime? goalStart, TemporalDateTime? goalEnd, CategoryTypes? goalCategory, DurationBeat? goalCurrentDuration, DurationBeat? goalTargetDuration, double? goalPercentage, String? userID, List<Activity>? goalActivities}) {
     return Goal._internal(
       id: id ?? this.id,
       goalStart: goalStart ?? this.goalStart,
@@ -217,7 +217,7 @@ class Goal extends Model {
     : id = json['id'],
       _goalStart = json['goalStart'] != null ? TemporalDateTime.fromString(json['goalStart']) : null,
       _goalEnd = json['goalEnd'] != null ? TemporalDateTime.fromString(json['goalEnd']) : null,
-      _goalCategory = json['goalCategory'],
+      _goalCategory = enumFromString<CategoryTypes>(json['goalCategory'], CategoryTypes.values),
       _goalCurrentDuration = json['goalCurrentDuration']?['serializedData'] != null
         ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['goalCurrentDuration']['serializedData']))
         : null,
@@ -236,7 +236,7 @@ class Goal extends Model {
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': _goalCategory, 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': enumToString(_goalCategory), 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "goal.id");
@@ -282,7 +282,7 @@ class Goal extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Goal.GOALCATEGORY,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(

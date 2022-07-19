@@ -5,8 +5,8 @@ class ActivityRepository {
   DateTime now = DateTime.now();
   Duration durationclass = Duration();
 
-  Future<void> newActivityRecord(String _category, String _goalId, int _hours,
-      int _minutes, int _seconds) async {
+  Future<void> newActivityRecord(CategoryTypes _category, String _goalId,
+      int _hours, int _minutes, int _seconds) async {
     final newActivity = Activity(
       activityStart: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
       activityEnd: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
@@ -22,7 +22,7 @@ class ActivityRepository {
   }
 
   Future<Activity> getActivityRecordById(
-      String _category, String _goalId, DateTime _now) async {
+      CategoryTypes _category, String _goalId, DateTime _now) async {
     final activityRecord = await Amplify.DataStore.query(
       Activity.classType,
       where: Activity.ID
@@ -36,7 +36,7 @@ class ActivityRepository {
   }
 
   Future<void> updateActivityCategory(
-      String _category, String _goalId, DateTime _now) async {
+      CategoryTypes _category, String _goalId, DateTime _now) async {
     // TODO: this may return the oldest element if you have more than one element
     Activity oldActivity =
         (await getActivityRecordById(_category, _goalId, _now));
@@ -45,7 +45,7 @@ class ActivityRepository {
     await Amplify.DataStore.save(newActivity);
   }
 
-  Future<void> updateActivityDuration(String _category, String _goalId,
+  Future<void> updateActivityDuration(CategoryTypes _category, String _goalId,
       DateTime _now, DurationBeat _duration) async {
     Activity oldActivity =
         (await getActivityRecordById(_category, _goalId, _now));

@@ -31,7 +31,7 @@ class Activity extends Model {
   final String id;
   final TemporalDateTime? _activityStart;
   final TemporalDateTime? _activityEnd;
-  final String? _activtyCategory;
+  final CategoryTypes? _activtyCategory;
   final DurationBeat? _activityDuration;
   final String? _goalID;
   final List<ActivityMetric>? _activityMetrics;
@@ -72,7 +72,7 @@ class Activity extends Model {
     }
   }
 
-  String get activtyCategory {
+  CategoryTypes get activtyCategory {
     try {
       return _activtyCategory!;
     } catch (e) {
@@ -85,8 +85,17 @@ class Activity extends Model {
     }
   }
 
-  DurationBeat? get activityDuration {
-    return _activityDuration;
+  DurationBeat get activityDuration {
+    try {
+      return _activityDuration!;
+    } catch (e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
+    }
   }
 
   String get goalID {
@@ -119,7 +128,7 @@ class Activity extends Model {
       required activityStart,
       required activityEnd,
       required activtyCategory,
-      activityDuration,
+      required activityDuration,
       required goalID,
       activityMetrics,
       createdAt,
@@ -137,8 +146,8 @@ class Activity extends Model {
       {String? id,
       required TemporalDateTime activityStart,
       required TemporalDateTime activityEnd,
-      required String activtyCategory,
-      DurationBeat? activityDuration,
+      required CategoryTypes activtyCategory,
+      required DurationBeat activityDuration,
       required String goalID,
       List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
@@ -186,7 +195,9 @@ class Activity extends Model {
     buffer.write("activityEnd=" +
         (_activityEnd != null ? _activityEnd!.format() : "null") +
         ", ");
-    buffer.write("activtyCategory=" + "$_activtyCategory" + ", ");
+    buffer.write("activtyCategory=" +
+        (_activtyCategory != null ? enumToString(_activtyCategory)! : "null") +
+        ", ");
     buffer.write("activityDuration=" +
         (_activityDuration != null ? _activityDuration!.toString() : "null") +
         ", ");
@@ -205,7 +216,7 @@ class Activity extends Model {
       {String? id,
       TemporalDateTime? activityStart,
       TemporalDateTime? activityEnd,
-      String? activtyCategory,
+      CategoryTypes? activtyCategory,
       DurationBeat? activityDuration,
       String? goalID,
       List<ActivityMetric>? activityMetrics}) {
@@ -227,7 +238,8 @@ class Activity extends Model {
         _activityEnd = json['activityEnd'] != null
             ? TemporalDateTime.fromString(json['activityEnd'])
             : null,
-        _activtyCategory = json['activtyCategory'],
+        _activtyCategory = enumFromString<CategoryTypes>(
+            json['activtyCategory'], CategoryTypes.values),
         _activityDuration = json['activityDuration']?['serializedData'] != null
             ? DurationBeat.fromJson(new Map<String, dynamic>.from(
                 json['activityDuration']['serializedData']))
@@ -251,7 +263,7 @@ class Activity extends Model {
         'id': id,
         'activityStart': _activityStart?.format(),
         'activityEnd': _activityEnd?.format(),
-        'activtyCategory': _activtyCategory,
+        'activtyCategory': enumToString(_activtyCategory),
         'activityDuration': _activityDuration?.toJson(),
         'goalID': _goalID,
         'activityMetrics':
@@ -302,11 +314,11 @@ class Activity extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
         key: Activity.ACTIVTYCATEGORY,
         isRequired: true,
-        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+        ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)));
 
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(
         fieldName: 'activityDuration',
-        isRequired: false,
+        isRequired: true,
         ofType: ModelFieldType(ModelFieldTypeEnum.embedded,
             ofCustomTypeName: 'DurationBeat')));
 
