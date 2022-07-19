@@ -29,8 +29,7 @@ class GoalRepository {
         where: Goal.USERID
             .eq(userId)
             .and(Goal.GOALCATEGORY.eq(category))
-            .and(Goal.GOALSTART.lt(TemporalDateTime(now)))
-            .and(Goal.GOALEND.gt(TemporalDateTime(now))));
+            .and(Goal.GOALSTART.lt(TemporalDateTime(now))));
     return record.first;
   }
 

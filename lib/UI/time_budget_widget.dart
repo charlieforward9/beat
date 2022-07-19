@@ -88,6 +88,7 @@ class _GoalCardState extends State<GoalCard> {
                 TextButton.icon(
                   onPressed: () {
                     //createGoal();
+                    //getGoalIDTester();
                     createActivity();
 
                     // // ========= EXAMPLE ===========R
@@ -221,10 +222,9 @@ class _GoalCardState extends State<GoalCard> {
   void createActivity() async {
     String userID = await widget.userService.getUserId("cameron@keenefl.com");
     DateTime date = DateTime.now();
-    String goalID = "f6ec4ce9-8e0a-499d-936c-55e75ba8c3a6";
-    // TODO: goalService.getGoalId not returning everything properly.
-    
-    //await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
+    String goalID =
+        await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
+    //print(testGoalID);
     widget.activityService.createRecord(CategoryTypes.FITNESS, goalID, 1, 1, 1);
     // link activity to goal
     DurationBeat _duration =
@@ -232,6 +232,17 @@ class _GoalCardState extends State<GoalCard> {
     widget.goalService
         .updateGoalDuration(CategoryTypes.FITNESS, userID, date, _duration);
     // update the goal percentage
+  }
+
+  void getGoalIDTester() async {
+    String userID = await widget.userService.getUserId("cameron@keenefl.com");
+    DateTime date = DateTime.now();
+    String goalID = "f6ec4ce9-8e0a-499d-936c-55e75ba8c3a6";
+    // TODO: goalService.getGoalId not returning everything properly.
+
+    final testGoalID =
+        await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
+    print(testGoalID);
   }
 
 // class ButtonRow extends StatefulWidget {
