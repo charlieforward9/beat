@@ -6,7 +6,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:beat/UI/UI_Helper_Widgets/completion_ring.dart';
 import 'amplifyconfiguration.dart';
-import 'package:beat/UI/app_theme.dart';
+import 'package:beat/views/home_widgets/app_theme.dart';
 
 import 'models/ModelProvider.dart';
 

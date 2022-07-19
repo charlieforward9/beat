@@ -1,9 +1,9 @@
-import 'package:beat/UI/UI_Helper_Widgets/completion_ring.dart';
-import 'package:beat/UI/app_theme.dart';
+//import 'package:beat/UI/UI_Helper_Widgets/completion_ring.dart';
+import 'package:beat/views/home_widgets/app_theme.dart';
 import 'package:flutter/material.dart';
 
-import '../UI/completion_widget.dart';
-import '../UI/home_progress_card.dart';
+import '../views/home_widgets/completion_widget.dart';
+import '../views/home_widgets/home_progress_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
