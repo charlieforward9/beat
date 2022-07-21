@@ -86,59 +86,20 @@ class _GoalCardState extends State<GoalCard> {
                 Expanded(flex: 1, child: Text('${widget.cardGoal}')),
                 //Spacer(),
                 TextButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
+                    String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
                     //createGoal();
                     //getGoalIDTester();
-                    createActivity();
-
-                    // // ========= EXAMPLE ===========R
-                    // if (widget.cardName == "Recovery") {
-                    //   widget.recoveryService
-                    //       .getRecordById(widget.recoveryID)
-                    //       .then((value) => openDialog(
-                    //           value.percentage.toString(),
-                    //           value.goal.toString(),
-                    //           "CAL",
-                    //           '${widget.ID}',
-                    //           '${widget.cardName}'));
-                    // } else if (widget.cardName == "Fitness") {
-                    //   widget.fitnessService
-                    //       .getRecordById(widget.fitnessID)
-                    //       .then((value) => openDialog(
-                    //           value.percentage.toString(),
-                    //           value.goal.toString(),
-                    //           "CAL",
-                    //           '${widget.ID}',
-                    //           '${widget.cardName}'));
-                    // } else if (widget.cardName == "Network") {
-                    //   widget.networkService
-                    //       .getRecordById(widget.networkID)
-                    //       .then((value) => openDialog(
-                    //           value.percentage.toString(),
-                    //           value.goal.toString(),
-                    //           "CAL",
-                    //           '${widget.ID}',
-                    //           '${widget.cardName}'));
-                    // } else if (widget.cardName == "Fuel") {
-                    //   widget.fuelService.getRecordById(widget.fuelID).then(
-                    //       (value) => openDialog(
-                    //           value.percentage.toString(),
-                    //           value.goal.toString(),
-                    //           "CAL",
-                    //           '${widget.ID}',
-                    //           '${widget.cardName}'));
-                    // } else if (widget.cardName == "Productivity") {
-                    //   widget.productivityService
-                    //       .getRecordById(widget.productivityID)
-                    //       .then((value) => openDialog(
-                    //           value.percentage.toString(),
-                    //           value.goal.toString(),
-                    //           "CAL",
-                    //           '${widget.ID}',
-                    //           '${widget.cardName}'));
-                    // }
-                    // openDialog(
-                    //     (69.0).toString(), (1000.0).toString(), "CAL", '${widget.ID}', '${widget.cardName}');
+                    //await createActivity();
+                    //updateGoal();
+                    //updateActivityCategoryTester(CategoryTypes.FITNESS);
+                    //updateActivityDurationTester(_activityId, 69, 69, 69);
+                    //getActivityStartTester(_activityId);
+                    //getActivityEndTester(_activityId);
+                    //getActivityCategoryTester(_activityId);
+                    //getActivityDurationTester(_activityId);
+                    //getGoalIdTester(_activityId);
+                    //getActivityIdTester(_activityId);
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -212,26 +173,91 @@ class _GoalCardState extends State<GoalCard> {
   }
 
   void createGoal() async {
-    int hours = 10, minutes = 10;
+    int hours = 10, minutes = 10, seconds = 10;
     String userId = await widget.userService.getUserId("cameron@keenefl.com");
 
     widget.goalService
-        .createGoal(CategoryTypes.FITNESS, userId, hours, minutes);
+        .createGoal(CategoryTypes.REST, userId, hours, minutes, seconds);
   }
 
-  void createActivity() async {
+  Future<void> createActivity() async {
     String userID = await widget.userService.getUserId("cameron@keenefl.com");
     DateTime date = DateTime.now();
     String goalID =
-        await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
+        await widget.goalService.getGoalId(CategoryTypes.REST, userID, date);
     //print(testGoalID);
-    widget.activityService.createRecord(CategoryTypes.FITNESS, goalID, 1, 1, 1);
+    widget.activityService.createRecord(CategoryTypes.REST, goalID, 1, 1, 1);
     // link activity to goal
     DurationBeat _duration =
         DurationBeat(durationHours: 4, durationMinutes: 0, durationSeconds: 0);
     widget.goalService
-        .updateGoalDuration(CategoryTypes.FITNESS, userID, date, _duration);
+        .updateGoalDuration(CategoryTypes.REST, userID, date, _duration);
     // update the goal percentage
+  }
+
+  Future<void> updateActivityCategoryTester(CategoryTypes _newCategory) async {
+    // Working
+    String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
+    widget.activityService.updateActivityCategory(_newCategory, _activityId);
+  }
+
+  Future<void> updateActivityDurationTester(
+      String _activityId,
+      // working
+      int _newHours,
+      int _newMinutes,
+      int _newSeconds) async {
+    //String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
+    DurationBeat newDuration = DurationBeat(
+        durationHours: _newHours,
+        durationMinutes: _newMinutes,
+        durationSeconds: _newSeconds);
+    widget.activityService.updateActivityDuration(_activityId, newDuration);
+  }
+
+  Future<void> getActivityStartTester(String _activityId) async {
+    widget.activityService.getActivityStart(_activityId).then((value) {
+      print("getActivityStartTester: $value");
+    });
+  }
+
+  Future<void> getActivityEndTester(String _activityId) async {
+    widget.activityService.getActivityEnd(_activityId).then((value) {
+      print("getActivityEndTester: $value");
+    });
+  }
+
+  Future<void> getActivityCategoryTester(String _activityId) async {
+    widget.activityService.getActivityCategory(_activityId).then((value) {
+      print("getActivityCategoryTester: $value");
+    });
+  }
+
+  Future<void> getActivityDurationTester(String _activityId) async {
+    widget.activityService.getActivityDuration(_activityId).then((value) {
+      print("getActivityDurationTester: $value");
+    });
+  }
+
+  Future<void> getGoalIdTester(String _activityId) async {
+    widget.activityService.getGoalId(_activityId).then((value) {
+      print("getGoalIdTester: $value");
+    });
+  }
+
+  Future<void> getActivityIdTester(String _activityId) async {
+    widget.activityService.getActivityId(_activityId).then((value) {
+      print("getActivityIdTester: $value");
+    });
+  }
+
+  void updateGoal() async {
+    String userID = await widget.userService.getUserId("cameron@keenefl.com");
+    DateTime date = DateTime.now();
+    DurationBeat _duration = DurationBeat(
+        durationHours: 4, durationMinutes: 11, durationSeconds: 11);
+    widget.goalService
+        .updateGoalDuration(CategoryTypes.REST, userID, date, _duration);
   }
 
   void getGoalIDTester() async {
@@ -243,6 +269,17 @@ class _GoalCardState extends State<GoalCard> {
     final testGoalID =
         await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
     print(testGoalID);
+  }
+
+  void updateGoalDurationTester() async {
+    String userID = await widget.userService.getUserId("cameron@keenefl.com");
+    DateTime date = DateTime.now();
+    String goalID =
+        await widget.goalService.getGoalId(CategoryTypes.FITNESS, userID, date);
+    // link activity to goal
+    DurationBeat _duration =
+        DurationBeat(durationHours: 4, durationMinutes: 0, durationSeconds: 0);
+    widget.goalService.updateGoalDurationOnGoalId(goalID, _duration);
   }
 
 // class ButtonRow extends StatefulWidget {

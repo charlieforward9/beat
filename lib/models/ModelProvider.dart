@@ -37,7 +37,7 @@ export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "0593de6207648c034a64c3d4ecdb96a4";
+  String version = "b990a9c2ef3b6542708c3e2813d7c11b";
   @override
   List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, Goal.schema, Metric.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();

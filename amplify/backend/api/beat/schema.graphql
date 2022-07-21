@@ -2,7 +2,7 @@ enum CategoryTypes {
   FITNESS
   FUEL
   PRODUCTIVITY
-  NETWORK
+  SOCIAL
   REST
 }
 
@@ -24,6 +24,7 @@ type Goal @model @auth(rules: [{allow: public}]) {
   goalPercentage: Float
   userID: ID! @index(name: "byUser")
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
+  goalOfUser: User @belongsTo
 }
 
 type Activity @model @auth(rules: [{allow: public}]) {
@@ -34,6 +35,7 @@ type Activity @model @auth(rules: [{allow: public}]) {
   activityDuration: DurationBeat!
   goalID: ID! @index(name: "byGoal")
   activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
+  activityOfGoal: Goal @belongsTo
 }
 
 type Metric @model @auth(rules: [{allow: public}]) {

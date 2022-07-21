@@ -35,6 +35,7 @@ class Activity extends Model {
   final DurationBeat? _activityDuration;
   final String? _goalID;
   final List<ActivityMetric>? _activityMetrics;
+  final Goal? _activityOfGoal;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -115,6 +116,10 @@ class Activity extends Model {
     return _activityMetrics;
   }
 
+  Goal? get activityOfGoal {
+    return _activityOfGoal;
+  }
+
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -131,6 +136,7 @@ class Activity extends Model {
       required activityDuration,
       required goalID,
       activityMetrics,
+      activityOfGoal,
       createdAt,
       updatedAt})
       : _activityStart = activityStart,
@@ -139,6 +145,7 @@ class Activity extends Model {
         _activityDuration = activityDuration,
         _goalID = goalID,
         _activityMetrics = activityMetrics,
+        _activityOfGoal = activityOfGoal,
         _createdAt = createdAt,
         _updatedAt = updatedAt;
 
@@ -149,7 +156,8 @@ class Activity extends Model {
       required CategoryTypes activtyCategory,
       required DurationBeat activityDuration,
       required String goalID,
-      List<ActivityMetric>? activityMetrics}) {
+      List<ActivityMetric>? activityMetrics,
+      Goal? activityOfGoal}) {
     return Activity._internal(
         id: id == null ? UUID.getUUID() : id,
         activityStart: activityStart,
@@ -159,7 +167,8 @@ class Activity extends Model {
         goalID: goalID,
         activityMetrics: activityMetrics != null
             ? List<ActivityMetric>.unmodifiable(activityMetrics)
-            : activityMetrics);
+            : activityMetrics,
+        activityOfGoal: activityOfGoal);
   }
 
   bool equals(Object other) {
@@ -177,7 +186,8 @@ class Activity extends Model {
         _activityDuration == other._activityDuration &&
         _goalID == other._goalID &&
         DeepCollectionEquality()
-            .equals(_activityMetrics, other._activityMetrics);
+            .equals(_activityMetrics, other._activityMetrics) &&
+        _activityOfGoal == other._activityOfGoal;
   }
 
   @override
@@ -202,6 +212,9 @@ class Activity extends Model {
         (_activityDuration != null ? _activityDuration!.toString() : "null") +
         ", ");
     buffer.write("goalID=" + "$_goalID" + ", ");
+    buffer.write("activityOfGoal=" +
+        (_activityOfGoal != null ? _activityOfGoal!.toString() : "null") +
+        ", ");
     buffer.write("createdAt=" +
         (_createdAt != null ? _createdAt!.format() : "null") +
         ", ");
@@ -219,7 +232,8 @@ class Activity extends Model {
       CategoryTypes? activtyCategory,
       DurationBeat? activityDuration,
       String? goalID,
-      List<ActivityMetric>? activityMetrics}) {
+      List<ActivityMetric>? activityMetrics,
+      Goal? activityOfGoal}) {
     return Activity._internal(
         id: id ?? this.id,
         activityStart: activityStart ?? this.activityStart,
@@ -227,7 +241,8 @@ class Activity extends Model {
         activtyCategory: activtyCategory ?? this.activtyCategory,
         activityDuration: activityDuration ?? this.activityDuration,
         goalID: goalID ?? this.goalID,
-        activityMetrics: activityMetrics ?? this.activityMetrics);
+        activityMetrics: activityMetrics ?? this.activityMetrics,
+        activityOfGoal: activityOfGoal ?? this.activityOfGoal);
   }
 
   Activity.fromJson(Map<String, dynamic> json)
@@ -252,6 +267,10 @@ class Activity extends Model {
                     new Map<String, dynamic>.from(e['serializedData'])))
                 .toList()
             : null,
+        _activityOfGoal = json['activityOfGoal']?['serializedData'] != null
+            ? Goal.fromJson(new Map<String, dynamic>.from(
+                json['activityOfGoal']['serializedData']))
+            : null,
         _createdAt = json['createdAt'] != null
             ? TemporalDateTime.fromString(json['createdAt'])
             : null,
@@ -268,6 +287,7 @@ class Activity extends Model {
         'goalID': _goalID,
         'activityMetrics':
             _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(),
+        'activityOfGoal': _activityOfGoal?.toJson(),
         'createdAt': _createdAt?.format(),
         'updatedAt': _updatedAt?.format()
       };
@@ -285,6 +305,10 @@ class Activity extends Model {
       fieldName: "activityMetrics",
       fieldType: ModelFieldType(ModelFieldTypeEnum.model,
           ofModelName: (ActivityMetric).toString()));
+  static final QueryField ACTIVITYOFGOAL = QueryField(
+      fieldName: "activityOfGoal",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (Goal).toString()));
   static var schema =
       Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Activity";
@@ -332,6 +356,12 @@ class Activity extends Model {
         isRequired: false,
         ofModelName: (ActivityMetric).toString(),
         associatedKey: ActivityMetric.ACTIVITY));
+
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+        key: Activity.ACTIVITYOFGOAL,
+        isRequired: false,
+        targetName: "goalGoalActivitiesId",
+        ofModelName: (Goal).toString()));
 
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
         fieldName: 'createdAt',

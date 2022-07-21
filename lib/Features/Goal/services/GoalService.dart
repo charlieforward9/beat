@@ -6,9 +6,9 @@ import '../repository/GoalRepository.dart';
 class GoalService {
   GoalRepository goalRepository = GoalRepository();
 
-  void createGoal(
-      CategoryTypes category, String userId, int hours, int minutes) {
-    goalRepository.newGoalRecord(category, userId, hours, minutes);
+  void createGoal(CategoryTypes category, String userId, int hours, int minutes,
+      int seconds) {
+    goalRepository.newGoalRecord(category, userId, hours, minutes, seconds);
   }
 
   Future<Goal> getGoalRecord(
@@ -67,5 +67,10 @@ class GoalService {
   Future<void> updateGoalDuration(CategoryTypes category, String userId,
       DateTime date, DurationBeat duration) {
     return goalRepository.updateDuration(category, userId, date, duration);
+  }
+
+  Future<void> updateGoalDurationOnGoalId(
+      String goalId, DurationBeat duration) {
+    return goalRepository.updateDurationOnGoalId(goalId, duration);
   }
 }
