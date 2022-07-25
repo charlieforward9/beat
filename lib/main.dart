@@ -4,6 +4,7 @@
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
+import 'package:beat/Features/User/services/UserService.dart';
 import 'amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
@@ -26,11 +27,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedPage = 0;
+  late UserService userService;
+  String userEmail = "charlesrichardsonusa@gmail.com";
 
   @override
   void initState() {
     super.initState();
     _configureAmplify();
+    //Delay incuded to prevent error pertaining to configuring not being finished when UserService is called
+    //User instance saved to <global.currentUser> import file for easy reference
+    Future.delayed(
+      Duration(seconds: 2),
+      () => UserService(userEmail),
+    );
   }
 
   //Pages in the navBar, in order of display from left to right

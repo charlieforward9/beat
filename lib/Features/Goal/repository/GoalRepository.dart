@@ -1,55 +1,87 @@
-import 'dart:convert';
-
+import 'dart:developer';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/models/ModelProvider.dart';
 
 class GoalRepository {
-  DateTime now = DateTime.now();
-  Duration durationclass = Duration();
+  //Helper Variables
+  final TemporalDateTime _today = TemporalDateTime(
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
 
-  Future<void> newGoalRecord(
-      CategoryTypes category, String userId, int _hours, int _minutes) async {
-    final newGoal = Goal(
-        goalStart: TemporalDateTime(DateTime(now.year, now.month, now.day)),
-        goalEnd: TemporalDateTime(DateTime(now.year, now.month, now.day)),
+  //Helper Functions
+  Future<bool> _previousGoalExists(String userID, CategoryTypes cat) async {
+    final goalList = await Amplify.DataStore.query(Goal.classType,
+        where: Goal.USERID.eq(userID).and(Goal.GOALCATEGORY.eq(cat)));
+    return goalList.isNotEmpty;
+  }
+
+
+  //INSERTION
+  Future<void> createGoal(String userID, CategoryTypes category,
+      DurationBeat targetDuration) async {
+    final Goal goal = Goal(
+        userID: userID,
         goalCategory: category,
+        goalTargetDuration: targetDuration,
         goalCurrentDuration: DurationBeat(
             durationHours: 0, durationMinutes: 0, durationSeconds: 0),
-        goalTargetDuration:
-            DurationBeat(durationHours: _hours, durationMinutes: 0),
         goalPercentage: 0,
-        userID: userId);
-    await Amplify.DataStore.save(newGoal);
+        goalStart: _today,
+        goalEnd: null); //Null when the goal is current.
+    await Amplify.DataStore.save(goal);
   }
-  // TODO: Create new goal every day from previous goal, unless goal is modified.
 
-  Future<Goal> getGoal(
-      CategoryTypes category, String userId, DateTime now) async {
+  //Sets the goalEnd attribute to current day. If the goal doesnt exist, does nothing.
+  Future<void> endGoal(String userID, CategoryTypes category) async {
+    if (await _previousGoalExists(userID, category)) {
+      Goal currGoal = (await getLatestGoal(category, userID));
+      await Amplify.DataStore.save(currGoal.copyWith(goalEnd: _today));
+    } else {
+      log("Cannot end a goal that does not exist, try creating a goal first");
+    }
+  }
+
+  //DELETION (LOST USER)
+  Future<void> deleteGoal(Goal goal) async {
+    await Amplify.DataStore.delete(goal);
+  }
+
+
+  //SEARCHING
+  //Getting the latest goal respective to the category.
+  Future<Goal> getLatestGoal(CategoryTypes category, String userId) async {
+    //Check if a record exist
     final record = await Amplify.DataStore.query(Goal.classType,
         where: Goal.USERID
             .eq(userId)
             .and(Goal.GOALCATEGORY.eq(category))
-            .and(Goal.GOALSTART.lt(TemporalDateTime(now))));
+            .and(Goal.GOALEND.eq(null)),
+        sortBy: [Goal.GOALEND.ascending()]);
     return record.first;
   }
 
-  Future<void> updateDuration(CategoryTypes category, String userId,
-      DateTime now, DurationBeat duration) async {
-    Goal oldRecord = await getGoal(category, userId, now);
-    DurationBeat targetBeat = oldRecord.goalTargetDuration;
-    Duration target = Duration(
-        hours: targetBeat.durationHours!,
-        minutes: targetBeat.durationMinutes!,
-        seconds: targetBeat.durationSeconds!);
-    Duration current = Duration(
-        hours: duration.durationHours!,
-        minutes: duration.durationMinutes!,
-        seconds: duration.durationSeconds!);
-    final newRecordPercenatge = oldRecord.copyWith(
-      id: oldRecord.id,
-      goalCurrentDuration: duration,
-      goalPercentage: (current.inSeconds * 100) / target.inSeconds,
-    );
-    await Amplify.DataStore.save(newRecordPercenatge);
+  //Finds the goal whos start-end range hold the datetime 
+  Future<Goal> getGoalFromDate(
+      CategoryTypes category, String userID, TemporalDateTime? datetime) async {
+    late final Goal goal;
+    if (datetime != null) {
+      final goalList = await Amplify.DataStore.query(Goal.classType,
+          where: Goal.USERID.eq(userID).and(Goal.GOALCATEGORY
+              .eq(category)
+              .and(Goal.GOALSTART.le(datetime).and(Goal.GOALEND.ge(datetime)))),
+          sortBy: [Goal.GOALEND.ascending()]);
+      goal = goalList.first;
+      ;
+    } else {
+      goal = await getLatestGoal(category, userID);
+    }
+    return goal;
+  }
+
+  //TODO User should have goals upon finishing sign up process. No need for null check
+  Future<List<Goal>?> getAllUserGoals(String userID) async {
+    final List<Goal> allUserGoals = await Amplify.DataStore.query(
+        Goal.classType,
+        where: Goal.USERID.eq(userID));
+    return allUserGoals.isEmpty ? null : allUserGoals;
   }
 }
