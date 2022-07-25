@@ -12,47 +12,39 @@ class ActivityRepository {
       activityEnd: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
       activtyCategory: _category, // 'Fitness',
       activityDuration: DurationBeat(
-          durationHours: 0,
-          durationMinutes: 0,
-          durationSeconds: 0), //DurationBeat(durationHours: 2),
+          durationHours: _hours,
+          durationMinutes: _minutes,
+          durationSeconds: _seconds), //DurationBeat(durationHours: 2),
       goalID: _goalId,
     );
     await Amplify.DataStore.save(newActivity);
     // TODO: Activities Stored in AmplifyDataStore not in Activity ??? Maybe ok.
   }
 
-  Future<Activity> getActivityRecordById(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
+  Future<Activity> getActivityRecordById(String _activityId) async {
     final activityRecord = await Amplify.DataStore.query(
       Activity.classType,
-      where: Activity.ID
-          .eq(_goalId)
-          .and(Activity.ACTIVTYCATEGORY.eq(_category))
-          .and(Activity.ACTIVITYSTART.lt(now))
-          .and(Activity.ACTIVITYSTART.gt(now)),
+      where: Activity.ID.eq(_activityId),
     );
     return activityRecord.first;
     // call and return index 0 [0]
   }
 
   Future<void> updateActivityCategory(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    // TODO: this may return the oldest element if you have more than one element
-    Activity oldActivity =
-        (await getActivityRecordById(_category, _goalId, _now));
+      CategoryTypes _newCategory, String _activityId) async {
+    Activity oldActivity = (await getActivityRecordById(_activityId));
     final newActivity =
-        oldActivity.copyWith(id: oldActivity.id, activtyCategory: _category);
+        oldActivity.copyWith(id: oldActivity.id, activtyCategory: _newCategory);
     await Amplify.DataStore.save(newActivity);
   }
 
-  Future<void> updateActivityDuration(CategoryTypes _category, String _goalId,
-      DateTime _now, DurationBeat _duration) async {
-    Activity oldActivity =
-        (await getActivityRecordById(_category, _goalId, _now));
+  Future<void> updateActivityDuration(
+      String _activityId, DurationBeat _newDuration) async {
+    Activity oldActivity = (await getActivityRecordById(_activityId));
     final newActivity = oldActivity.copyWith(
         id: oldActivity.id,
-        activtyCategory: _category,
-        activityDuration: _duration);
+        activtyCategory: oldActivity.activtyCategory,
+        activityDuration: _newDuration);
     await Amplify.DataStore.save(newActivity);
   }
 }

@@ -12,55 +12,47 @@ class ActivityService {
         _category, _goalId, _hours, _minutes, _seconds);
   }
 
-  Future<Activity> getActivityRecord(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    return activityRepository.getActivityRecordById(_category, _goalId, _now);
+  Future<Activity> getActivityRecord(String _activityMetric) async {
+    return activityRepository.getActivityRecordById(_activityMetric);
   }
 
   Future<void> updateActivityCategory(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    return activityRepository.updateActivityCategory(_category, _goalId, _now);
+      CategoryTypes _newCategory, String _activityId) async {
+    return activityRepository.updateActivityCategory(_newCategory, _activityId);
   }
 
-  Future<void> updateActivityDuration(CategoryTypes _category, String _goalId,
-      DateTime _now, DurationBeat _duration) async {
-    return activityRepository.updateActivityDuration(
-        _category, _goalId, _now, _duration);
+  Future<void> updateActivityDuration(
+      String _activityId, DurationBeat _newDuration) async {
+    return activityRepository.updateActivityDuration(_activityId, _newDuration);
   }
 
-  Future<TemporalDateTime> getActivityStart(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<TemporalDateTime> getActivityStart(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.activityStart;
   }
 
-  Future<TemporalDateTime> getActivityEnd(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<TemporalDateTime> getActivityEnd(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.activityEnd;
   }
 
-  Future<CategoryTypes> getActivityCategory(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<CategoryTypes> getActivityCategory(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.activtyCategory;
   }
 
-  Future<DurationBeat> getActivityDuration(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<DurationBeat> getActivityDuration(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.activityDuration;
   }
 
-  Future<String> getGoalId(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<String> getGoalId(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.goalID;
   }
 
-  Future<String> getActivityId(
-      CategoryTypes _category, String _goalId, DateTime _now) async {
-    Activity record = await getActivityRecord(_category, _goalId, _now);
+  Future<String> getActivityId(String _activityId) async {
+    Activity record = await getActivityRecord(_activityId);
     return record.id;
   }
 }
