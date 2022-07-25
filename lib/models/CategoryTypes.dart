@@ -23,6 +23,6 @@ enum CategoryTypes {
   FITNESS,
   FUEL,
   PRODUCTIVITY,
-  NETWORK,
+  SOCIAL,
   REST
 }

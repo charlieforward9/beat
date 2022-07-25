@@ -1,3 +1,4 @@
+//ignore_errors
 import 'package:beat/Features/User/services/UserService.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,6 @@ import '../Features/Activity/services/ActivityService.dart';
 // sleep
 import 'dart:io';
 
-enum categories {
-  FITNESS,
-  FUEL,
-  PRODUCTIVITY,
-  NETWORK,
-  REST,
-}
-
 class GoalCard extends StatefulWidget {
   final String cardName;
   final String cardGoal;
@@ -40,7 +33,7 @@ class GoalCard extends StatefulWidget {
   // NetworkService networkService = NetworkService();
   // ProductivityService productivityService = ProductivityService();
   GoalService goalService = GoalService();
-  UserService userService = UserService();
+  UserService userService = UserService("charlesrichardsonusa@gmail.com");
   ActivityService activityService = ActivityService();
   //*************** ID FOR TESTING *************** */
   final fitnessID = "c6a235e6-a42f-49f7-b9d2-0656c91d0880";
@@ -91,7 +84,7 @@ class _GoalCardState extends State<GoalCard> {
                     //getGoalIDTester();
                     createActivity();
 
-                    // // ========= EXAMPLE ===========R
+                    // ========= EXAMPLE ===========
                     // if (widget.cardName == "Recovery") {
                     //   widget.recoveryService
                     //       .getRecordById(widget.recoveryID)
@@ -215,8 +208,8 @@ class _GoalCardState extends State<GoalCard> {
     int hours = 10, minutes = 10;
     String userId = await widget.userService.getUserId("cameron@keenefl.com");
 
-    widget.goalService
-        .createGoal(CategoryTypes.FITNESS, userId, hours, minutes);
+    //widget.goalService
+    //    .createGoal(CategoryTypes.FITNESS, userId, hours, minutes);
   }
 
   void createActivity() async {
@@ -229,8 +222,8 @@ class _GoalCardState extends State<GoalCard> {
     // link activity to goal
     DurationBeat _duration =
         DurationBeat(durationHours: 4, durationMinutes: 0, durationSeconds: 0);
-    widget.goalService
-        .updateGoalDuration(CategoryTypes.FITNESS, userID, date, _duration);
+    widget.goalService.setNewGoal(userID, CategoryTypes.FITNESS, _duration);
+        
     // update the goal percentage
   }
 
