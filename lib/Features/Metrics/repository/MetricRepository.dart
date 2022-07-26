@@ -7,7 +7,7 @@ class MetricRepository {
   Future<void> newMetric(String _location, int _heartRate) async {
     final newMetric = Metric(
         metricTimestamp: TemporalDateTime(
-            DateTime(now.year, now.month, now.day, 23, 59, 59, 59)),
+            DateTime(now.year, now.month, now.day, now.day, now.minute, now.second)),
         metricLocation: _location,
         metricHeartRate: _heartRate);
     await Amplify.DataStore.save(newMetric);
