@@ -32,18 +32,19 @@ type Goal @model @auth(rules: [{allow: public}]) {
   #Time which activity contrubutions begin for the day (12AM for most) (Minus sleep, potentially need custom schema for sleep)
   goalStart: AWSDateTime!
   #Time which activity contrubutions begin for the day (11:59PM for most)
-  goalEnd: AWSDateTime!
-  #(TODO enum?): fitness, productivity, fuel, social, rest
-  goalCategory: String!
+  goalEnd: AWSDateTime
+  #Enumeration
+  goalCategory: CategoryTypes!
   #Summation of respective Activity.activityDuration (TODO may be better as a service) 
   goalCurrentDuration: Duration!
   #User defined daily target for the respective category
   goalTargetDuration: Duration!
   #CurrentDuration divided by TargetDuration == (Rethought for non-duration categories, maybe make custom datatypes based on category
   goalPercentage: Float
-  
   #Activity instances belonging to the day and category goal
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
+  #Bi-directionally enabling relationship attribute
+  goalOfUser: User @belongsTo
 }
 ```
 
@@ -59,13 +60,14 @@ type Activity @model @auth(rules: [{allow: public}]) {
   activityStart: AWSDateTime!
   #timestamp indicating end of activity
   activityEnd: AWSDateTime!
-  #(TODO enum?): fitness, productivity, fuel, social, rest
-  activityCategory: String!
+  #Enumeration value
+  activityCategory: CategoryTypes!
   #elapsed time of activity (assuming no small breaks in between, yet)
   activityDuration: Duration
-  
   #Metric instances belonging to the activity
   activityMetrics: [Metric] @manyToMany(relationName: "MetricActivity")
+  #Bi-directionally enabling relationship attribute
+  activityOfGoal: Goal @belongsTo
 }
 
 ```
@@ -97,5 +99,13 @@ type Duration {
   durationSeconds: Int
   durationMinutes: Int
   durationHours: Int
+}
+
+enum CategoryTypes {
+  FITNESS
+  FUEL
+  PRODUCTIVITY
+  SOCIAL
+  REST
 }
 ```
