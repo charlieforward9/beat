@@ -45,7 +45,6 @@ class HomePage extends StatelessWidget {
             fourthRingProgress: goal5P),
 
         //TODO: Order by percentDone aescending, when at 100, push to bottom
-        //TODO: Fix these colors (dillan)
         Padding(padding: EdgeInsets.symmetric(vertical: 10)),
         HomeProgressCard(
           goalTitle: goal1,

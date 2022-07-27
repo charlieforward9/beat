@@ -4,7 +4,7 @@
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
-import 'package:beat/Features/User/services/UserService.dart';
+import 'package:beat/data/User/services/UserService.dart';
 import 'amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
