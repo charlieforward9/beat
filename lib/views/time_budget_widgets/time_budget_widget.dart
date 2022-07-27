@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../Features/Goal/services/GoalService.dart';
+import '../../data/Goal/services/GoalService.dart';
+//import '../../data/Activity/services/ActivityServiceTest.dart';
+//^ I moved the test functions to this path
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -48,7 +50,8 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
+                    //TODO
+                    //String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
                     //createGoal();
                     //getGoalIDTester();
                     //await createActivity();
