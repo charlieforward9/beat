@@ -32,12 +32,13 @@ class Goal extends Model {
   final String id;
   final TemporalDateTime? _goalStart;
   final TemporalDateTime? _goalEnd;
-  final String? _goalCategory;
+  final CategoryTypes? _goalCategory;
   final DurationBeat? _goalCurrentDuration;
   final DurationBeat? _goalTargetDuration;
   final double? _goalPercentage;
   final String? _userID;
   final List<Activity>? _goalActivities;
+  final User? _goalOfUser;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -62,20 +63,11 @@ class Goal extends Model {
     }
   }
   
-  TemporalDateTime get goalEnd {
-    try {
-      return _goalEnd!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  TemporalDateTime? get goalEnd {
+    return _goalEnd;
   }
   
-  String get goalCategory {
+  CategoryTypes get goalCategory {
     try {
       return _goalCategory!;
     } catch(e) {
@@ -135,6 +127,10 @@ class Goal extends Model {
     return _goalActivities;
   }
   
+  User? get goalOfUser {
+    return _goalOfUser;
+  }
+  
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -143,9 +139,9 @@ class Goal extends Model {
     return _updatedAt;
   }
   
-  const Goal._internal({required this.id, required goalStart, required goalEnd, required goalCategory, required goalCurrentDuration, required goalTargetDuration, goalPercentage, required userID, goalActivities, createdAt, updatedAt}): _goalStart = goalStart, _goalEnd = goalEnd, _goalCategory = goalCategory, _goalCurrentDuration = goalCurrentDuration, _goalTargetDuration = goalTargetDuration, _goalPercentage = goalPercentage, _userID = userID, _goalActivities = goalActivities, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Goal._internal({required this.id, required goalStart, goalEnd, required goalCategory, required goalCurrentDuration, required goalTargetDuration, goalPercentage, required userID, goalActivities, goalOfUser, createdAt, updatedAt}): _goalStart = goalStart, _goalEnd = goalEnd, _goalCategory = goalCategory, _goalCurrentDuration = goalCurrentDuration, _goalTargetDuration = goalTargetDuration, _goalPercentage = goalPercentage, _userID = userID, _goalActivities = goalActivities, _goalOfUser = goalOfUser, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Goal({String? id, required TemporalDateTime goalStart, required TemporalDateTime goalEnd, required String goalCategory, required DurationBeat goalCurrentDuration, required DurationBeat goalTargetDuration, double? goalPercentage, required String userID, List<Activity>? goalActivities}) {
+  factory Goal({String? id, required TemporalDateTime goalStart, TemporalDateTime? goalEnd, required CategoryTypes goalCategory, required DurationBeat goalCurrentDuration, required DurationBeat goalTargetDuration, double? goalPercentage, required String userID, List<Activity>? goalActivities, User? goalOfUser}) {
     return Goal._internal(
       id: id == null ? UUID.getUUID() : id,
       goalStart: goalStart,
@@ -155,7 +151,8 @@ class Goal extends Model {
       goalTargetDuration: goalTargetDuration,
       goalPercentage: goalPercentage,
       userID: userID,
-      goalActivities: goalActivities != null ? List<Activity>.unmodifiable(goalActivities) : goalActivities);
+      goalActivities: goalActivities != null ? List<Activity>.unmodifiable(goalActivities) : goalActivities,
+      goalOfUser: goalOfUser);
   }
   
   bool equals(Object other) {
@@ -174,7 +171,8 @@ class Goal extends Model {
       _goalTargetDuration == other._goalTargetDuration &&
       _goalPercentage == other._goalPercentage &&
       _userID == other._userID &&
-      DeepCollectionEquality().equals(_goalActivities, other._goalActivities);
+      DeepCollectionEquality().equals(_goalActivities, other._goalActivities) &&
+      _goalOfUser == other._goalOfUser;
   }
   
   @override
@@ -188,11 +186,12 @@ class Goal extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("goalStart=" + (_goalStart != null ? _goalStart!.format() : "null") + ", ");
     buffer.write("goalEnd=" + (_goalEnd != null ? _goalEnd!.format() : "null") + ", ");
-    buffer.write("goalCategory=" + "$_goalCategory" + ", ");
+    buffer.write("goalCategory=" + (_goalCategory != null ? enumToString(_goalCategory)! : "null") + ", ");
     buffer.write("goalCurrentDuration=" + (_goalCurrentDuration != null ? _goalCurrentDuration!.toString() : "null") + ", ");
     buffer.write("goalTargetDuration=" + (_goalTargetDuration != null ? _goalTargetDuration!.toString() : "null") + ", ");
     buffer.write("goalPercentage=" + (_goalPercentage != null ? _goalPercentage!.toString() : "null") + ", ");
     buffer.write("userID=" + "$_userID" + ", ");
+    buffer.write("goalOfUser=" + (_goalOfUser != null ? _goalOfUser!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -200,7 +199,7 @@ class Goal extends Model {
     return buffer.toString();
   }
   
-  Goal copyWith({String? id, TemporalDateTime? goalStart, TemporalDateTime? goalEnd, String? goalCategory, DurationBeat? goalCurrentDuration, DurationBeat? goalTargetDuration, double? goalPercentage, String? userID, List<Activity>? goalActivities}) {
+  Goal copyWith({String? id, TemporalDateTime? goalStart, TemporalDateTime? goalEnd, CategoryTypes? goalCategory, DurationBeat? goalCurrentDuration, DurationBeat? goalTargetDuration, double? goalPercentage, String? userID, List<Activity>? goalActivities, User? goalOfUser}) {
     return Goal._internal(
       id: id ?? this.id,
       goalStart: goalStart ?? this.goalStart,
@@ -210,14 +209,15 @@ class Goal extends Model {
       goalTargetDuration: goalTargetDuration ?? this.goalTargetDuration,
       goalPercentage: goalPercentage ?? this.goalPercentage,
       userID: userID ?? this.userID,
-      goalActivities: goalActivities ?? this.goalActivities);
+      goalActivities: goalActivities ?? this.goalActivities,
+      goalOfUser: goalOfUser ?? this.goalOfUser);
   }
   
   Goal.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _goalStart = json['goalStart'] != null ? TemporalDateTime.fromString(json['goalStart']) : null,
       _goalEnd = json['goalEnd'] != null ? TemporalDateTime.fromString(json['goalEnd']) : null,
-      _goalCategory = json['goalCategory'],
+      _goalCategory = enumFromString<CategoryTypes>(json['goalCategory'], CategoryTypes.values),
       _goalCurrentDuration = json['goalCurrentDuration']?['serializedData'] != null
         ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['goalCurrentDuration']['serializedData']))
         : null,
@@ -232,11 +232,14 @@ class Goal extends Model {
           .map((e) => Activity.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
+      _goalOfUser = json['goalOfUser']?['serializedData'] != null
+        ? User.fromJson(new Map<String, dynamic>.from(json['goalOfUser']['serializedData']))
+        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': _goalCategory, 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': enumToString(_goalCategory), 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'goalOfUser': _goalOfUser?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "goal.id");
@@ -250,6 +253,9 @@ class Goal extends Model {
   static final QueryField GOALACTIVITIES = QueryField(
     fieldName: "goalActivities",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Activity).toString()));
+  static final QueryField GOALOFUSER = QueryField(
+    fieldName: "goalOfUser",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Goal";
     modelSchemaDefinition.pluralName = "Goals";
@@ -275,14 +281,14 @@ class Goal extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Goal.GOALEND,
-      isRequired: true,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Goal.GOALCATEGORY,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.embedded(
@@ -314,6 +320,13 @@ class Goal extends Model {
       isRequired: false,
       ofModelName: (Activity).toString(),
       associatedKey: Activity.GOALID
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: Goal.GOALOFUSER,
+      isRequired: false,
+      targetName: "userUserGoalsId",
+      ofModelName: (User).toString()
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
