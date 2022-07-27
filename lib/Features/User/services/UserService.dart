@@ -11,6 +11,8 @@ class UserService {
     getUser(email)
         .then((user) => {
               global.currentUser = user,
+              log("This log is being made from the UserService file. It returns the current user that is specified by email in the main.dart initialization function. \n\nThis user entity is accessable by global.currentUser",
+                  name: "Notice"),
               log(global.currentUser.toString(),
                   name: "Current User Signed In on Init")
             })
