@@ -28,8 +28,7 @@ class _WeeklyLogState extends State<WeeklyLog> {
       padding: EdgeInsets.zero,
       //TODO: Program for multiple weeks to be inserted somewhere around here
       child: FutureBuilder<List<double>>(
-        future: controller
-            .fetchDurationData(), // a previously-obtained Future<String> or null
+        future: controller.pullDurationData(),
         builder: (BuildContext context, AsyncSnapshot<List<double>> snapshot) {
           List<Widget> children;
 

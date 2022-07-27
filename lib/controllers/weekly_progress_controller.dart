@@ -3,7 +3,7 @@
 
 
 //TODO: Fit controller with real data
-Future<List<double>> fetchDurationData() {
+Future<List<double>> pullDurationData() {
   List<double> data = List.filled(growable: false, 5, 0);
 
   //DUMMY DATA
