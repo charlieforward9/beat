@@ -13,7 +13,7 @@ class MetricRepository {
     await Amplify.DataStore.save(newMetric);
   }
 
-  Future<Metric> getMetricById(String userId) async {
+  Future<Metric> fetchMetricById(String userId) async {
     final record = await Amplify.DataStore.query(Metric.classType,
         where: Metric.ID.eq(userId));
     return record.first;

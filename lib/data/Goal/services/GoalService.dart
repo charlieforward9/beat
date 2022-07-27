@@ -24,8 +24,8 @@ class GoalService {
   Future<Goal> getGoal(
       String userID, CategoryTypes category, TemporalDateTime? datetime) {
     return datetime == null
-        ? _goalRepository.getLatestGoal(category, userID)
-        : _goalRepository.getGoalFromDate(category, userID, datetime);
+        ? _goalRepository.fetchLatestGoal(category, userID)
+        : _goalRepository.fetchGoalFromDate(category, userID, datetime);
   }
 
   //Null category type means all categories
@@ -33,7 +33,7 @@ class GoalService {
   //TODO User should have goals once signed. This should never return null when a user account is set up
   Future<List<Goal>?> getAllGoals(
       String userID, CategoryTypes? category) async {
-    List<Goal>? allUserGoals = await _goalRepository.getAllUserGoals(userID);
+    List<Goal>? allUserGoals = await _goalRepository.fetchAllUserGoals(userID);
 
     return category == null
         ? allUserGoals?.toList()
@@ -44,7 +44,7 @@ class GoalService {
 
   //Should only be used when a user deletes their account
   Future<void> deleteAllUserGoals(String userID) async {
-    List<Goal>? allUserGoals = await _goalRepository.getAllUserGoals(userID);
+    List<Goal>? allUserGoals = await _goalRepository.fetchAllUserGoals(userID);
     if (allUserGoals != null) {
       for (Goal goal in allUserGoals) {
         await _goalRepository.deleteGoal(goal);

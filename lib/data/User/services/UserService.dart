@@ -24,7 +24,7 @@ class UserService {
   }
 
   Future<User> getUser(String email) {
-    return userRepository.getUserByEmail(email);
+    return userRepository.fetchUserByEmail(email);
   }
 
   Future<String> getUserName(String email) async {

@@ -8,13 +8,13 @@ class UserRepository {
     await Amplify.DataStore.save(newRecord);
   }
 
-  Future<User> getUserByEmail(String email) async {
+  Future<User> fetchUserByEmail(String email) async {
     return await Amplify.DataStore.query(User.classType,
             where: User.USEREMAIL.eq(email))
         .then((user) => user.first);
     }
 
-  Future<User> getCurrentUser(String id) async {
+  Future<User> fetchCurrentUser(String id) async {
     return Amplify.DataStore.query(User.classType, where: User.ID.eq(id))
         .then((user) => user.first);
   }

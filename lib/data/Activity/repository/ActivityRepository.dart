@@ -21,7 +21,7 @@ class ActivityRepository {
     // TODO: Activities Stored in AmplifyDataStore not in Activity ??? Maybe ok.
   }
 
-  Future<Activity> getActivityRecordById(String _activityId) async {
+  Future<Activity> fetchActivityRecordById(String _activityId) async {
     final activityRecord = await Amplify.DataStore.query(
       Activity.classType,
       where: Activity.ID.eq(_activityId),
@@ -32,7 +32,7 @@ class ActivityRepository {
 
   Future<void> updateActivityCategory(
       CategoryTypes _newCategory, String _activityId) async {
-    Activity oldActivity = (await getActivityRecordById(_activityId));
+    Activity oldActivity = (await fetchActivityRecordById(_activityId));
     final newActivity =
         oldActivity.copyWith(id: oldActivity.id, activtyCategory: _newCategory);
     await Amplify.DataStore.save(newActivity);
@@ -40,7 +40,7 @@ class ActivityRepository {
 
   Future<void> updateActivityDuration(
       String _activityId, DurationBeat _newDuration) async {
-    Activity oldActivity = (await getActivityRecordById(_activityId));
+    Activity oldActivity = (await fetchActivityRecordById(_activityId));
     final newActivity = oldActivity.copyWith(
         id: oldActivity.id,
         activtyCategory: oldActivity.activtyCategory,

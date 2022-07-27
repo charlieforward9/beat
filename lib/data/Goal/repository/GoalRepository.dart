@@ -33,7 +33,7 @@ class GoalRepository {
   //Sets the goalEnd attribute to current day. If the goal doesnt exist, does nothing.
   Future<void> endGoal(String userID, CategoryTypes category) async {
     if (await _previousGoalExists(userID, category)) {
-      Goal currGoal = (await getLatestGoal(category, userID));
+      Goal currGoal = (await fetchLatestGoal(category, userID));
       await Amplify.DataStore.save(currGoal.copyWith(goalEnd: _today));
     } else {
       log("Cannot end a goal that does not exist, try creating a goal first");
@@ -48,7 +48,7 @@ class GoalRepository {
 
   //SEARCHING
   //Getting the latest goal respective to the category.
-  Future<Goal> getLatestGoal(CategoryTypes category, String userId) async {
+  Future<Goal> fetchLatestGoal(CategoryTypes category, String userId) async {
     //Check if a record exist
     final record = await Amplify.DataStore.query(Goal.classType,
         where: Goal.USERID
@@ -60,7 +60,7 @@ class GoalRepository {
   }
 
   //Finds the goal whos start-end range hold the datetime 
-  Future<Goal> getGoalFromDate(
+  Future<Goal> fetchGoalFromDate(
       CategoryTypes category, String userID, TemporalDateTime? datetime) async {
     late final Goal goal;
     if (datetime != null) {
@@ -72,13 +72,13 @@ class GoalRepository {
       goal = goalList.first;
       ;
     } else {
-      goal = await getLatestGoal(category, userID);
+      goal = await fetchLatestGoal(category, userID);
     }
     return goal;
   }
 
   //TODO User should have goals upon finishing sign up process. No need for null check
-  Future<List<Goal>?> getAllUserGoals(String userID) async {
+  Future<List<Goal>?> fetchAllUserGoals(String userID) async {
     final List<Goal> allUserGoals = await Amplify.DataStore.query(
         Goal.classType,
         where: Goal.USERID.eq(userID));

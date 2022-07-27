@@ -13,7 +13,7 @@ class ActivityService {
   }
 
   Future<Activity> getActivityRecord(String _activityMetric) async {
-    return activityRepository.getActivityRecordById(_activityMetric);
+    return activityRepository.fetchActivityRecordById(_activityMetric);
   }
 
   Future<void> updateActivityCategory(
