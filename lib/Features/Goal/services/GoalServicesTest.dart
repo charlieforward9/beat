@@ -22,9 +22,11 @@ class GoalServiceTest extends GoalService {
       Future.delayed(
           Duration(seconds: 2),
           () async => {
-                newGoalConfirmation = await getGoal(testUserID, category, null),
-                dev.log("New goal created ${newGoalConfirmation.toString()}",
-                    time: DateTime.now(), name: 'GoalServiceTest createNewGoal')
+                getGoal(testUserID, category, null).then((value) => {
+                      dev.log("New goal created ${value.toString()}",
+                          time: DateTime.now(),
+                          name: 'GoalServiceTest createNewGoal')
+                    })
               });
     } catch (e) {
       print(e);
@@ -50,20 +52,19 @@ class GoalServiceTest extends GoalService {
   void logAllUserGoals() async {
     testUserID = global.currentUser.id;
 
-    
     getAllGoals(testUserID, null).then((goals) => dev.log(
         "These are the goals ${goals.toString()}",
         name: "GoalServiceTest AllUserGoals"));
-    }
-  
+  }
 
   //Current
   void logOnlyLatestGoals() async {
     testUserID = global.currentUser.id;
 
     for (var cat in _allCategories) {
-      getGoal(testUserID, cat, null)
-          .then((goals) => dev.log("These are the latest goals: $goals",name: "GoalServiceTest LatestUserGoals"));
+      getGoal(testUserID, cat, null).then((goals) => dev.log(
+          "These are the latest goals: $goals",
+          name: "GoalServiceTest LatestUserGoals"));
     }
   }
 
