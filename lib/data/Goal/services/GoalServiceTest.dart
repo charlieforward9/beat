@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
 import 'dart:math';
 
-import 'package:beat/Features/Goal/services/GoalService.dart';
+import '../../../data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 
 import '../../User/services/UserService.dart';

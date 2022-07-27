@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:beat/Features/User/repository/UserRepository.dart';
+import '../../User/repository/UserRepository.dart';
 import '../../../models/ModelProvider.dart';
 import '../../../global.dart' as global;
 
