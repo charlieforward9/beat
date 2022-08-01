@@ -28,6 +28,13 @@ class GoalCard extends StatefulWidget {
 }
 
 class _GoalCardState extends State<GoalCard> {
+ 
+  void _getCurrentLocation() async {
+    LocationService locationService = LocationService();
+    Position position = await locationService.getPosition();
+    position != null ? debugPrint('Current Location: ' + position.toString()) : debugPrint('No Location Data');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,9 +45,7 @@ class _GoalCardState extends State<GoalCard> {
           onTap: () {
             debugPrint('Card tapped - Goal Card.');
             debugPrint('Testing Location');
-            LocationService locationService = LocationService();
-            Future<Position> location = locationService.getPosition();
-            location.then((coordinates) => debugPrint('${coordinates.latitude.toString()}, ${coordinates.longitude.toString()}'));
+            _getCurrentLocation();
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 15,

@@ -57,7 +57,9 @@ class LocationService{
       When the time limit is passed a TimeOutException will be thrown and the call will
       be cancelled. By default no limit is configured.
     */
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(
+      forceAndroidLocationManager: true,
+      desiredAccuracy: LocationAccuracy.high);
   }
 
   Future<Position?> getLastPosition() async {
