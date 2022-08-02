@@ -15,3 +15,17 @@ Refer to the information below to correctly clone the repository and contribute 
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
 [Flutter documentation](https://flutter.dev/docs) offers tutorials, samples, guidance on mobile development, and a full API reference.
+
+
+## Categories
+- CategoryTypes.FITNESS
+- CategoryTypes.FUEL
+- CategoryTypes.PRODUCTIVITY
+- CategoryTypes.SOCIAL
+- CategoryTypes.REST
+
+## DurationBeat
+- durationSeconds - Int
+- durationMinutes - Int
+- durationHours - Int
+- DurationBeat temp = DurationBeat(durationHours: 3, durationMinutes: 3, durationSeconds: 3);

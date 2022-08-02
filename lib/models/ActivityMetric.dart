@@ -138,7 +138,7 @@ class ActivityMetric extends Model {
     'id': id, 'activity': _activity?.toJson(), 'metric': _metric?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "activityMetric.id");
+  static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField ACTIVITY = QueryField(
     fieldName: "activity",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Activity).toString()));

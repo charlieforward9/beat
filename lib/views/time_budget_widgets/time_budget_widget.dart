@@ -1,9 +1,14 @@
+import 'package:beat/models/CategoryTypes.dart';
+import 'package:beat/models/DurationBeat.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/Goal/services/GoalService.dart';
 //import '../../data/Activity/services/ActivityServiceTest.dart';
 import '../../controllers/time_budget_controller.dart' as controller;
 //^ I moved the test functions to this path
+import '../../data/Goal/services/GoalServiceTest.dart';
+
+import '../../global.dart' as globalTest;
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -12,6 +17,8 @@ class GoalCard extends StatefulWidget {
 
   final TextEditingController updatedGoal = TextEditingController();
   final TextEditingController updatedPercentage = TextEditingController();
+
+  GoalServiceTest goalServiceTest = GoalServiceTest();
 
   GoalService goalService = GoalService();
 
@@ -51,6 +58,12 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
+                    DurationBeat temp = DurationBeat(
+                        durationHours: 3,
+                        durationMinutes: 3,
+                        durationSeconds: 3);
+                    widget.goalServiceTest
+                        .createAndConfirmNewGoal(CategoryTypes.FITNESS, temp);
                     //_percentage, _goal, _metric, _id, _type
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                     //controller.controllerTester(widget.cardName, widget.cardGoal, widget._goal);
@@ -118,6 +131,23 @@ class _GoalCardState extends State<GoalCard> {
           ],
         ),
       );
+
+  String getGoal(_category, _time) {
+    @override
+    String userID = globalTest.currentUser.id;
+    CategoryTypes tmp = CategoryTypes.FITNESS;
+    // Goal tempGoal = await goalService.getGoal(userID, tmp, _time);
+    // goalService.getGoal(userID, tmp, _time).then((value) {
+    //   //print("Goal:");
+    // });
+
+    // need userID, category, dateTime,
+    //print("UserID: $userID");
+    // if (_category == "Fitness") {
+    //   // DurationBeat temp = DurationBeat.now();
+    // }
+    return userID;
+  }
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {

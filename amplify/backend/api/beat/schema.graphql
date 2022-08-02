@@ -11,7 +11,7 @@ type User @model @auth(rules: [{allow: public}]) {
   userEmail: AWSEmail!
   userName: String!
   userPassword: String!
-  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"], relationName: "UserGoals")
+  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Goal @model @auth(rules: [{allow: public}]) {

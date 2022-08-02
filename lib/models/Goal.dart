@@ -242,7 +242,7 @@ class Goal extends Model {
     'id': id, 'goalStart': _goalStart?.format(), 'goalEnd': _goalEnd?.format(), 'goalCategory': enumToString(_goalCategory), 'goalCurrentDuration': _goalCurrentDuration?.toJson(), 'goalTargetDuration': _goalTargetDuration?.toJson(), 'goalPercentage': _goalPercentage, 'userID': _userID, 'goalActivities': _goalActivities?.map((Activity? e) => e?.toJson()).toList(), 'goalOfUser': _goalOfUser?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "goal.id");
+  static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField GOALSTART = QueryField(fieldName: "goalStart");
   static final QueryField GOALEND = QueryField(fieldName: "goalEnd");
   static final QueryField GOALCATEGORY = QueryField(fieldName: "goalCategory");
