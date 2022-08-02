@@ -49,5 +49,15 @@
 	<string>This app needs access to location when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
+	<key>NSBonjourServices</key>
+	<array>	
+   		<string>_dartobservatory._tcp</string>
+	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>I want to get your location Information in background</string>
+	<key>UIBackgroundModes</key>
+	<array>
+    	<string>location</string>
+	</array>
 </dict>
 </plist>
