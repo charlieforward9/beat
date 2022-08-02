@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/Goal/services/GoalService.dart';
 //import '../../data/Activity/services/ActivityServiceTest.dart';
+import '../../controllers/time_budget_controller.dart' as controller;
 //^ I moved the test functions to this path
 
 class GoalCard extends StatefulWidget {
@@ -50,6 +51,9 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
+                    //_percentage, _goal, _metric, _id, _type
+                    //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
+                    //controller.controllerTester(widget.cardName, widget.cardGoal, widget._goal);
                     //TODO
                     //String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
                     //createGoal();
@@ -80,7 +84,7 @@ class _GoalCardState extends State<GoalCard> {
         // TODO: Need to do error handeling for empty feilds.
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Goal Info:"),
+          title: Text("$_type Info:"),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

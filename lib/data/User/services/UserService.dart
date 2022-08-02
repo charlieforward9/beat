@@ -15,6 +15,7 @@ class UserService {
                   name: "Notice"),
               log(global.currentUser.toString(),
                   name: "Current User Signed In on Init")
+                  
             })
         .ignore();
   }
