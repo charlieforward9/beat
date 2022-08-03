@@ -1,6 +1,8 @@
 //export PATH=/Users/crich/Documents/flutter/bin:$PATH
 
 //***********Backend-related Imports***********//
+import 'dart:developer';
+
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
@@ -27,19 +29,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _selectedPage = 0;
-  late UserService userService;
   String userEmail = "charlesrichardsonusa@gmail.com";
 
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    _configureAmplify(userEmail);
     //Delay incuded to prevent error pertaining to configuring not being finished when UserService is called
     //User instance saved to <global.currentUser> import file for easy reference
-    Future.delayed(
-      Duration(seconds: 2),
-      () => UserService(userEmail),
-    );
   }
 
   //Pages in the navBar, in order of display from left to right
@@ -56,39 +53,55 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  //Base build function, all other widgets are built within
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        home: Scaffold(
-          //backgroundColor: Theme.of(context).primaryColor,
-          body: Center(
-            child: _widgetOptions.elementAt(_selectedPage),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month_outlined),
-                label: 'Log',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.edit),
-                label: 'Edit',
-              ),
-            ],
-            currentIndex: _selectedPage,
-            selectedItemColor: Colors.amber[800],
-            onTap: _onNavBarTapped,
-          ),
-        ));
+    return FutureBuilder(
+        future: Amplify.asyncConfig,
+        builder: (BuildContext context, AsyncSnapshot<AmplifyConfig> snapshot) {
+          Widget child;
+          if (snapshot.connectionState == ConnectionState.done) {
+            child = MaterialApp(
+                title: 'BEAT',
+                home: Scaffold(
+                  //backgroundColor: Theme.of(context).primaryColor,
+                  body: Center(
+                    child: _widgetOptions.elementAt(_selectedPage),
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                        label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.calendar_month_outlined),
+                        label: 'Log',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.edit),
+                        label: 'Edit',
+                      ),
+                    ],
+                    currentIndex: _selectedPage,
+                    selectedItemColor: Colors.amber[800],
+                    onTap: _onNavBarTapped,
+                  ),
+                ));
+            return child;
+          } else {
+            return MaterialApp(
+                title: "Not Config",
+                home: Scaffold(
+                  body: Center(child: Text("Amplify Not Config")),
+                ));
+          }
+        });
   }
 }
 
-void _configureAmplify() async {
+//Handles Amplify plugins and sets the currentUser
+void _configureAmplify(userEmail) async {
   final datastorePlugin = AmplifyDataStore(
     modelProvider: ModelProvider.instance,
   );
@@ -97,6 +110,7 @@ void _configureAmplify() async {
   await Amplify.addPlugins([datastorePlugin, api]);
   try {
     await Amplify.configure(amplifyconfig);
+    UserService(userEmail);
   } on AmplifyAlreadyConfiguredException {
     debugPrint(
         'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');

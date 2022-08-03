@@ -7,18 +7,18 @@ class UserService {
   UserRepository userRepository = UserRepository();
   late User currentUser;
 
+  _logUser(user) {
+    log("This log is being made from the UserService file. It returns the current user that is specified by email in the main.dart initialization function. \n\nThis user entity is accessable by global.currentUser \n ${user.toString()}",
+              name: "Notice");
+  }
+
+  //User instance saved to <global.currentUser> import file for simple reference
   UserService(String email) {
-    getUser(email)
-        .then((user) => {
-              global.currentUser = user,
-              log("This log is being made from the UserService file. It returns the current user that is specified by email in the main.dart initialization function. \n\nThis user entity is accessable by global.currentUser",
-                  name: "Notice"),
-              log(global.currentUser.toString(),
-                  name: "Current User Signed In on Init")
-                  
-            })
-        .ignore();
-    //TODO: DELAY HERE
+    //Delay before to ensure amplify is configured
+    getUser(email).then((user) => {
+          global.currentUser = user,
+          _logUser(user)
+        });
   }
 
   void createUser(String email, String name, String password) {
