@@ -79,9 +79,14 @@ class _MyAppState extends State<MyApp> {
                 icon: Icon(Icons.edit),
                 label: 'Edit',
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.map),
+                label: 'Map',
+              )
             ],
             currentIndex: _selectedPage,
             selectedItemColor: Colors.amber[800],
+            unselectedItemColor: Colors.grey,
             onTap: _onNavBarTapped,
           ),
         ));
