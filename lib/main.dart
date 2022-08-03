@@ -5,6 +5,7 @@ import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:beat/data/User/services/UserService.dart';
+import 'package:beat/views/map_view.dart';
 import 'amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),
+    MapPage(),
   ];
 
   void _onNavBarTapped(int index) {
