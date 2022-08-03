@@ -12,7 +12,7 @@ class GoalServiceTest extends GoalService {
   late String testUserID;
   final List<CategoryTypes> _allCategories = CategoryTypes.values;
 
-  void _createAndConfirmNewGoal(
+  void createAndConfirmNewGoal(
       CategoryTypes category, DurationBeat newTargetDuration) async {
     Goal newGoalConfirmation;
     String testUserID = global.currentUser.id;
@@ -45,7 +45,7 @@ class GoalServiceTest extends GoalService {
           durationHours: randHour,
           durationMinutes: randMinute,
           durationSeconds: 0);
-      _createAndConfirmNewGoal(cat, target);
+      createAndConfirmNewGoal(cat, target);
     }
   }
 
@@ -60,8 +60,10 @@ class GoalServiceTest extends GoalService {
   //Current
   void logOnlyLatestGoals() async {
     testUserID = global.currentUser.id;
-
+    
+    // get latest goal in each category
     for (var cat in _allCategories) {
+      // when the timestamp is null, the latest goal is pulled
       getGoal(testUserID, cat, null).then((goals) => dev.log(
           "These are the latest goals: $goals",
           name: "GoalServiceTest LatestUserGoals"));
