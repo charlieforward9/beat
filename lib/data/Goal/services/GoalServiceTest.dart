@@ -68,5 +68,26 @@ class GoalServiceTest extends GoalService {
     }
   }
 
-  //TODO: WHY IS goalOfUser giving issues??????
+  Future<List<Goal>> futureLatestGoals() async {
+    testUserID = global.currentUser.id;
+    List<Future<Goal>> latestGoals = [];
+
+    for (var cat in _allCategories) {
+      latestGoals.add(getGoal(testUserID, cat, null));
+    }
+
+    return Future.wait(latestGoals);
+  }
+
+  Future<Goal> latestFitnessGoal() async {
+    var data = Future.delayed(
+        Duration(seconds: 2),
+        () => {
+              getGoal(global.currentUser.id, CategoryTypes.FITNESS, null),
+            });
+
+    return data.then((value) => value.elementAt(0));
+  }
+
+  //TODO: WHY IS goalOfUser giving issues when set and no issues when null??????
 }

@@ -42,19 +42,19 @@ void _updatedSpecificGoal(_cardName, _goal, _progress) async {
 //   print("Progress: $_progress");
 // }
 
-Future<String> getGoal(_category, _time) async {
-  @override
-  String userID = globalTest.currentUser.id;
-  CategoryTypes tmp = CategoryTypes.FITNESS;
-  Goal tempGoal = await goalService.getGoal(userID, tmp, _time);
-  // goalService.getGoal(userID, tmp, _time).then((value) {
-  //   //print("Goal:");
-  // });
+// String getGoal(_category, _time) async {
+//   @override
+//   String userID = globalTest.currentUser.id;
+//   CategoryTypes tmp = CategoryTypes.FITNESS;
+//   Future<Goal> tempGoal = goalService.getGoal(userID, tmp, _time);
+//   // goalService.getGoal(userID, tmp, _time).then((value) {
+//   //   //print("Goal:");
+//   // });
 
-  // need userID, category, dateTime,
-  //print("UserID: $userID");
-  // if (_category == "Fitness") {
-  //   // DurationBeat temp = DurationBeat.now();
-  // }
-  return tempGoal.id;
-}
+//   // need userID, category, dateTime,
+//   //print("UserID: $userID");
+//   // if (_category == "Fitness") {
+//   //   // DurationBeat temp = DurationBeat.now();
+//   // }
+//   return tempGoal.id;
+// }

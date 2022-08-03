@@ -11,14 +11,14 @@ class TimeBudgetPage extends StatelessWidget {
   final timeNow = TemporalDateTime.now();
 
   @override
-  Future<Widget> build(BuildContext context) async {
+  Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: <Widget>[
           Spacer(),
           GoalCard(
               cardName: "Rest",
-              cardGoal: await controller.getGoal(CategoryTypes.FITNESS, timeNow).then((value) => value),
+              cardGoal: "3.0hr",
               passedColor: BeatTheme.colors.fitnessColor),
           GoalCard(
               cardName: "Fitness",
