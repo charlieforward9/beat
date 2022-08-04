@@ -1,3 +1,4 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:beat/models/CategoryTypes.dart';
 import 'package:beat/models/DurationBeat.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../../controllers/time_budget_controller.dart' as controller;
 import '../../data/Goal/services/GoalServiceTest.dart';
 
 import '../../global.dart' as globalTest;
+import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -58,12 +60,9 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    DurationBeat temp = DurationBeat(
-                        durationHours: 3,
-                        durationMinutes: 3,
-                        durationSeconds: 3);
-                    widget.goalServiceTest
-                        .createAndConfirmNewGoal(CategoryTypes.FITNESS, temp);
+                    getGoal();
+                    //String userID = getGoal2();
+                    //print("UserID: $userID");
                     //_percentage, _goal, _metric, _id, _type
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                     //controller.controllerTester(widget.cardName, widget.cardGoal, widget._goal);
@@ -132,22 +131,42 @@ class _GoalCardState extends State<GoalCard> {
         ),
       );
 
-  String getGoal(_category, _time) {
+  void getGoal() async {
     @override
     String userID = globalTest.currentUser.id;
     CategoryTypes tmp = CategoryTypes.FITNESS;
-    // Goal tempGoal = await goalService.getGoal(userID, tmp, _time);
-    // goalService.getGoal(userID, tmp, _time).then((value) {
-    //   //print("Goal:");
-    // });
-
-    // need userID, category, dateTime,
-    //print("UserID: $userID");
-    // if (_category == "Fitness") {
-    //   // DurationBeat temp = DurationBeat.now();
-    // }
-    return userID;
+    Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
+    String goalID = tempGoal.getId();
+    print("Testing GoalID: $goalID");
   }
+
+  // String getGoal2() {
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   String tempGoalID = "99999";
+  //   var result = Future.delayed(Duration(seconds: 2),
+  //       () => widget.goalService.getGoal(userID, tmp, null));
+  //   print("result: $result");
+  //   widget.goalService
+  //       .getGoal(userID, tmp, null)
+  //       .then((value) => tempGoalID = value.getId());
+  //   //String goalID = tempGoal.getId();
+  //   //print("Testing GoalID: $tempGoalID");
+  //   return tempGoalID;
+  // }
+
+  // void getGoal3() async{
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   String tempGoalID = "99999";
+  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
+  //   print("result: $result");
+
+  // }
+
+
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {

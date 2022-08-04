@@ -14,19 +14,63 @@ class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
   final timeNow = TemporalDateTime.now();
 
-  final test = controller.TimeBudgetController().logOnlyLatestGoals();
+  //final test = controller.TimeBudgetController().logOnlyLatestGoals();
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: <Widget>[
-          Spacer(),
-          GoalCard(
-              cardName: "Rest",
-              cardGoal: "3.0hr",
-              passedColor: BeatTheme.colors.fitnessColor),
-          GoalCard(
+      child: Container(
+          child: FutureBuilder<Goal>(
+        future: controller.getGoal(),
+        builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
+          List<Widget> children;
+          if (snapshot.connectionState == ConnectionState.done) {
+            try {
+              children = <Widget>[
+                Spacer(),
+                GoalCard(
+                    cardName: '${snapshot.data!.goalCategory}',
+                    cardGoal: '${snapshot.data!.goalPercentage}',
+                    passedColor: BeatTheme.colors.fitnessColor),
+                SizedBox(height: 125),
+                ButtonRow(
+                    buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
+                Spacer(),
+              ];
+            } catch (e) {
+              print(e);
+              children = [Text('error')];
+            }
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              )
+            ];
+          } else {
+            children = const <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result... (dummy data)'),
+              )
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
+      )),
+    );
+  }
+}
+
+/*
+
+GoalCard(
               cardName: "Fitness",
               cardGoal: "1.5hr",
               passedColor: BeatTheme.colors.fuelingColor),
@@ -42,16 +86,7 @@ class TimeBudgetPage extends StatelessWidget {
               cardName: "Productivity",
               cardGoal: "8hr",
               passedColor: BeatTheme.colors.workColor),
-          SizedBox(height: 125),
-          ButtonRow(buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
-          Spacer(),
-        ],
-      ),
-    );
-  }
-}
-
-
+ */
 
 /*
 GoalCard(
