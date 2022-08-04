@@ -29,8 +29,10 @@ class TimeBudgetPage extends StatelessWidget {
               children = <Widget>[
                 Spacer(),
                 GoalCard(
-                    cardName: '${snapshot.data!.goalCategory}',
-                    cardGoal: '${snapshot.data!.goalPercentage}',
+                    cardName:
+                        '${snapshot.data!.goalCategory.name.toLowerCase()}',
+                    cardGoal:
+                        '${snapshot.data!.goalTargetDuration.durationHours}h ${snapshot.data!.goalTargetDuration.durationMinutes}m',
                     passedColor: BeatTheme.colors.fitnessColor),
                 SizedBox(height: 125),
                 ButtonRow(
