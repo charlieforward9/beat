@@ -26,6 +26,14 @@ Future<Goal> getGoal() async {
   return tempGoal;
 }
 
+List<Future<Goal>> getListOfGoals() async {
+  // get the goal for each category, five goals
+  @override
+  String userID = globalTest.currentUser.id;
+  List<Goal> storage = add(await goalService.getGoal(userID, CategoryTypes.FITNESS, null));
+  return storage;
+}
+
 // TODO: Make function to return Stirng of type from CategoryTypes
 
 
