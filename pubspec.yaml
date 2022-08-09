@@ -43,6 +43,7 @@ dependencies:
   amplify_api: ^0.6.0
   amplify_flutter: ^0.6.0
   geolocator: ^9.0.1
+  google_maps_flutter: ^2.1.10
 
 dev_dependencies:
   flutter_test:
