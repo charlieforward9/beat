@@ -1,4 +1,6 @@
+import 'package:beat/features/location/LocationService.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../data/Goal/services/GoalService.dart';
 //import '../../data/Activity/services/ActivityServiceTest.dart';
@@ -26,6 +28,13 @@ class GoalCard extends StatefulWidget {
 }
 
 class _GoalCardState extends State<GoalCard> {
+ 
+  void _getCurrentLocation() async {
+    LocationService locationService = LocationService();
+    Position position = await locationService.getPosition();
+    position != null ? debugPrint('Current Location: ' + position.toString()) : debugPrint('No Location Data');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,6 +44,8 @@ class _GoalCardState extends State<GoalCard> {
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
             debugPrint('Card tapped - Goal Card.');
+            debugPrint('Testing Location');
+            _getCurrentLocation();
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 15,
