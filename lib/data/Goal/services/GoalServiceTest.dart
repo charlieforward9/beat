@@ -1,6 +1,8 @@
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:amplify_flutter/amplify_flutter.dart';
+
 import '../../../data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 
@@ -60,7 +62,7 @@ class GoalServiceTest extends GoalService {
   //Current
   void logOnlyLatestGoals() async {
     testUserID = global.currentUser.id;
-    
+
     // get latest goal in each category
     for (var cat in _allCategories) {
       // when the timestamp is null, the latest goal is pulled
@@ -85,7 +87,8 @@ class GoalServiceTest extends GoalService {
     var data = Future.delayed(
         Duration(seconds: 2),
         () => {
-              getGoal(global.currentUser.id, CategoryTypes.FITNESS, null),
+              getGoal(global.currentUser.id, CategoryTypes.FITNESS,
+                  TemporalDate.now()),
             });
 
     return data.then((value) => value.elementAt(0));

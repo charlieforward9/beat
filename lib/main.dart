@@ -1,12 +1,11 @@
-//export PATH=/Users/crich/Documents/flutter/bin:$PATH
-
 //***********Backend-related Imports***********//
-import 'dart:developer';
-
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
+import 'package:beat/cubits/goal_cubit.dart';
 import 'package:beat/data/User/services/UserService.dart';
+import 'package:beat/views/loading_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
@@ -30,18 +29,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _selectedPage = 0;
   String userEmail = "charlesrichardsonusa@gmail.com";
+  bool amplifyConfigured = false;
 
   @override
   void initState() {
     super.initState();
-    _configureAmplify(userEmail);
-    //Delay incuded to prevent error pertaining to configuring not being finished when UserService is called
-    //User instance saved to <global.currentUser> import file for easy reference
+    _configureAmplify();
   }
 
   //Pages in the navBar, in order of display from left to right
   // removed const from this function
-  List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),
@@ -53,66 +51,63 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  //Base build function, all other widgets are built within
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Amplify.asyncConfig,
-        builder: (BuildContext context, AsyncSnapshot<AmplifyConfig> snapshot) {
-          Widget child;
-          if (snapshot.connectionState == ConnectionState.done) {
-            child = MaterialApp(
-                title: 'BEAT',
-                home: Scaffold(
-                  //backgroundColor: Theme.of(context).primaryColor,
-                  body: Center(
-                    child: _widgetOptions.elementAt(_selectedPage),
-                  ),
-                  bottomNavigationBar: BottomNavigationBar(
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.calendar_month_outlined),
-                        label: 'Log',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.edit),
-                        label: 'Edit',
-                      ),
-                    ],
-                    currentIndex: _selectedPage,
-                    selectedItemColor: Colors.amber[800],
-                    onTap: _onNavBarTapped,
-                  ),
-                ));
-            return child;
-          } else {
-            return MaterialApp(
-                title: "Not Config",
-                home: Scaffold(
-                  body: Center(child: Text("Amplify Not Config")),
-                ));
-          }
-        });
+    if (amplifyConfigured) {
+      return MaterialApp(
+          title: 'Flutter Demo',
+          home: BlocProvider(
+              create: (context) => GoalCubit()
+                ..getDayGoals()
+                ..observeGoals(),
+              child: Scaffold(
+                body: Center(
+                  child: _widgetOptions.elementAt(_selectedPage),
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.calendar_month_outlined),
+                      label: 'Log',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.edit),
+                      label: 'Edit',
+                    ),
+                  ],
+                  currentIndex: _selectedPage,
+                  selectedItemColor: Colors.amber[800],
+                  onTap: _onNavBarTapped,
+                ),
+              )));
+    }
+    return const MaterialApp(
+        title: "Not Config",
+        home: Scaffold(
+          body: Center(child: Text("Amplify Not Config")),
+        ));
   }
-}
 
-//Handles Amplify plugins and sets the currentUser
-void _configureAmplify(userEmail) async {
-  final datastorePlugin = AmplifyDataStore(
-    modelProvider: ModelProvider.instance,
-  );
-  // Add the following line and update your function call with `addPlugins`
-  final api = AmplifyAPI();
-  await Amplify.addPlugins([datastorePlugin, api]);
-  try {
-    await Amplify.configure(amplifyconfig);
-    UserService(userEmail);
-  } on AmplifyAlreadyConfiguredException {
-    debugPrint(
-        'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
+  void _configureAmplify() async {
+    final datastorePlugin = AmplifyDataStore(
+      modelProvider: ModelProvider.instance,
+    );
+    // Add the following line and update your function call with `addPlugins`
+    final api = AmplifyAPI();
+    await Amplify.addPlugins([datastorePlugin, api]);
+    try {
+      await Amplify.configure(amplifyconfig);
+    } on AmplifyAlreadyConfiguredException {
+      debugPrint(
+          'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
+    }
+    setState(() {
+      UserService(userEmail);
+      amplifyConfigured = true;
+    });
   }
 }

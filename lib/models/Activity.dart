@@ -220,7 +220,7 @@ class Activity extends Model {
     'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': enumToString(_activtyCategory), 'activityDuration': _activityDuration?.toJson(), 'goalID': _goalID, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'activityOfGoal': _activityOfGoal?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "id");
+  static final QueryField ID = QueryField(fieldName: "activity.id");
   static final QueryField ACTIVITYSTART = QueryField(fieldName: "activityStart");
   static final QueryField ACTIVITYEND = QueryField(fieldName: "activityEnd");
   static final QueryField ACTIVTYCATEGORY = QueryField(fieldName: "activtyCategory");

@@ -1,3 +1,4 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import '../../../models/ModelProvider.dart';
 
@@ -46,5 +47,17 @@ class ActivityRepository {
         activtyCategory: oldActivity.activtyCategory,
         activityDuration: _newDuration);
     await Amplify.DataStore.save(newActivity);
+  }
+
+  Future<List<Activity>> getAllActivitiesBelongingToGoal(String goalID) async {
+    final activities = await Amplify.DataStore.query(Activity.classType,
+        where: Activity.ACTIVITYOFGOAL.eq(goalID));
+    return activities;
+  }
+
+  Future<List<Activity>> getActivityByGoalID(String goalID) async {
+    final activities = await Amplify.DataStore.query(Activity.classType,
+        where: Activity.GOALID.eq(goalID));
+    return activities;
   }
 }

@@ -2,7 +2,12 @@
 //import '<PATH>' as TimeBudgetController;
 import 'dart:developer';
 
+import 'dart:math';
+
 // import data models
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:beat/data/Goal/repository/GoalRepository.dart';
+
 import '../models/ModelProvider.dart';
 
 // service imports
@@ -15,10 +20,11 @@ import '../data/User/services/UserService.dart';
 import '../global.dart' as globalTest;
 
 GoalService goalService = GoalService();
+ActivityService activityService = ActivityService();
 
 Future<Goal> getGoal() async {
   @override
-  String userID = globalTest.currentUser.id;
+  String userID = "190c7bd1-02ad-4ab1-970d-49b8e6f7a9f8";
   CategoryTypes tmp = CategoryTypes.FITNESS;
   Goal tempGoal = await goalService.getGoal(userID, tmp, null);
   String goalID = tempGoal.getId();
@@ -26,61 +32,57 @@ Future<Goal> getGoal() async {
   return tempGoal;
 }
 
-List<Future<Goal>> getListOfGoals() async {
-  // get the goal for each category, five goals
-  @override
-  String userID = globalTest.currentUser.id;
-  List<Goal> storage = add(await goalService.getGoal(userID, CategoryTypes.FITNESS, null));
-  return storage;
+Future<Goal> getAllActivities(String goalID) async {
+  // testGetGoalActivities();
+  Goal tempGoal = await goalService.getGoalByGoalID(goalID);
+  print(tempGoal);
+
+  return tempGoal;
 }
 
-// TODO: Make function to return Stirng of type from CategoryTypes
+Future<void> createActivity() async {
+  print("Creating Activity....");
+  Random random = new Random();
+  int randomNumber1 = random.nextInt(100);
+  int randomNumber2 = random.nextInt(randomNumber1);
+  int randomNumber3 = random.nextInt(randomNumber2);
+  activityService.createRecord(
+      CategoryTypes.FITNESS,
+      "f49cf805-6ada-4731-87a6-8b1fb027660c",
+      randomNumber1,
+      randomNumber2,
+      randomNumber3);
+}
 
+Future<List<Activity>> getGoalActivities(String goalID) async {
+  List<Activity> allActivities =
+      await activityService.getActivitiesByGoalID(goalID);
 
+  if (allActivities.length == 0) {
+    print("List empty");
+  } else {
+    for (int i = 0; i < allActivities.length; i++) {
+      print(allActivities[i]);
+    }
+  }
+  return allActivities;
+}
 
-// class TimeBudgetController {
-//   //TODO: Add functions
-
-//   // make repository for all services
-//   ActivityService activityService = ActivityService();
-//   GoalService goalService = GoalService();
-//   MetricRepository metricService = MetricRepository();
-//   UserService userService = UserService("charlesrichardsonusa@gmail.com");
-
-//   /*
-//     Things to add
-//     - get specific user goal
-//     - get specific user percentage
-//     - update specific user goal
-//     - update specific user percentage
-
-
-//   */
-
-//   void _updatedSpecificGoal(_cardName, _goal, _progress) async {
-//     if (_cardName == "Recovery") {
-//       log(globalTest.currentUser.toString());
-//     }
-//   }
-
-//   Future<List<Goal>> logOnlyLatestGoals() async {
-//     final List<CategoryTypes> _allCategories = CategoryTypes.values;
-//     String testUserID =
-//         await userService.getUserId("charlesrichardsonusa@gmail.com");
-//     //String testUserID = globalTest.currentUser.id;
-//     List<Goal> storage = [];
-
-//     // get latest goal in each category
-//     for (var cat in _allCategories) {
-//       // when the timestamp is null, the latest goal is pulled
-//       Goal temp = await goalService.getGoal(testUserID, cat, null);
-//       String goalID = temp.getId();
-//       storage.add(temp);
-//       print("Goal ID: $goalID");
-//       //getGoal(testUserID, cat, null);
-//     }
-//     // return storage;
-//     return Future.delayed(
-//         const Duration(seconds: 2), () => Future<List<Goal>>.value(storage));
-//   }
-// }
+Future<List<Goal>> getUsersLatestGoals(String userID) async {
+  List<Goal> storage = List.empty(growable: true);
+  Goal fitnessGoal = await goalService.getGoal(
+      userID, CategoryTypes.FITNESS, TemporalDate.now());
+  getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
+  storage.add(fitnessGoal);
+  Goal socialGoal =
+      await goalService.getGoal(userID, CategoryTypes.SOCIAL,  TemporalDate.now());
+  storage.add(socialGoal);
+  Goal restGoal = await goalService.getGoal(userID, CategoryTypes.REST,  TemporalDate.now());
+  storage.add(restGoal);
+  Goal productivityGoal =
+      await goalService.getGoal(userID, CategoryTypes.PRODUCTIVITY,  TemporalDate.now());
+  storage.add(productivityGoal);
+  Goal fuelGoal = await goalService.getGoal(userID, CategoryTypes.FUEL,  TemporalDate.now());
+  storage.add(fuelGoal);
+  return storage;
+}

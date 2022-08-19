@@ -150,7 +150,7 @@ class Metric extends Model {
     'id': id, 'metricTimestamp': _metricTimestamp?.format(), 'metricLocation': _metricLocation, 'activities': _activities?.map((ActivityMetric? e) => e?.toJson()).toList(), 'metricHeartRate': _metricHeartRate, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "id");
+  static final QueryField ID = QueryField(fieldName: "metric.id");
   static final QueryField METRICTIMESTAMP = QueryField(fieldName: "metricTimestamp");
   static final QueryField METRICLOCATION = QueryField(fieldName: "metricLocation");
   static final QueryField ACTIVITIES = QueryField(

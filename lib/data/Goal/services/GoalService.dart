@@ -1,5 +1,6 @@
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/controllers/time_budget_controller.dart';
 
 import '../../../models/ModelProvider.dart';
 import '../repository/GoalRepository.dart';
@@ -22,10 +23,10 @@ class GoalService {
   //If date is null, it returns the current goal
   //If date specified, it finds the goal whose goalStart and goalEnd range holds this date
   Future<Goal> getGoal(
-      String userID, CategoryTypes category, TemporalDateTime? datetime) {
-    return datetime == null
+      String userID, CategoryTypes category, TemporalDate? date) {
+    return date == null
         ? _goalRepository.fetchLatestGoal(category, userID)
-        : _goalRepository.fetchGoalFromDate(category, userID, datetime);
+        : _goalRepository.fetchGoalFromDate(category, userID, date);
   }
 
   //Null category type means all categories
@@ -52,7 +53,6 @@ class GoalService {
     }
   }
 
-
   //
   //
   //
@@ -64,54 +64,54 @@ class GoalService {
   //
   //
   //
-  Future<double> getPercentage(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalPercentage!;
-  }
+  // Future<double> getPercentage(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalPercentage!;
+  // }
 
-  Future<DurationBeat> getCurrentDurationBeat(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalCurrentDuration;
-  }
+  // Future<DurationBeat> getCurrentDurationBeat(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalCurrentDuration;
+  // }
 
-  Future<DurationBeat> getTargetDurationBeat(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalTargetDuration;
-  }
+  // Future<DurationBeat> getTargetDurationBeat(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalTargetDuration;
+  // }
 
-  Future<CategoryTypes> getCategory(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalCategory;
-  }
+  // Future<CategoryTypes> getCategory(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalCategory;
+  // }
 
-  Future<TemporalDateTime> getStart(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalStart;
-  }
+  // Future<TemporalDateTime> getStart(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalStart;
+  // }
 
-  Future<TemporalDateTime?> getEnd(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.goalEnd;
-  }
+  // Future<TemporalDateTime?> getEnd(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.goalEnd;
+  // }
 
-  Future<String> getGoalId(
-      CategoryTypes category, String userId, DateTime? date) async {
-    final historicDate = date == null ? null : TemporalDateTime(date);
-    Goal record = await getGoal(userId, category, historicDate);
-    return record.id;
-  }
+  // Future<String> getGoalId(
+  //     CategoryTypes category, String userId, DateTime? date) async {
+  //   final historicDate = date == null ? null : TemporalDateTime(date);
+  //   Goal record = await getGoal(userId, category, historicDate);
+  //   return record.id;
+  // }
   //
   //
   //
@@ -123,5 +123,43 @@ class GoalService {
   //
   //
   //
+  // get list of corresponding activites given goal id
 
+  Future<Goal> getGoalByGoalID(String goalID) async {
+    Goal tempGoal = await _goalRepository.fetchGoalByGoalID(goalID);
+    return tempGoal;
+  }
+
+  Future<Map<CategoryTypes, Goal>> getDailyGoals(String userID) async {
+    TemporalDate now = TemporalDate.now();
+    Map<CategoryTypes, Goal> goals = {};
+    Goal test =
+        await getGoal(userID, CategoryTypes.FITNESS, TemporalDate.now());
+    print("TestingGoal: $test");
+    goals[CategoryTypes.FITNESS] =
+        await getGoal(userID, CategoryTypes.FITNESS, now);
+    goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST, now);
+    goals[CategoryTypes.SOCIAL] =
+        await getGoal(userID, CategoryTypes.SOCIAL, now);
+    goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL, now);
+    goals[CategoryTypes.PRODUCTIVITY] =
+        await getGoal(userID, CategoryTypes.PRODUCTIVITY, now);
+
+    // goals[CategoryTypes.FITNESS] = await getGoal(userID, CategoryTypes.FITNESS,now);
+    // goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST,now);
+    // goals[CategoryTypes.SOCIAL] = await getGoal(userID, CategoryTypes.SOCIAL,now);
+    // goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL,now);
+    // goals[CategoryTypes.PRODUCTIVITY] = await getGoal(userID, CategoryTypes.PRODUCTIVITY,now);
+    return goals;
+  }
+
+  Stream observeGoals() {
+    return _goalRepository.observeGoalChanges();
+    // .listen((_) => getDailyGoals(userID));
+  }
+
+  Future<List<Activity>> getAllGoalActivities(String goalID) async {
+    Goal tempGoal = await _goalRepository.fetchGoalByGoalID(goalID);
+    return tempGoal.goalActivities ?? [];
+  }
 }

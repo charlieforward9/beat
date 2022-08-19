@@ -20,54 +20,88 @@ class TimeBudgetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-          child: FutureBuilder<Goal>(
-        future: controller.getGoal(),
-        builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
+          child: FutureBuilder<List<Goal>>(
+        future: controller
+            .getUsersLatestGoals("190c7bd1-02ad-4ab1-970d-49b8e6f7a9f8"),
+        builder: (BuildContext context, AsyncSnapshot<List<Goal>> snapshot) {
           List<Widget> children;
-          if (snapshot.connectionState == ConnectionState.done) {
-            try {
-              children = <Widget>[
-                Spacer(),
-                GoalCard(
-                    cardName:
-                        '${snapshot.data!.goalCategory.name.toLowerCase()}',
+          if (snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                //String name_of_activity = snapshot.data![index].id;
+                return GoalCard(
+                    //cardName: '${snapshot.data!.goalCategory.name}',
+                    cardName: '${snapshot.data![index].goalCategory.name}',
                     cardGoal:
-                        '${snapshot.data!.goalTargetDuration.durationHours}h ${snapshot.data!.goalTargetDuration.durationMinutes}m',
-                    passedColor: BeatTheme.colors.fitnessColor),
-                SizedBox(height: 125),
-                ButtonRow(
-                    buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
-                Spacer(),
-              ];
-            } catch (e) {
-              print(e);
-              children = [Text('error')];
-            }
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              )
-            ];
-          } else {
-            children = const <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Awaiting result... (dummy data)'),
-              )
-            ];
+                        '${snapshot.data![index].goalTargetDuration.durationHours}h ${snapshot.data![index].goalTargetDuration.durationMinutes}m',
+                    passedColor: BeatTheme.colors.fitnessColor);
+              },
+            );
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
-            ),
-          );
+
+          /// handles others as you did on question
+          else {
+            return CircularProgressIndicator();
+          }
         },
       )),
     );
   }
+
+  // Widget build(BuildContext context) {
+  //   return Center(
+  //     child: Container(
+  //         child: FutureBuilder<Goal>(
+  //       future:
+  //           controller.getAllActivities("f49cf805-6ada-4731-87a6-8b1fb027660c"),
+  //       builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
+  //         List<Widget> children;
+  //         if (snapshot.connectionState == ConnectionState.done) {
+  //           try {
+  //             children = <Widget>[
+  //               Spacer(),
+  //               GoalCard(
+  //                   //cardName: '${snapshot.data!.goalCategory.name}',
+  //                   cardName: '${snapshot.data!.goalCategory.name}',
+  //                   cardGoal:
+  //                       '${snapshot.data!.goalTargetDuration.durationHours}h ${snapshot.data!.goalTargetDuration.durationMinutes}m',
+  //                   passedColor: BeatTheme.colors.fitnessColor),
+  //               SizedBox(height: 125),
+  //               ButtonRow(
+  //                   buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
+  //               Spacer(),
+  //             ];
+  //           } catch (e) {
+  //             print(e);
+  //             children = [Text('error')];
+  //           }
+  //         } else if (snapshot.hasError) {
+  //           children = <Widget>[
+  //             Padding(
+  //               padding: const EdgeInsets.only(top: 16),
+  //               child: Text('Error: ${snapshot.error}'),
+  //             )
+  //           ];
+  //         } else {
+  //           children = const <Widget>[
+  //             Padding(
+  //               padding: EdgeInsets.only(top: 16),
+  //               child: Text('Awaiting result... (dummy data)'),
+  //             )
+  //           ];
+  //         }
+  //         return Center(
+  //           child: Column(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: children,
+  //           ),
+  //         );
+  //       },
+  //     )),
+  //   );
+  // }
 }
 
 /*

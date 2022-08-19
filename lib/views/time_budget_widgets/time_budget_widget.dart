@@ -44,7 +44,8 @@ class _GoalCardState extends State<GoalCard> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
-            debugPrint('Card tapped - Goal Card.');
+            debugPrint('Card tapped - ${widget.cardName} Card.');
+            //controller.getGoalActivities()
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 15,
@@ -61,25 +62,9 @@ class _GoalCardState extends State<GoalCard> {
                 TextButton.icon(
                   onPressed: () async {
                     getGoal();
-                    //String userID = getGoal2();
-                    //print("UserID: $userID");
-                    //_percentage, _goal, _metric, _id, _type
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                     //controller.controllerTester(widget.cardName, widget.cardGoal, widget._goal);
-                    //TODO
-                    //String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
-                    //createGoal();
-                    //getGoalIDTester();
-                    //await createActivity();
-                    //updateGoal();
-                    //updateActivityCategoryTester(CategoryTypes.FITNESS);
-                    //updateActivityDurationTester(_activityId, 69, 69, 69);
-                    //getActivityStartTester(_activityId);
-                    //getActivityEndTester(_activityId);
-                    //getActivityCategoryTester(_activityId);
-                    //getActivityDurationTester(_activityId);
-                    //getGoalIdTester(_activityId);
-                    //getActivityIdTester(_activityId);
+                    controller.getGoal();
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -165,8 +150,6 @@ class _GoalCardState extends State<GoalCard> {
   //   print("result: $result");
 
   // }
-
-
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {

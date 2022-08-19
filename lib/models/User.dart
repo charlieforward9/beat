@@ -168,7 +168,7 @@ class User extends Model {
     'id': id, 'userEmail': _userEmail, 'userName': _userName, 'userPassword': _userPassword, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "id");
+  static final QueryField ID = QueryField(fieldName: "user.id");
   static final QueryField USEREMAIL = QueryField(fieldName: "userEmail");
   static final QueryField USERNAME = QueryField(fieldName: "userName");
   static final QueryField USERPASSWORD = QueryField(fieldName: "userPassword");
