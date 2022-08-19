@@ -48,7 +48,7 @@ class ActivityService {
 
   Future<String> getGoalId(String _activityId) async {
     Activity record = await getActivityRecord(_activityId);
-    return record.goalID;
+    return record.howToGetG;
   }
 
   Future<String> getActivityId(String _activityId) async {

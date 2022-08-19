@@ -24,7 +24,6 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** This is an auto generated class representing the User type in your schema. */
 @immutable
 class User extends Model {
@@ -39,203 +38,235 @@ class User extends Model {
 
   @override
   getInstanceType() => classType;
-  
+
   @override
   String getId() {
     return id;
   }
-  
+
   String get userEmail {
     try {
       return _userEmail!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   String get userName {
     try {
       return _userName!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   String get userPassword {
     try {
       return _userPassword!;
-    } catch(e) {
+    } catch (e) {
       throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
+          AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: AmplifyExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   List<Goal>? get userGoals {
     return _userGoals;
   }
-  
+
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
-  
+
   TemporalDateTime? get updatedAt {
     return _updatedAt;
   }
-  
-  const User._internal({required this.id, required userEmail, required userName, required userPassword, userGoals, createdAt, updatedAt}): _userEmail = userEmail, _userName = userName, _userPassword = userPassword, _userGoals = userGoals, _createdAt = createdAt, _updatedAt = updatedAt;
-  
-  factory User({String? id, required String userEmail, required String userName, required String userPassword, List<Goal>? userGoals}) {
+
+  const User._internal(
+      {required this.id,
+      required userEmail,
+      required userName,
+      required userPassword,
+      userGoals,
+      createdAt,
+      updatedAt})
+      : _userEmail = userEmail,
+        _userName = userName,
+        _userPassword = userPassword,
+        _userGoals = userGoals,
+        _createdAt = createdAt,
+        _updatedAt = updatedAt;
+
+  factory User(
+      {String? id,
+      required String userEmail,
+      required String userName,
+      required String userPassword,
+      List<Goal>? userGoals}) {
     return User._internal(
-      id: id == null ? UUID.getUUID() : id,
-      userEmail: userEmail,
-      userName: userName,
-      userPassword: userPassword,
-      userGoals: userGoals != null ? List<Goal>.unmodifiable(userGoals) : userGoals);
+        id: id == null ? UUID.getUUID() : id,
+        userEmail: userEmail,
+        userName: userName,
+        userPassword: userPassword,
+        userGoals:
+            userGoals != null ? List<Goal>.unmodifiable(userGoals) : userGoals);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is User &&
-      id == other.id &&
-      _userEmail == other._userEmail &&
-      _userName == other._userName &&
-      _userPassword == other._userPassword &&
-      DeepCollectionEquality().equals(_userGoals, other._userGoals);
+        id == other.id &&
+        _userEmail == other._userEmail &&
+        _userName == other._userName &&
+        _userPassword == other._userPassword &&
+        DeepCollectionEquality().equals(_userGoals, other._userGoals);
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("User {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("userEmail=" + "$_userEmail" + ", ");
     buffer.write("userName=" + "$_userName" + ", ");
     buffer.write("userPassword=" + "$_userPassword" + ", ");
-    buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("createdAt=" +
+        (_createdAt != null ? _createdAt!.format() : "null") +
+        ", ");
+    buffer.write(
+        "updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  User copyWith({String? id, String? userEmail, String? userName, String? userPassword, List<Goal>? userGoals}) {
+
+  User copyWith(
+      {String? id,
+      String? userEmail,
+      String? userName,
+      String? userPassword,
+      List<Goal>? userGoals}) {
     return User._internal(
-      id: id ?? this.id,
-      userEmail: userEmail ?? this.userEmail,
-      userName: userName ?? this.userName,
-      userPassword: userPassword ?? this.userPassword,
-      userGoals: userGoals ?? this.userGoals);
+        id: id ?? this.id,
+        userEmail: userEmail ?? this.userEmail,
+        userName: userName ?? this.userName,
+        userPassword: userPassword ?? this.userPassword,
+        userGoals: userGoals ?? this.userGoals);
   }
-  
-  User.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _userEmail = json['userEmail'],
-      _userName = json['userName'],
-      _userPassword = json['userPassword'],
-      _userGoals = json['userGoals'] is List
-        ? (json['userGoals'] as List)
-          .where((e) => e?['serializedData'] != null)
-          .map((e) => Goal.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
-          .toList()
-        : null,
-      _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
-  
+
+  User.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _userEmail = json['userEmail'],
+        _userName = json['userName'],
+        _userPassword = json['userPassword'],
+        _userGoals = json['userGoals'] is List
+            ? (json['userGoals'] as List)
+                .where((e) => e?['serializedData'] != null)
+                .map((e) => Goal.fromJson(
+                    new Map<String, dynamic>.from(e['serializedData'])))
+                .toList()
+            : null,
+        _createdAt = json['createdAt'] != null
+            ? TemporalDateTime.fromString(json['createdAt'])
+            : null,
+        _updatedAt = json['updatedAt'] != null
+            ? TemporalDateTime.fromString(json['updatedAt'])
+            : null;
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'userEmail': _userEmail, 'userName': _userName, 'userPassword': _userPassword, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
-  };
+        'id': id,
+        'userEmail': _userEmail,
+        'userName': _userName,
+        'userPassword': _userPassword,
+        'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(),
+        'createdAt': _createdAt?.format(),
+        'updatedAt': _updatedAt?.format()
+      };
 
   static final QueryField ID = QueryField(fieldName: "user.id");
   static final QueryField USEREMAIL = QueryField(fieldName: "userEmail");
   static final QueryField USERNAME = QueryField(fieldName: "userName");
   static final QueryField USERPASSWORD = QueryField(fieldName: "userPassword");
   static final QueryField USERGOALS = QueryField(
-    fieldName: "userGoals",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Goal).toString()));
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+      fieldName: "userGoals",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (Goal).toString()));
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
     modelSchemaDefinition.pluralName = "Users";
-    
+
     modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
+        ModelOperation.CREATE,
+        ModelOperation.UPDATE,
+        ModelOperation.DELETE,
+        ModelOperation.READ
+      ])
     ];
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.USEREMAIL,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: User.USEREMAIL,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.USERNAME,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: User.USERNAME,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.USERPASSWORD,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: User.USERPASSWORD,
+        isRequired: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: User.USERGOALS,
-      isRequired: false,
-      ofModelName: (Goal).toString(),
-      associatedKey: Goal.USERID
-    ));
-    
+        key: User.USERGOALS,
+        isRequired: false,
+        ofModelName: (Goal).toString(),
+        associatedKey: Goal.HOWTOGETU));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'createdAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
-    
+        fieldName: 'createdAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
-      fieldName: 'updatedAt',
-      isRequired: false,
-      isReadOnly: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
-    ));
+        fieldName: 'updatedAt',
+        isRequired: false,
+        isReadOnly: true,
+        ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)));
   });
 }
 
 class _UserModelType extends ModelType<User> {
   const _UserModelType();
-  
+
   @override
   User fromJson(Map<String, dynamic> jsonData) {
     return User.fromJson(jsonData);

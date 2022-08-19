@@ -16,7 +16,7 @@ class ActivityRepository {
           durationHours: _hours,
           durationMinutes: _minutes,
           durationSeconds: _seconds), //DurationBeat(durationHours: 2),
-      goalID: _goalId,
+      howToGetG: _goalId,
     );
     await Amplify.DataStore.save(newActivity);
     // TODO: Activities Stored in AmplifyDataStore not in Activity ??? Maybe ok.
@@ -57,7 +57,7 @@ class ActivityRepository {
 
   Future<List<Activity>> getActivityByGoalID(String goalID) async {
     final activities = await Amplify.DataStore.query(Activity.classType,
-        where: Activity.GOALID.eq(goalID));
+        where: Activity.HOWTOGETG.eq(goalID));
     return activities;
   }
 }

@@ -4,13 +4,12 @@ import 'package:beat/models/ModelProvider.dart';
 
 class GoalRepository {
   //Helper Variables
-  final TemporalDate _today = TemporalDate(
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
+  final TemporalDate _today = TemporalDate(DateTime(8, 19, 2022));
 
   //Helper Functions
   Future<bool> _previousGoalExists(String userID, CategoryTypes cat) async {
     final goalList = await Amplify.DataStore.query(Goal.classType,
-        where: Goal.USERID.eq(userID).and(Goal.GOALCATEGORY.eq(cat)));
+        where: Goal.HOWTOGETU.eq(userID).and(Goal.GOALCATEGORY.eq(cat)));
     return goalList.isNotEmpty;
   }
 
@@ -18,7 +17,7 @@ class GoalRepository {
   Future<void> createGoal(String userID, CategoryTypes category,
       DurationBeat targetDuration) async {
     final Goal goal = Goal(
-        userID: userID,
+        howToGetU: userID,
         goalCategory: category,
         goalTargetDuration: targetDuration,
         goalCurrentDuration: DurationBeat(
@@ -48,7 +47,7 @@ class GoalRepository {
   Future<Goal> fetchLatestGoal(CategoryTypes category, String userId) async {
     //Check if a record exist
     final record = await Amplify.DataStore.query(Goal.classType,
-        where: Goal.USERID
+        where: Goal.HOWTOGETU
             .eq(userId)
             .and(Goal.GOALCATEGORY.eq(category))
             .and(Goal.GOALDAY.eq(_today)),
@@ -63,12 +62,11 @@ class GoalRepository {
     late final Goal goal;
     if (date != null) {
       final goalList = await Amplify.DataStore.query(Goal.classType,
-          where: Goal.USERID
+          where: Goal.HOWTOGETU
               .eq(userID)
               .and(Goal.GOALCATEGORY.eq(category).and(Goal.GOALDAY.eq(date))),
           sortBy: [Goal.GOALDAY.ascending()]);
       goal = goalList.first;
-      ;
     } else {
       goal = await fetchLatestGoal(category, userID);
     }
@@ -79,7 +77,7 @@ class GoalRepository {
   Future<List<Goal>?> fetchAllUserGoals(String userID) async {
     final List<Goal> allUserGoals = await Amplify.DataStore.query(
         Goal.classType,
-        where: Goal.USERID.eq(userID));
+        where: Goal.HOWTOGETU.eq(userID));
     return allUserGoals.isEmpty ? null : allUserGoals;
   }
 
