@@ -419,7 +419,7 @@ class Goal extends Model {
         key: Goal.GOALACTIVITIES,
         isRequired: false,
         ofModelName: (Activity).toString(),
-        associatedKey: Activity.GOALID));
+        associatedKey: Activity.HOWTOGETG));
 
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
         key: Goal.GOALOFUSER,

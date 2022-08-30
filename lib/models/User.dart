@@ -214,7 +214,7 @@ class User extends Model {
       key: User.USERGOALS,
       isRequired: false,
       ofModelName: (Goal).toString(),
-      associatedKey: Goal.USERID
+      associatedKey: Goal.HOWTOGETU
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(

@@ -1,8 +1,12 @@
+import 'package:beat/cubits/goal_cubit.dart';
+import 'package:beat/models/ModelProvider.dart';
+import 'package:beat/views/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:beat/views/home_widgets/app_theme.dart';
 
 import 'home_widgets/completion_widget.dart';
 import 'home_widgets/home_progress_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 //*************** Services Import *************** */
 // import '../Features/Fitness/services/FitnessService.dart';
@@ -11,8 +15,14 @@ import 'home_widgets/home_progress_card.dart';
 // import '../Features/Network/services/NetworkService.dart';
 // import '../Features/Productivity/services/ProductivityService.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => CompletionViewState();
+}
+
+class CompletionViewState extends State<HomePage> {
+  // completionViewState({Key? key}) : super(key: key);
 
   //TODO Create a storage unit for this good stuff
   //************************* */
@@ -29,9 +39,53 @@ class HomePage extends StatelessWidget {
   double goal4P = 90.0;
   double goal5P = 74.0;
 
-
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<GoalCubit, GoalState>(builder: (context, state) {
+        if (state is MapGoalsSuccess) {
+          return state.goals.isEmpty
+              ? emptyGoals()
+              : completionView(state.goals);
+        } else if (state is MapGoalsFailure) {
+          return _exceptionView(state.exception);
+        } else {
+          return LoadingView();
+        }
+      }),
+    );
+  }
+
+  Widget _exceptionView(Exception exception) {
+    return Center(child: Text(exception.toString()));
+  }
+
+  Widget emptyGoals() {
+    return const Center(
+      child: Text('No goals yet'),
+    );
+  }
+
+  Widget completionView(Map<CategoryTypes, Goal> goals) {
+    Goal recovery = goals[CategoryTypes.REST]!;
+    Goal fitness = goals[CategoryTypes.FITNESS]!;
+    Goal fuel = goals[CategoryTypes.FUEL]!;
+    Goal productivity = goals[CategoryTypes.PRODUCTIVITY]!;
+    Goal social = goals[CategoryTypes.SOCIAL]!;
+    debugPrint(fitness.toString());
+
+    double goal1P = recovery.goalPercentage!;
+    double goal2P = fitness.goalPercentage!;
+    double goal3P = fuel.goalPercentage!;
+    double goal4P = productivity.goalPercentage!;
+    double goal5P = social.goalPercentage!;
+
+    final goal1 = recovery.goalCategory.name;
+    final goal2 = fitness.goalCategory.name;
+    final goal3 = fuel.goalCategory.name;
+    final goal4 = productivity.goalCategory.name;
+    final goal5 = social.goalCategory.name;
+
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const SizedBox(
@@ -49,7 +103,8 @@ class HomePage extends StatelessWidget {
         HomeProgressCard(
           goalTitle: goal1,
           percentDone: goal1P,
-          goalColor: BeatTheme.colors.fitnessColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+          goalColor: BeatTheme.colors
+              .restColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
         ),
         HomeProgressCard(
           goalTitle: goal2,

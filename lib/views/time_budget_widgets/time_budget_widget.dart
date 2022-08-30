@@ -1,8 +1,16 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:beat/models/CategoryTypes.dart';
+import 'package:beat/models/DurationBeat.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/Goal/services/GoalService.dart';
 //import '../../data/Activity/services/ActivityServiceTest.dart';
+import '../../controllers/time_budget_controller.dart' as controller;
 //^ I moved the test functions to this path
+import '../../data/Goal/services/GoalServiceTest.dart';
+
+import '../../global.dart' as globalTest;
+import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -11,6 +19,8 @@ class GoalCard extends StatefulWidget {
 
   final TextEditingController updatedGoal = TextEditingController();
   final TextEditingController updatedPercentage = TextEditingController();
+
+  GoalServiceTest goalServiceTest = GoalServiceTest();
 
   GoalService goalService = GoalService();
 
@@ -34,7 +44,9 @@ class _GoalCardState extends State<GoalCard> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
-            debugPrint('Card tapped - Goal Card.');
+            controller
+                .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
+            debugPrint('Card tapped - ${widget.cardName} Card.');
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 15,
@@ -50,20 +62,8 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    //TODO
-                    //String _activityId = "d3de16cd-89d7-40f2-bb27-34392de557c3";
-                    //createGoal();
-                    //getGoalIDTester();
-                    //await createActivity();
-                    //updateGoal();
-                    //updateActivityCategoryTester(CategoryTypes.FITNESS);
-                    //updateActivityDurationTester(_activityId, 69, 69, 69);
-                    //getActivityStartTester(_activityId);
-                    //getActivityEndTester(_activityId);
-                    //getActivityCategoryTester(_activityId);
-                    //getActivityDurationTester(_activityId);
-                    //getGoalIdTester(_activityId);
-                    //getActivityIdTester(_activityId);
+                    controller.createActivity();
+                    //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -80,7 +80,7 @@ class _GoalCardState extends State<GoalCard> {
         // TODO: Need to do error handeling for empty feilds.
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Goal Info:"),
+          title: Text("$_type Info:"),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -114,6 +114,41 @@ class _GoalCardState extends State<GoalCard> {
           ],
         ),
       );
+
+  // void getGoal() async {
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
+  //   String goalID = tempGoal.getId();
+  //   print("Testing GoalID: $goalID");
+  // }
+
+  // String getGoal2() {
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   String tempGoalID = "99999";
+  //   var result = Future.delayed(Duration(seconds: 2),
+  //       () => widget.goalService.getGoal(userID, tmp, null));
+  //   print("result: $result");
+  //   widget.goalService
+  //       .getGoal(userID, tmp, null)
+  //       .then((value) => tempGoalID = value.getId());
+  //   //String goalID = tempGoal.getId();
+  //   //print("Testing GoalID: $tempGoalID");
+  //   return tempGoalID;
+  // }
+
+  // void getGoal3() async{
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   String tempGoalID = "99999";
+  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
+  //   print("result: $result");
+
+  // }
 
   void _updatedSpecificGoal(_goal, _progress) async {
     if (widget.cardName == "Recovery") {

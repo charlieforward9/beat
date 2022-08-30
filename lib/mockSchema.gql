@@ -16,25 +16,26 @@ type User @model @auth(rules: [{allow: public}]) {
 
 type Goal @model @auth(rules: [{allow: public}]) {
   id: ID!
-  goalDay: AWSDate!
+  goalStart: AWSDateTime!
+  goalEnd: AWSDateTime
   goalCategory: CategoryTypes!
   goalCurrentDuration: DurationBeat!
   goalTargetDuration: DurationBeat!
   goalPercentage: Float
-  howToGetU: ID! @index(name: "byUser")
+  userID: ID! @index(name: "byUser")
+  goalOfUser: User! @belongsTo(fields: ["userID"])
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
-  goalOfUser: User @belongsTo
 }
 
 type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
   activityStart: AWSDateTime!
   activityEnd: AWSDateTime!
-  activtyCategory: CategoryTypes!
+  activityCategory: CategoryTypes!
   activityDuration: DurationBeat!
-  howToGetG: ID! @index(name: "byGoal")
+  goalID: ID! @index(name: "byGoal")
+  activityOfGoal: Goal! @belongsTo(fields: ["goalID"])
   activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
-  activityOfGoal: Goal @belongsTo
 }
 
 type Metric @model @auth(rules: [{allow: public}]) {
@@ -50,4 +51,3 @@ type DurationBeat {
   durationMinutes: Int
   durationHours: Int
 }
- 

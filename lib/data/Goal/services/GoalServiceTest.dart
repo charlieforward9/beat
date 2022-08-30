@@ -1,6 +1,8 @@
 import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:amplify_flutter/amplify_flutter.dart';
+
 import '../../../data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 
@@ -12,7 +14,7 @@ class GoalServiceTest extends GoalService {
   late String testUserID;
   final List<CategoryTypes> _allCategories = CategoryTypes.values;
 
-  void _createAndConfirmNewGoal(
+  void createAndConfirmNewGoal(
       CategoryTypes category, DurationBeat newTargetDuration) async {
     Goal newGoalConfirmation;
     String testUserID = global.currentUser.id;
@@ -45,7 +47,7 @@ class GoalServiceTest extends GoalService {
           durationHours: randHour,
           durationMinutes: randMinute,
           durationSeconds: 0);
-      _createAndConfirmNewGoal(cat, target);
+      createAndConfirmNewGoal(cat, target);
     }
   }
 
@@ -61,12 +63,36 @@ class GoalServiceTest extends GoalService {
   void logOnlyLatestGoals() async {
     testUserID = global.currentUser.id;
 
+    // get latest goal in each category
     for (var cat in _allCategories) {
+      // when the timestamp is null, the latest goal is pulled
       getGoal(testUserID, cat, null).then((goals) => dev.log(
           "These are the latest goals: $goals",
           name: "GoalServiceTest LatestUserGoals"));
     }
   }
 
-  //TODO: WHY IS goalOfUser giving issues??????
+  Future<List<Goal>> futureLatestGoals() async {
+    testUserID = global.currentUser.id;
+    List<Future<Goal>> latestGoals = [];
+
+    for (var cat in _allCategories) {
+      latestGoals.add(getGoal(testUserID, cat, null));
+    }
+
+    return Future.wait(latestGoals);
+  }
+
+  Future<Goal> latestFitnessGoal() async {
+    var data = Future.delayed(
+        Duration(seconds: 2),
+        () => {
+              getGoal(global.currentUser.id, CategoryTypes.FITNESS,
+                  TemporalDate.now()),
+            });
+
+    return data.then((value) => value.elementAt(0));
+  }
+
+  //TODO: WHY IS goalOfUser giving issues when set and no issues when null??????
 }

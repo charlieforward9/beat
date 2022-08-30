@@ -48,11 +48,25 @@ class ActivityService {
 
   Future<String> getGoalId(String _activityId) async {
     Activity record = await getActivityRecord(_activityId);
-    return record.goalID;
+    return record.howToGetG;
   }
 
   Future<String> getActivityId(String _activityId) async {
     Activity record = await getActivityRecord(_activityId);
     return record.id;
+  }
+
+  Future<List<Activity>> getActivitiesGoal(String _goalID) async {
+    List<Activity> activities =
+        await activityRepository.getAllActivitiesBelongingToGoal(_goalID);
+    return activities;
+  }
+
+  Future<List<Activity>> getActivitiesByGoalID(String _goalID) async {
+    List<Activity> activities =
+        await activityRepository.getActivityByGoalID(_goalID);
+    int size = activities.length;
+    print("Array Size: $size");
+    return activities;
   }
 }

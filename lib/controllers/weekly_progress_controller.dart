@@ -13,6 +13,5 @@ Future<List<double>> pullDurationData() {
   data[3] = 0.92;
   data[4] = 0.65;
 
-  return Future.delayed(
-      const Duration(seconds: 1), () => Future<List<double>>.value(data));
+  return Future<List<double>>.value(data);
 }
