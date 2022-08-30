@@ -131,11 +131,9 @@ class GoalService {
   }
 
   Future<Map<CategoryTypes, Goal>> getDailyGoals(String userID) async {
-    TemporalDate now = TemporalDate.now();
+    TemporalDate now = TemporalDate(DateTime.utc(2022, 08, 19));
+    //TemporalDate now = TemporalDate.now();
     Map<CategoryTypes, Goal> goals = {};
-    Goal test =
-        await getGoal(userID, CategoryTypes.FITNESS, TemporalDate.now());
-    print("TestingGoal: $test");
     goals[CategoryTypes.FITNESS] =
         await getGoal(userID, CategoryTypes.FITNESS, now);
     goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST, now);

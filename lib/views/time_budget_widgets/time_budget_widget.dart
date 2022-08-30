@@ -44,8 +44,9 @@ class _GoalCardState extends State<GoalCard> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
+            controller
+                .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
             debugPrint('Card tapped - ${widget.cardName} Card.');
-            //controller.getGoalActivities()
           },
           child: SizedBox(
             width: MediaQuery.of(context).size.width - 15,
@@ -61,10 +62,8 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    getGoal();
+                    controller.createActivity();
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
-                    //controller.controllerTester(widget.cardName, widget.cardGoal, widget._goal);
-                    controller.getGoal();
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -116,14 +115,14 @@ class _GoalCardState extends State<GoalCard> {
         ),
       );
 
-  void getGoal() async {
-    @override
-    String userID = globalTest.currentUser.id;
-    CategoryTypes tmp = CategoryTypes.FITNESS;
-    Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
-    String goalID = tempGoal.getId();
-    print("Testing GoalID: $goalID");
-  }
+  // void getGoal() async {
+  //   @override
+  //   String userID = globalTest.currentUser.id;
+  //   CategoryTypes tmp = CategoryTypes.FITNESS;
+  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
+  //   String goalID = tempGoal.getId();
+  //   print("Testing GoalID: $goalID");
+  // }
 
   // String getGoal2() {
   //   @override
