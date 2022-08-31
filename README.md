@@ -1,6 +1,8 @@
 # beat
 
-A new Flutter project.
+Youtube video tuturial for the Bloc Geolocator things https://www.youtube.com/watch?v=Fy59L5lHznE&t=116s
+
+
 
 ## Onboarding
 
