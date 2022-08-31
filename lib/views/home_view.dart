@@ -1,5 +1,6 @@
+import 'package:beat/views/time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:beat/views/home_widgets/app_theme.dart';
+import 'package:beat/app_theme.dart';
 
 import 'home_widgets/completion_widget.dart';
 import 'home_widgets/home_progress_card.dart';

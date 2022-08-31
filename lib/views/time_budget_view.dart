@@ -1,6 +1,6 @@
 import 'time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:beat/views/home_widgets/app_theme.dart';
+import 'package:beat/app_theme.dart';
 class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
 
