@@ -45,12 +45,25 @@ class GoalRepository {
   // Get goal by the goalID
 
   // UPDATE
-  Future<void> updateGoalCurrentDuration(String _goalID) async {
+  Future<void> updateGoalCurrentDuration(
+      String _goalID, DurationBeat newDuration) async {
     Goal oldGoal = await fetchGoalByGoalID(_goalID);
+    // calc the percentage
+    // set the new duraito9n
+    final totalTargetDuration =
+        (oldGoal.goalTargetDuration.durationHours! * 360) +
+            (oldGoal.goalTargetDuration.durationMinutes! * 60) +
+            (oldGoal.goalTargetDuration.durationSeconds!);
+    final totalCurrentDuration = (newDuration.durationHours! * 360) +
+        (newDuration.durationMinutes! * 60) +
+        (newDuration.durationSeconds!);
+    print("totalTargetDuration: $totalTargetDuration");
+    print("totalCurrentDuration: $totalCurrentDuration");
+    final newPercentage = (totalCurrentDuration / totalTargetDuration) * 100;
+    print("newPercentage: $newPercentage");
+
     final newGoal = oldGoal.copyWith(
-        goalPercentage: 50,
-        goalCurrentDuration: DurationBeat(
-            durationHours: 999, durationMinutes: 888, durationSeconds: 777));
+        goalPercentage: newPercentage, goalCurrentDuration: newDuration);
     await Amplify.DataStore.save(newGoal);
   }
 

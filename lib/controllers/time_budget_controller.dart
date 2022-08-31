@@ -53,7 +53,7 @@ Future<void> createActivity() async {
       randomNumber1);
 }
 
-Future<List<Activity>> getGoalActivities(String goalID) async {
+Future<DurationBeat> getGoalActivities(String goalID) async {
   int sumHours = 0;
   int sumMinutes = 0;
   int sumSeconds = 0;
@@ -76,7 +76,11 @@ Future<List<Activity>> getGoalActivities(String goalID) async {
   print("sumHours: $sumHours");
   print("sumMinutes: $sumMinutes");
   print("sumSeconds: $sumSeconds");
-  return allActivities;
+
+  return DurationBeat(
+      durationHours: sumHours,
+      durationMinutes: sumMinutes,
+      durationSeconds: sumSeconds);
 }
 
 Future<List<Goal>> getUsersLatestGoals(String userID) async {
@@ -101,5 +105,8 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
 }
 
 Future<void> updateCurrentDuration(String _goalID) async {
-  await goalService.updateGoalCurrentDuration(_goalID);
+  DurationBeat newDuration =
+      await getGoalActivities("fc16fe6c-b95b-437d-a730-ff2dabd5696c");
+
+  await goalService.updateGoalCurrentDuration(_goalID, newDuration);
 }
