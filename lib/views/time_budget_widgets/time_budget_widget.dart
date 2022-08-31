@@ -44,8 +44,10 @@ class _GoalCardState extends State<GoalCard> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
+            // controller
+            //     .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
             controller
-                .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
+                .updateCurrentDuration("fc16fe6c-b95b-437d-a730-ff2dabd5696c");
             debugPrint('Card tapped - ${widget.cardName} Card.');
           },
           child: SizedBox(

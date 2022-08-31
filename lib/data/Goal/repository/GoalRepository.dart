@@ -42,6 +42,18 @@ class GoalRepository {
     await Amplify.DataStore.delete(goal);
   }
 
+  // Get goal by the goalID
+
+  // UPDATE
+  Future<void> updateGoalCurrentDuration(String _goalID) async {
+    Goal oldGoal = await fetchGoalByGoalID(_goalID);
+    final newGoal = oldGoal.copyWith(
+        goalPercentage: 50,
+        goalCurrentDuration: DurationBeat(
+            durationHours: 999, durationMinutes: 888, durationSeconds: 777));
+    await Amplify.DataStore.save(newGoal);
+  }
+
   //SEARCHING
   //Getting the latest goal respective to the category.
   Future<Goal> fetchLatestGoal(CategoryTypes category, String userId) async {

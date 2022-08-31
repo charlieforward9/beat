@@ -19,6 +19,10 @@ class GoalService {
     await _goalRepository.createGoal(userID, category, newTargetDuration);
   }
 
+  Future<void> updateGoalCurrentDuration(String _goalID) async {
+    await _goalRepository.updateGoalCurrentDuration(_goalID);
+  }
+
   //Returns the requested goal based on its category and date
   //If date is null, it returns the current goal
   //If date specified, it finds the goal whose goalStart and goalEnd range holds this date

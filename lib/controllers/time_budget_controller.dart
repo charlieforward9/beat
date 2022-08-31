@@ -99,3 +99,7 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
   storage.add(fuelGoal);
   return storage;
 }
+
+Future<void> updateCurrentDuration(String _goalID) async {
+  await goalService.updateGoalCurrentDuration(_goalID);
+}
