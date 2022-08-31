@@ -1,4 +1,4 @@
-import 'package:beat/features/location/LocationService.dart';
+import 'package:beat/data/Geolocation/GeolocationService.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -30,8 +30,8 @@ class GoalCard extends StatefulWidget {
 class _GoalCardState extends State<GoalCard> {
  
   void _getCurrentLocation() async {
-    LocationService locationService = LocationService();
-    Position position = await locationService.getPosition();
+    GeolocationService locationService = GeolocationService();
+    Position position = await locationService.getCurrentLocation();
     position != null ? debugPrint('Current Location: ' + position.toString()) : debugPrint('No Location Data');
   }
 
