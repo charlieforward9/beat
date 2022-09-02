@@ -108,8 +108,9 @@ class _MyAppState extends State<MyApp> {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
-    //Clear on-device cache to prevent old data from returning
-    Amplify.DataStore.clear(); 
+    //Reset on-device cache to clear old data
+    // await Amplify.DataStore.clear();
+    // await Amplify.DataStore.start();
     setState(() {
       UserService(userEmail);
       amplifyConfigured = true;
