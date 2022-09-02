@@ -1,3 +1,6 @@
+//DONT DELETE
+//export PATH=/Users/crich/Documents/flutter/bin:$PATH
+
 //***********Backend-related Imports***********//
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -105,6 +108,8 @@ class _MyAppState extends State<MyApp> {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
+    //Clear on-device cache to prevent old data from returning
+    Amplify.DataStore.clear(); 
     setState(() {
       UserService(userEmail);
       amplifyConfigured = true;
