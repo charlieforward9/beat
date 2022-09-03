@@ -51,3 +51,8 @@ type DurationBeat {
   durationHours: Int
 }
  
+type DateTimeBeat {
+  utc: AWSDateTime!
+  local: String!
+}
+ 

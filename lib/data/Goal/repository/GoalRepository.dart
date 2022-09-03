@@ -4,7 +4,7 @@ import 'package:beat/models/ModelProvider.dart';
 
 class GoalRepository {
   //Helper Variables
-  final TemporalDate _today = TemporalDate(DateTime(8, 19, 2022));
+  final TemporalDate _today = TemporalDate(DateTime(2022, 09, 2));
 
   //Helper Functions
   Future<bool> _previousGoalExists(String userID, CategoryTypes cat) async {
