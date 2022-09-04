@@ -10,6 +10,8 @@ import 'amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
 
+import 'data/weFitter.dart';
+
 //***********Frontend-related Imports***********//
 import 'views/home_view.dart';
 import 'views/weekly_progress_view.dart';
@@ -17,8 +19,14 @@ import 'views/time_budget_view.dart';
 
 import 'package:flutter/material.dart';
 
-void main() {
+/*void main() {
   runApp(MyApp());
+}*/
+void main() async {
+  var goochi = await getAdminBearerToken();
+  print(goochi);
+  Map<String, dynamic> gross = await (createWeFitterProfile(goochi));
+  print(gross);
 }
 
 class MyApp extends StatefulWidget {
