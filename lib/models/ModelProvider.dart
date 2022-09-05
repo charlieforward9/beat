@@ -24,25 +24,29 @@ import 'Activity.dart';
 import 'ActivityMetric.dart';
 import 'Goal.dart';
 import 'Metric.dart';
+import 'TestEntity.dart';
 import 'User.dart';
+import 'DateTimeBeat.dart';
 import 'DurationBeat.dart';
 
 export 'Activity.dart';
 export 'ActivityMetric.dart';
 export 'CategoryTypes.dart';
+export 'DateTimeBeat.dart';
 export 'DurationBeat.dart';
 export 'Goal.dart';
 export 'Metric.dart';
+export 'TestEntity.dart';
 export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "6bec222d1e30147995f8b9ca7d46c0e3";
+  String version = "da4b679bf00ed150b7bfe9e61e241423";
   @override
-  List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, Goal.schema, Metric.schema, User.schema];
+  List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, Goal.schema, Metric.schema, TestEntity.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
-  List<ModelSchema> customTypeSchemas = [DurationBeat.schema];
+  List<ModelSchema> customTypeSchemas = [DateTimeBeat.schema, DurationBeat.schema];
 
   static ModelProvider get instance => _instance;
   
@@ -56,6 +60,8 @@ class ModelProvider implements ModelProviderInterface {
         return Goal.classType;
       case "Metric":
         return Metric.classType;
+      case "TestEntity":
+        return TestEntity.classType;
       case "User":
         return User.classType;
       default:
