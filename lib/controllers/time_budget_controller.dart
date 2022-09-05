@@ -33,13 +33,13 @@ Future<Goal> getGoal() async {
   return tempGoal;
 }
 
-Future<Goal> getAllActivities(String goalID) async {
-  // testGetGoalActivities();
-  Goal tempGoal = await goalService.getGoalByGoalID(goalID);
-  print(tempGoal);
+// Future<Goal> getAllActivities(String goalID) async {
+//   // testGetGoalActivities();
+//   Goal tempGoal = await goalService.getGoalByGoalID(goalID);
+//   // print(tempGoal);
 
-  return tempGoal;
-}
+//   return tempGoal;
+// }
 
 Future<void> createActivity() async {
   debugPrint("Creating Activity....");
@@ -53,60 +53,32 @@ Future<void> createActivity() async {
       randomNumber1);
 }
 
-Future<DurationBeat> getGoalActivities(String goalID) async {
-  int sumHours = 0;
-  int sumMinutes = 0;
-  int sumSeconds = 0;
-  DurationBeat sumOfActivities =
-      DurationBeat(durationHours: 0, durationMinutes: 0, durationSeconds: 0);
-  List<Activity> allActivities =
-      await activityService.getActivitiesByGoalID(goalID);
-
-  if (allActivities.length == 0) {
-    print("List empty");
-  } else {
-    for (int i = 0; i < allActivities.length; i++) {
-      // add the hours, minutes, seconds
-      sumHours += allActivities[i].activityDuration.durationHours!;
-      sumMinutes += allActivities[i].activityDuration.durationMinutes!;
-      sumSeconds += allActivities[i].activityDuration.durationSeconds!;
-      print(allActivities[i]);
-    }
-  }
-  print("sumHours: $sumHours");
-  print("sumMinutes: $sumMinutes");
-  print("sumSeconds: $sumSeconds");
-
-  return DurationBeat(
-      durationHours: sumHours,
-      durationMinutes: sumMinutes,
-      durationSeconds: sumSeconds);
-}
-
 Future<List<Goal>> getUsersLatestGoals(String userID) async {
   TemporalDate tempDate = TemporalDate(DateTime.utc(2022, 08, 19));
   List<Goal> storage = List.empty(growable: true);
   Goal fitnessGoal = await goalService.getGoal(
       userID, CategoryTypes.FITNESS, tempDate); // TemporalDate.now()
+  // goalService.updateGoalCurrentDuration(fitnessGoal.id);
   storage.add(fitnessGoal);
   Goal socialGoal =
       await goalService.getGoal(userID, CategoryTypes.SOCIAL, tempDate);
+  goalService.updateGoalCurrentDuration(socialGoal.id);
   storage.add(socialGoal);
   Goal restGoal =
       await goalService.getGoal(userID, CategoryTypes.REST, tempDate);
+  //goalService.updateGoalCurrentDuration(restGoal.id);
   storage.add(restGoal);
   Goal productivityGoal =
       await goalService.getGoal(userID, CategoryTypes.PRODUCTIVITY, tempDate);
+  //goalService.updateGoalCurrentDuration(productivityGoal.id);
   storage.add(productivityGoal);
   Goal fuelGoal =
       await goalService.getGoal(userID, CategoryTypes.FUEL, tempDate);
+  //goalService.updateGoalCurrentDuration(fuelGoal.id);
   storage.add(fuelGoal);
   return storage;
 }
 
 Future<void> updateCurrentDuration(String _goalID) async {
-  DurationBeat newDuration =
-      await getGoalActivities("fc16fe6c-b95b-437d-a730-ff2dabd5696c");
-
-  await goalService.updateGoalCurrentDuration(_goalID, newDuration);
+  await goalService.updateGoalCurrentDuration(_goalID);
 }

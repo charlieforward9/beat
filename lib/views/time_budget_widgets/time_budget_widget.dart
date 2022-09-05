@@ -47,7 +47,7 @@ class _GoalCardState extends State<GoalCard> {
             // controller
             //     .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
             controller
-                .updateCurrentDuration("fc16fe6c-b95b-437d-a730-ff2dabd5696c");
+                .updateCurrentDuration("015ad3d8-868b-4153-9cf5-f7c49a024582");
             debugPrint('Card tapped - ${widget.cardName} Card.');
           },
           child: SizedBox(

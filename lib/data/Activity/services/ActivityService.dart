@@ -66,7 +66,7 @@ class ActivityService {
     List<Activity> activities =
         await activityRepository.getActivityByGoalID(_goalID);
     int size = activities.length;
-    print("Array Size: $size");
+    //print("Array Size: $size");
     return activities;
   }
 }

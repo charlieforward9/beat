@@ -21,22 +21,40 @@ class MapGoalsFailure extends GoalState {
 
 class GoalCubit extends Cubit<GoalState> {
   final goalService = GoalService();
-  String userId = '190c7bd1-02ad-4ab1-970d-49b8e6f7a9f8';
+  String userId = '985924ea-f60a-4deb-89d9-ad6c71fec5c6';
 
   GoalCubit() : super(LoadingGoals());
 
   void getDayGoals() async {
+    // updateGoalPercentage("015ad3d8-868b-4153-9cf5-f7c49a024582");
+
     if (state is MapGoalsSuccess == false) {
       emit(LoadingGoals());
     }
 
     try {
       final goals = await goalService.getDailyGoals(userId);
+      final goalLength = goals.length;
+      goals.forEach((key, value) {
+        final goalID = value.id;
+        // print('Key: $key');
+        // print('Value: $value');
+        // print('GoalID: $goalID');
+        //goalService.updateGoalCurrentDuration(goalID);
+      });
       emit(MapGoalsSuccess(goals: goals));
     } catch (e) {
       emit(MapGoalsFailure(exception: Exception(e)));
     }
   }
+
+  // create new functions here - start
+  void updateGoalPercentage(String _goalID) async {
+    //print("updatedGoalPercentage being called");
+    await goalService.updateGoalCurrentDuration(_goalID);
+  }
+
+  // create new functions here - end
 
   void observeGoals() {
     goalService.observeGoals().listen((_) => getDayGoals());
