@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:http/http.dart' as http;
+import 'package:amplify_flutter/amplify_flutter.dart';
 
 Future<String> getAdminBearerToken() async {
   //returns bearerAdmin token
@@ -50,8 +51,17 @@ Future<Map<String, dynamic>> createWeFitterProfile(
   if (response.statusCode == 201) {
     var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
     var bearerToken = jsonResponse['bearer'];
+
+    final userInts = Integrations(
+        wf_public_id: jsonResponse['public_id'],
+        wf_profile_bearer: jsonResponse['bearer']);
+    await Amplify.DataStore.save(userInts);
+
+    final updatedUser = user.copyWith(userIntegrations: userInts);
+    await Amplify.DataStore.save(updatedUser);
+
     return jsonResponse;
   } else {
-    return {};
+    return {}; //TODO: ADD proper error handling
   }
 }
