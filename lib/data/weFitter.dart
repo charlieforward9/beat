@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:beat/models/ModelProvider.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getAdminBearerToken() async {
@@ -23,22 +24,22 @@ Future<String> getAdminBearerToken() async {
   }
 }
 
-Future<Map<String, dynamic>> createWeFitterProfile(adminBearer) async {
+Future<Map<String, dynamic>> createWeFitterProfile(
+    adminBearer, User user) async {
   //returns map with profile information
   var headers = {
     'Authorization': 'Bearer $adminBearer',
     'Cookie': 'SERVERID=s4'
   };
   var body = {
-    'given_name': 'string',
-    'family_name': 'string',
-    'nickname': 'string',
-    'gender': 'M',
-    'birthdate': '2022-09-02',
+    'given_name': user.userFirstName,
+    'family_name': user.userLastName,
+    'nickname': user.userName,
+    'gender': user.userGender,
+    'birthdate': '2022-09-02', //TODO: string manipulate
     'locale': 'EN-us', //TODO : automate setting of location
-    'reference': 'string',
-    'avatar':
-        'https://www.google.com/imgres?imgurl=https%3A%2F%2Fnews.yale.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Ffeatured_media%2Fpublic%2Fadobestock_247791659-ynews-cc.jpg%3Fitok%3DQBjU78nw%26c%3D07307e7d6a991172b9f808eb83b18804&imgrefurl=https%3A%2F%2Fnews.yale.edu%2F2020%2F01%2F28%2Ftiny-salamanders-huge-genome-may-harbor-secrets-regeneration&tbnid=zXYayC55n_dnMM&vet=12ahUKEwjvv_TNrPf5AhUeRFMKHVmQCRoQMygFegUIARDnAQ..i&docid=MZkk-NldV1OabM&w=1022&h=594&q=salamander&ved=2ahUKEwjvv_TNrPf5AhUeRFMKHVmQCRoQMygFegUIARDnAQ'
+    'reference': user.id,
+    'avatar': user.userAvatar
   };
 
   final response = await http.post(
