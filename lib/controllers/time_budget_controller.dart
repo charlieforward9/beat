@@ -88,22 +88,21 @@ Future<List<Activity>> getGoalActivities(String goalID) async {
 }
 
 Future<List<Goal>> getUsersLatestGoals(String userID) async {
-  TemporalDate tempDate = TemporalDate(DateTime(2022, 09, 02));
   List<Goal> storage = List.empty(growable: true);
   Goal fitnessGoal = await goalService.getGoal(
-      userID, CategoryTypes.FITNESS, tempDate); // TemporalDate.now()
+      userID, CategoryTypes.FITNESS, null); // TemporalDate.now()
   storage.add(fitnessGoal);
   Goal socialGoal =
-      await goalService.getGoal(userID, CategoryTypes.SOCIAL, tempDate);
+      await goalService.getGoal(userID, CategoryTypes.SOCIAL, null);
   storage.add(socialGoal);
   Goal restGoal =
-      await goalService.getGoal(userID, CategoryTypes.REST, tempDate);
+      await goalService.getGoal(userID, CategoryTypes.REST, null);
   storage.add(restGoal);
   Goal productivityGoal =
-      await goalService.getGoal(userID, CategoryTypes.PRODUCTIVITY, tempDate);
+      await goalService.getGoal(userID, CategoryTypes.PRODUCTIVITY, null);
   storage.add(productivityGoal);
   Goal fuelGoal =
-      await goalService.getGoal(userID, CategoryTypes.FUEL, tempDate);
+      await goalService.getGoal(userID, CategoryTypes.FUEL, null);
   storage.add(fuelGoal);
   return storage;
 }
