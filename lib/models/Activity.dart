@@ -30,8 +30,8 @@ import 'package:flutter/foundation.dart';
 class Activity extends Model {
   static const classType = const _ActivityModelType();
   final String id;
-  final TemporalDateTime? _activityStart;
-  final TemporalDateTime? _activityEnd;
+  final TemporalDateTime? _utcStart;
+  final String? _localStart;
   final CategoryTypes? _activtyCategory;
   final DurationBeat? _activityDuration;
   final String? _howToGetG;
@@ -48,9 +48,9 @@ class Activity extends Model {
     return id;
   }
   
-  TemporalDateTime get activityStart {
+  TemporalDateTime get utcStart {
     try {
-      return _activityStart!;
+      return _utcStart!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -61,9 +61,9 @@ class Activity extends Model {
     }
   }
   
-  TemporalDateTime get activityEnd {
+  String get localStart {
     try {
-      return _activityEnd!;
+      return _localStart!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -129,13 +129,13 @@ class Activity extends Model {
     return _updatedAt;
   }
   
-  const Activity._internal({required this.id, required activityStart, required activityEnd, required activtyCategory, required activityDuration, required howToGetG, activityMetrics, activityOfGoal, createdAt, updatedAt}): _activityStart = activityStart, _activityEnd = activityEnd, _activtyCategory = activtyCategory, _activityDuration = activityDuration, _howToGetG = howToGetG, _activityMetrics = activityMetrics, _activityOfGoal = activityOfGoal, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Activity._internal({required this.id, required utcStart, required localStart, required activtyCategory, required activityDuration, required howToGetG, activityMetrics, activityOfGoal, createdAt, updatedAt}): _utcStart = utcStart, _localStart = localStart, _activtyCategory = activtyCategory, _activityDuration = activityDuration, _howToGetG = howToGetG, _activityMetrics = activityMetrics, _activityOfGoal = activityOfGoal, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Activity({String? id, required TemporalDateTime activityStart, required TemporalDateTime activityEnd, required CategoryTypes activtyCategory, required DurationBeat activityDuration, required String howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
+  factory Activity({String? id, required TemporalDateTime utcStart, required String localStart, required CategoryTypes activtyCategory, required DurationBeat activityDuration, required String howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
     return Activity._internal(
       id: id == null ? UUID.getUUID() : id,
-      activityStart: activityStart,
-      activityEnd: activityEnd,
+      utcStart: utcStart,
+      localStart: localStart,
       activtyCategory: activtyCategory,
       activityDuration: activityDuration,
       howToGetG: howToGetG,
@@ -152,8 +152,8 @@ class Activity extends Model {
     if (identical(other, this)) return true;
     return other is Activity &&
       id == other.id &&
-      _activityStart == other._activityStart &&
-      _activityEnd == other._activityEnd &&
+      _utcStart == other._utcStart &&
+      _localStart == other._localStart &&
       _activtyCategory == other._activtyCategory &&
       _activityDuration == other._activityDuration &&
       _howToGetG == other._howToGetG &&
@@ -170,8 +170,8 @@ class Activity extends Model {
     
     buffer.write("Activity {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("activityStart=" + (_activityStart != null ? _activityStart!.format() : "null") + ", ");
-    buffer.write("activityEnd=" + (_activityEnd != null ? _activityEnd!.format() : "null") + ", ");
+    buffer.write("utcStart=" + (_utcStart != null ? _utcStart!.format() : "null") + ", ");
+    buffer.write("localStart=" + "$_localStart" + ", ");
     buffer.write("activtyCategory=" + (_activtyCategory != null ? enumToString(_activtyCategory)! : "null") + ", ");
     buffer.write("activityDuration=" + (_activityDuration != null ? _activityDuration!.toString() : "null") + ", ");
     buffer.write("howToGetG=" + "$_howToGetG" + ", ");
@@ -183,11 +183,11 @@ class Activity extends Model {
     return buffer.toString();
   }
   
-  Activity copyWith({String? id, TemporalDateTime? activityStart, TemporalDateTime? activityEnd, CategoryTypes? activtyCategory, DurationBeat? activityDuration, String? howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
+  Activity copyWith({String? id, TemporalDateTime? utcStart, String? localStart, CategoryTypes? activtyCategory, DurationBeat? activityDuration, String? howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
     return Activity._internal(
       id: id ?? this.id,
-      activityStart: activityStart ?? this.activityStart,
-      activityEnd: activityEnd ?? this.activityEnd,
+      utcStart: utcStart ?? this.utcStart,
+      localStart: localStart ?? this.localStart,
       activtyCategory: activtyCategory ?? this.activtyCategory,
       activityDuration: activityDuration ?? this.activityDuration,
       howToGetG: howToGetG ?? this.howToGetG,
@@ -197,8 +197,8 @@ class Activity extends Model {
   
   Activity.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _activityStart = json['activityStart'] != null ? TemporalDateTime.fromString(json['activityStart']) : null,
-      _activityEnd = json['activityEnd'] != null ? TemporalDateTime.fromString(json['activityEnd']) : null,
+      _utcStart = json['utcStart'] != null ? TemporalDateTime.fromString(json['utcStart']) : null,
+      _localStart = json['localStart'],
       _activtyCategory = enumFromString<CategoryTypes>(json['activtyCategory'], CategoryTypes.values),
       _activityDuration = json['activityDuration']?['serializedData'] != null
         ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['activityDuration']['serializedData']))
@@ -217,12 +217,12 @@ class Activity extends Model {
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': enumToString(_activtyCategory), 'activityDuration': _activityDuration?.toJson(), 'howToGetG': _howToGetG, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'activityOfGoal': _activityOfGoal?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'utcStart': _utcStart?.format(), 'localStart': _localStart, 'activtyCategory': enumToString(_activtyCategory), 'activityDuration': _activityDuration?.toJson(), 'howToGetG': _howToGetG, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'activityOfGoal': _activityOfGoal?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "activity.id");
-  static final QueryField ACTIVITYSTART = QueryField(fieldName: "activityStart");
-  static final QueryField ACTIVITYEND = QueryField(fieldName: "activityEnd");
+  static final QueryField UTCSTART = QueryField(fieldName: "utcStart");
+  static final QueryField LOCALSTART = QueryField(fieldName: "localStart");
   static final QueryField ACTIVTYCATEGORY = QueryField(fieldName: "activtyCategory");
   static final QueryField ACTIVITYDURATION = QueryField(fieldName: "activityDuration");
   static final QueryField HOWTOGETG = QueryField(fieldName: "howToGetG");
@@ -250,15 +250,15 @@ class Activity extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYSTART,
+      key: Activity.UTCSTART,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYEND,
+      key: Activity.LOCALSTART,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(

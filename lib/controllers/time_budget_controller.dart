@@ -6,6 +6,7 @@ import 'dart:math';
 
 // import data models
 import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:beat/data/DateTimeService.dart';
 import 'package:beat/data/Goal/repository/GoalRepository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -41,16 +42,23 @@ Future<Goal> getAllActivities(String goalID) async {
   return tempGoal;
 }
 
+//TODO double check that this contoller works with a non-hard-coded values
 Future<void> createActivity() async {
   debugPrint("Creating Activity....");
-  Random random = new Random();
-  int randomNumber1 = random.nextInt(100);
-  activityService.createRecord(
-      CategoryTypes.FITNESS,
-      "f49cf805-6ada-4731-87a6-8b1fb027660c",
-      randomNumber1,
-      randomNumber1,
-      randomNumber1);
+  int rand = Random().nextInt(100);
+  DateTime now = DateTime.now();
+  final loc = DTService().localDT;
+  final utc = DTService().utcDT;
+  DurationBeat dur = DurationBeat(
+      durationHours: rand, durationMinutes: rand, durationSeconds: rand);
+
+  activityService.createActivity(
+    loc,
+    utc,
+    CategoryTypes.FITNESS,
+    dur,
+    "f49cf805-6ada-4731-87a6-8b1fb027660c",
+  );
 }
 
 Future<List<Activity>> getGoalActivities(String goalID) async {
