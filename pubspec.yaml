@@ -43,6 +43,9 @@ dependencies:
   amplify_api: ^0.6.0
   amplify_flutter: ^0.6.0
   flutter_bloc: ^8.0.1
+  http: ^0.13.5
+  intl: ^0.17.0
+  flutter_inappwebview: ^5.4.3+7
   
 
 dev_dependencies:
