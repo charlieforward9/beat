@@ -19,17 +19,18 @@
 
 // ignore_for_file: public_member_api_docs, annotate_overrides, dead_code, dead_codepublic_member_api_docs, depend_on_referenced_packages, file_names, library_private_types_in_public_api, no_leading_underscores_for_library_prefixes, no_leading_underscores_for_local_identifiers, non_constant_identifier_names, null_check_on_nullable_type_parameter, prefer_adjacent_string_concatenation, prefer_const_constructors, prefer_if_null_operators, prefer_interpolation_to_compose_strings, slash_for_doc_comments, sort_child_properties_last, unnecessary_const, unnecessary_constructor_name, unnecessary_late, unnecessary_new, unnecessary_null_aware_assignments, unnecessary_nullable_for_final_variable_declarations, unnecessary_string_interpolations, use_build_context_synchronously
 
+import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the Integrations type in your schema. */
+/** This is an auto generated class representing the MetricActivity type in your schema. */
 @immutable
-class Integrations extends Model {
-  static const classType = const _IntegrationsModelType();
+class MetricActivity extends Model {
+  static const classType = const _MetricActivityModelType();
   final String id;
-  final String? _wf_profile_bearer;
-  final String? _wf_public_id;
+  final Activity? _activity;
+  final Metric? _metric;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -41,9 +42,9 @@ class Integrations extends Model {
     return id;
   }
   
-  String get wf_profile_bearer {
+  Activity get activity {
     try {
-      return _wf_profile_bearer!;
+      return _activity!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -54,9 +55,9 @@ class Integrations extends Model {
     }
   }
   
-  String get wf_public_id {
+  Metric get metric {
     try {
-      return _wf_public_id!;
+      return _metric!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -75,13 +76,13 @@ class Integrations extends Model {
     return _updatedAt;
   }
   
-  const Integrations._internal({required this.id, required wf_profile_bearer, required wf_public_id, createdAt, updatedAt}): _wf_profile_bearer = wf_profile_bearer, _wf_public_id = wf_public_id, _createdAt = createdAt, _updatedAt = updatedAt;
+  const MetricActivity._internal({required this.id, required activity, required metric, createdAt, updatedAt}): _activity = activity, _metric = metric, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Integrations({String? id, required String wf_profile_bearer, required String wf_public_id}) {
-    return Integrations._internal(
+  factory MetricActivity({String? id, required Activity activity, required Metric metric}) {
+    return MetricActivity._internal(
       id: id == null ? UUID.getUUID() : id,
-      wf_profile_bearer: wf_profile_bearer,
-      wf_public_id: wf_public_id);
+      activity: activity,
+      metric: metric);
   }
   
   bool equals(Object other) {
@@ -91,10 +92,10 @@ class Integrations extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Integrations &&
+    return other is MetricActivity &&
       id == other.id &&
-      _wf_profile_bearer == other._wf_profile_bearer &&
-      _wf_public_id == other._wf_public_id;
+      _activity == other._activity &&
+      _metric == other._metric;
   }
   
   @override
@@ -104,10 +105,10 @@ class Integrations extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Integrations {");
+    buffer.write("MetricActivity {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("wf_profile_bearer=" + "$_wf_profile_bearer" + ", ");
-    buffer.write("wf_public_id=" + "$_wf_public_id" + ", ");
+    buffer.write("activity=" + (_activity != null ? _activity!.toString() : "null") + ", ");
+    buffer.write("metric=" + (_metric != null ? _metric!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -115,54 +116,53 @@ class Integrations extends Model {
     return buffer.toString();
   }
   
-  Integrations copyWith({String? id, String? wf_profile_bearer, String? wf_public_id}) {
-    return Integrations._internal(
+  MetricActivity copyWith({String? id, Activity? activity, Metric? metric}) {
+    return MetricActivity._internal(
       id: id ?? this.id,
-      wf_profile_bearer: wf_profile_bearer ?? this.wf_profile_bearer,
-      wf_public_id: wf_public_id ?? this.wf_public_id);
+      activity: activity ?? this.activity,
+      metric: metric ?? this.metric);
   }
   
-  Integrations.fromJson(Map<String, dynamic> json)  
+  MetricActivity.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _wf_profile_bearer = json['wf_profile_bearer'],
-      _wf_public_id = json['wf_public_id'],
+      _activity = json['activity']?['serializedData'] != null
+        ? Activity.fromJson(new Map<String, dynamic>.from(json['activity']['serializedData']))
+        : null,
+      _metric = json['metric']?['serializedData'] != null
+        ? Metric.fromJson(new Map<String, dynamic>.from(json['metric']['serializedData']))
+        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'wf_profile_bearer': _wf_profile_bearer, 'wf_public_id': _wf_public_id, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'activity': _activity?.toJson(), 'metric': _metric?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "integrations.id");
-  static final QueryField WF_PROFILE_BEARER = QueryField(fieldName: "wf_profile_bearer");
-  static final QueryField WF_PUBLIC_ID = QueryField(fieldName: "wf_public_id");
+  static final QueryField ID = QueryField(fieldName: "metricActivity.id");
+  static final QueryField ACTIVITY = QueryField(
+    fieldName: "activity",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Activity).toString()));
+  static final QueryField METRIC = QueryField(
+    fieldName: "metric",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Metric).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Integrations";
-    modelSchemaDefinition.pluralName = "Integrations";
-    
-    modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
-    ];
+    modelSchemaDefinition.name = "MetricActivity";
+    modelSchemaDefinition.pluralName = "MetricActivities";
     
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Integrations.WF_PROFILE_BEARER,
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: MetricActivity.ACTIVITY,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      targetName: "activityID",
+      ofModelName: (Activity).toString()
     ));
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Integrations.WF_PUBLIC_ID,
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: MetricActivity.METRIC,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      targetName: "metricID",
+      ofModelName: (Metric).toString()
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
@@ -181,11 +181,11 @@ class Integrations extends Model {
   });
 }
 
-class _IntegrationsModelType extends ModelType<Integrations> {
-  const _IntegrationsModelType();
+class _MetricActivityModelType extends ModelType<MetricActivity> {
+  const _MetricActivityModelType();
   
   @override
-  Integrations fromJson(Map<String, dynamic> jsonData) {
-    return Integrations.fromJson(jsonData);
+  MetricActivity fromJson(Map<String, dynamic> jsonData) {
+    return MetricActivity.fromJson(jsonData);
   }
 }
