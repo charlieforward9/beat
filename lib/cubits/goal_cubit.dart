@@ -22,7 +22,7 @@ class MapGoalsFailure extends GoalState {
 class GoalCubit extends Cubit<GoalState> {
   final goalService = GoalService();
   //TODO LateInitException here when global user is used
-  String userId = '28377eec-214f-473a-8934-186852b20c64';
+  String userId = 'f998c35f-9ba3-4546-a4b6-7bdc21c54073';
 
   GoalCubit() : super(LoadingGoals());
 

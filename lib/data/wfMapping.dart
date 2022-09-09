@@ -148,8 +148,8 @@ Future<void> mapWFWorkoutToBeatActivity() async {
         .toLocal()
         .toIso8601String();
     var _category = CategoryTypes.FITNESS;
-    var _duration = DurationBeat(
-        durationSeconds: _toDuration(workout["duration"]).inSeconds);
+    var _duration =
+        DurationBeat(seconds: _toDuration(workout["duration"]).inSeconds);
     var _goal = await GoalService()
         .getGoal(currentUser.id, CategoryTypes.FITNESS, _utcStartDate);
     //TODO Handle the metrics that come from WeFitter
@@ -158,9 +158,9 @@ Future<void> mapWFWorkoutToBeatActivity() async {
     var activity = Activity(
         utcStart: _utcStart,
         localStart: _localStart,
-        activtyCategory: _category,
+        activityCategory: _category,
         activityDuration: _duration,
-        howToGetG: _goalId,
+        goalOfActivity: _goalId,
         activityOfGoal: _goal);
 
     Amplify.DataStore.save(activity);
