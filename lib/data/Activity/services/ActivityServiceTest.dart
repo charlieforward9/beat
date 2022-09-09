@@ -24,8 +24,7 @@ class ActivityServiceTest {
   Future<void> testActivityTimestamp() async {
     const category = CategoryTypes.FUEL;
     final goalDate = TemporalDate(DateTime(2022, 09, 02));
-    dev.log(
-        "Teting ${category.name} Activity Timestamp, check Database");
+    dev.log("Teting ${category.name} Activity Timestamp, check Database");
     gService
         .getGoal(userID, category, goalDate)
         .then((value) => aService.getActivitiesByGoalID(value.id))
@@ -36,29 +35,30 @@ class ActivityServiceTest {
   Future<void> createAnActivityForEachGoal() async {
     final uid = global.currentUser.id;
     final randDur = Random().nextInt(50);
-    final dur = DurationBeat(
-        durationHours: randDur,
-        durationMinutes: randDur,
-        durationSeconds: randDur);
+    final dur =
+        DurationBeat(hours: randDur, minutes: randDur, seconds: randDur);
     for (CategoryTypes cat in CategoryTypes.values) {
       gService
           .getGoal(uid, cat, null)
           .then((goal) => Activity(
               localStart: DTService().localDT,
               utcStart: DTService().utcDT,
-              activtyCategory: cat,
+              activityCategory: cat,
               activityDuration: dur,
-              howToGetG: goal.id))
-          .then(((activity) =>
-              {createAndConfirmActivity(activity)}));
+              goalOfActivity: goal.id))
+          .then(((activity) => {createAndConfirmActivity(activity)}));
     }
   }
 
   Future<void> createAndConfirmActivity(Activity activity) async {
     await aService
-        .createActivity(activity.localStart, activity.utcStart, activity.activtyCategory,
-            activity.activityDuration, activity.howToGetG)
-        .then((_) => aService.getActivitiesByGoalID(activity.howToGetG))
+        .createActivity(
+            activity.localStart,
+            activity.utcStart,
+            activity.activityCategory,
+            activity.activityDuration,
+            activity.goalOfActivity)
+        .then((_) => aService.getActivitiesByGoalID(activity.goalOfActivity))
         .then((value) => dev.log(value.first.toString()));
   }
 }
