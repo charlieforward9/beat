@@ -15,7 +15,9 @@
             "usesubusernamefordefaultidentityclaim": true,
             "usefieldnameforprimarykeyconnectionfield": false,
             "enableautoindexquerynames": false,
-            "respectprimarykeyattributesonconnectionfield": false
+            "respectprimarykeyattributesonconnectionfield": false,
+            "shoulddeepmergedirectiveconfigdefaults": false,
+            "populateownerfieldforstaticgroupauth": false
         },
         "frontend-ios": {
             "enablexcodeintegration": true
