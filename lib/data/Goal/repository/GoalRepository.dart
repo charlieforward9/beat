@@ -15,7 +15,7 @@ class GoalRepository {
   Future<Goal> fetchLatestGoal(CategoryTypes category, String userId) async {
     //Check if a record exist
     final record = await Amplify.DataStore.query(Goal.classType,
-        where: Goal.HOWTOGETU.eq(userId).and(Goal.GOALCATEGORY.eq(category)),
+        where: Goal.USEROFGOAL.eq(userId).and(Goal.GOALCATEGORY.eq(category)),
         sortBy: [Goal.UTCDATE.descending()]);
     return record.first;
   }
@@ -25,7 +25,7 @@ class GoalRepository {
   Future<Goal> fetchGoalFromDate(
       CategoryTypes category, String userID, TemporalDate date) async {
     final goalList = await Amplify.DataStore.query(Goal.classType,
-        where: Goal.HOWTOGETU
+        where: Goal.USEROFGOAL
             .eq(userID)
             .and(Goal.GOALCATEGORY.eq(category).and(Goal.UTCDATE.eq(date))),
         sortBy: [Goal.UTCDATE.descending()]);
@@ -36,7 +36,7 @@ class GoalRepository {
   Future<List<Goal>?> fetchAllUserGoals(String userID) async {
     final List<Goal> allUserGoals = await Amplify.DataStore.query(
         Goal.classType,
-        where: Goal.HOWTOGETU.eq(userID));
+        where: Goal.USEROFGOAL.eq(userID));
     return allUserGoals.isEmpty ? null : allUserGoals;
   }
 

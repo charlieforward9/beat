@@ -15,10 +15,10 @@ class ActivityService {
     final activity = Activity(
         localStart: _localStart,
         utcStart: _utcStart,
-        activtyCategory: _category,
+        activityCategory: _category,
         activityDuration: _duration,
         activityMetrics: null,
-        howToGetG: _goalId);
+        goalOfActivity: _goalId);
 
     await activityRepository.saveActivity(activity);
   }
