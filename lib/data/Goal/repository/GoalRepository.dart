@@ -24,11 +24,14 @@ class GoalRepository {
   //Assumes date is null
   Future<Goal> fetchGoalFromDate(
       CategoryTypes category, String userID, TemporalDate date) async {
-    final goalList = await Amplify.DataStore.query(Goal.classType,
-        where: Goal.USEROFGOAL
-            .eq(userID)
-            .and(Goal.GOALCATEGORY.eq(category).and(Goal.UTCDATE.eq(date))),
-        sortBy: [Goal.UTCDATE.descending()]);
+    final goalList = await Amplify.DataStore.query(
+      Goal.classType,
+      where: Goal.USEROFGOAL.eq(userID).and(
+            Goal.GOALCATEGORY.eq(category).and(
+                  Goal.UTCDATE.eq(date),
+                ),
+          ),
+    );
     return goalList.first;
   }
 
