@@ -12,6 +12,7 @@ class GoalRepository {
 
   // Get goal by the goalID
   // UPDATE
+  // need to pass in goal instead of creating goal in the repository
   Future<void> updateGoalPercentage(
       String _goalID, double newPercentage) async {
     Goal oldGoal = await fetchGoalByGoalID(_goalID);
@@ -19,6 +20,7 @@ class GoalRepository {
     await Amplify.DataStore.save(newGoal);
   }
 
+  // need to pass in goal instead of creating goal in the repository
   // UPDATE
   Future<void> updateGoalDurationPercentage(
       String _goalID, DurationBeat newDuration, newPercentage) async {
