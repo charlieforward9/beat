@@ -32,6 +32,59 @@ class GoalService {
     //await _userService.saveGoalToUser(goal);
   }
 
+  Future<DurationBeat> getDurationOfAllGoalActivities(String goalID) async {
+    int sumHours = 0;
+    int sumMinutes = 0;
+    int sumSeconds = 0;
+    DurationBeat sumOfActivities =
+        DurationBeat(durationHours: 0, durationMinutes: 0, durationSeconds: 0);
+    List<Activity> allActivities =
+        await activityService.getActivitiesByGoalID(goalID);
+
+    if (allActivities.length == 0) {
+      // print("List empty");
+    } else {
+      for (int i = 0; i < allActivities.length; i++) {
+        // add the hours, minutes, seconds
+        sumHours += allActivities[i].activityDuration.durationHours!;
+        sumMinutes += allActivities[i].activityDuration.durationMinutes!;
+        sumSeconds += allActivities[i].activityDuration.durationSeconds!;
+        //print(allActivities[i]);
+      }
+    }
+    // print("sumHours: $sumHours");
+    // print("sumMinutes: $sumMinutes");
+    // print("sumSeconds: $sumSeconds");
+
+    return DurationBeat(
+        durationHours: sumHours,
+        durationMinutes: sumMinutes,
+        durationSeconds: sumSeconds);
+  }
+
+  Future<void> updateGoalCurrentDuration(String _goalID) async {
+    // _goalID = "015ad3d8-868b-4153-9cf5-f7c49a024582";
+    DurationBeat _newCurrentDuration =
+        await getDurationOfAllGoalActivities(_goalID);
+    // get the old goal
+    Goal oldGoal = await _goalRepository.fetchGoalByGoalID(_goalID);
+    // sum old duration
+    final oldDuration = Duration(
+        hours: oldGoal.goalTargetDuration.durationHours!,
+        minutes: oldGoal.goalTargetDuration.durationMinutes!,
+        seconds: oldGoal.goalTargetDuration.durationSeconds!);
+    final newDuration = Duration(
+        hours: _newCurrentDuration.durationHours!,
+        minutes: _newCurrentDuration.durationMinutes!,
+        seconds: _newCurrentDuration.durationSeconds!);
+    final newPercentage = (newDuration.inSeconds / oldDuration.inSeconds) * 100;
+    // print("newPercentage - test: $newPercentage");
+    // send to repo to update the goal
+    // need to pass in goal instead of creating goal in the repository
+    await _goalRepository.updateGoalDurationPercentage(
+        _goalID, _newCurrentDuration, newPercentage);
+  }
+
   //Returns the requested goal based on its category and date
   //If date is null, it returns the current goal
   //If date specified, it finds the goal whose goalStart and goalEnd range holds this date

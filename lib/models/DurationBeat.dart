@@ -22,7 +22,6 @@
 import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/foundation.dart';
 
-
 /** This is an auto generated class representing the DurationBeat type in your schema. */
 @immutable
 class DurationBeat {
@@ -33,6 +32,7 @@ class DurationBeat {
   int? get hours {
     return _hours;
   }
+
   
   int? get minutes {
     return _minutes;
@@ -50,11 +50,11 @@ class DurationBeat {
       minutes: minutes,
       seconds: seconds);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
@@ -63,20 +63,20 @@ class DurationBeat {
       _minutes == other._minutes &&
       _seconds == other._seconds;
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("DurationBeat {");
     buffer.write("hours=" + (_hours != null ? _hours!.toString() : "null") + ", ");
     buffer.write("minutes=" + (_minutes != null ? _minutes!.toString() : "null") + ", ");
     buffer.write("seconds=" + (_seconds != null ? _seconds!.toString() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
   
@@ -96,10 +96,11 @@ class DurationBeat {
     'hours': _hours, 'minutes': _minutes, 'seconds': _seconds
   };
 
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "DurationBeat";
     modelSchemaDefinition.pluralName = "DurationBeats";
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
       fieldName: 'hours',
       isRequired: false,

@@ -34,13 +34,13 @@ Future<Goal> getGoal() async {
   return tempGoal;
 }
 
-Future<Goal> getAllActivities(String goalID) async {
-  // testGetGoalActivities();
-  Goal tempGoal = await goalService.getGoalByGoalID(goalID);
-  print(tempGoal);
+// Future<Goal> getAllActivities(String goalID) async {
+//   // testGetGoalActivities();
+//   Goal tempGoal = await goalService.getGoalByGoalID(goalID);
+//   // print(tempGoal);
 
-  return tempGoal;
-}
+//   return tempGoal;
+// }
 
 //TODO double check that this contoller works with a non-hard-coded values
 Future<void> createActivity() async {
@@ -91,6 +91,7 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
   List<Goal> storage = List.empty(growable: true);
   Goal fitnessGoal = await goalService.getGoal(
       userID, CategoryTypes.FITNESS, null); // TemporalDate.now()
+      //goalService.updateGoalCurrentDuration(fuelGoal.id);
   storage.add(fitnessGoal);
   Goal socialGoal =
       await goalService.getGoal(userID, CategoryTypes.SOCIAL, null);
@@ -105,4 +106,8 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
       await goalService.getGoal(userID, CategoryTypes.FUEL, null);
   storage.add(fuelGoal);
   return storage;
+}
+
+Future<void> updateCurrentDuration(String _goalID) async {
+  await goalService.updateGoalCurrentDuration(_goalID);
 }
