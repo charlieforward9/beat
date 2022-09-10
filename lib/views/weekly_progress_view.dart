@@ -73,13 +73,18 @@ class _WeeklyLogState extends State<WeeklyLog> {
                         width: _categoryMaxWidth * (snapshot.data![4]),
                         child: Text('${snapshot.data![4]}'),
                       ),
+                      //HELPER FOR SIMPLE TESTING
+                      // FloatingActionButton(
+                      //     onPressed: () => ActivityServiceTest()
+                      //         .createAnActivityForEachGoal())
+                      //GoalServiceTest().createAllPossibleGoalsWithRandomValues()
+                      //ActivityServiceTest().createAnActivityForEachGoal()
                     ],
                   ),
                 )
               ];
             } catch (e) {
-              print(e);
-              children = [Text('error')];
+              children = [Text(e.toString())];
             }
           } else if (snapshot.hasError) {
             children = <Widget>[

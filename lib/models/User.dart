@@ -34,8 +34,15 @@ class User extends Model {
   final String? _userName;
   final String? _userPassword;
   final List<Goal>? _userGoals;
+  final String? _userFirstName;
+  final String? _userLastName;
+  final GenderTypes? _userGender;
+  final TemporalDate? _userBirthDate;
+  final String? _userAvatar;
+  final Integrations? _userIntegrations;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
+  final String? _userUserIntegrationsId;
 
   @override
   getInstanceType() => classType;
@@ -88,6 +95,75 @@ class User extends Model {
     return _userGoals;
   }
   
+  String get userFirstName {
+    try {
+      return _userFirstName!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  String get userLastName {
+    try {
+      return _userLastName!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  GenderTypes get userGender {
+    try {
+      return _userGender!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  TemporalDate get userBirthDate {
+    try {
+      return _userBirthDate!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  String get userAvatar {
+    try {
+      return _userAvatar!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
+  Integrations? get userIntegrations {
+    return _userIntegrations;
+  }
+  
   TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -96,15 +172,26 @@ class User extends Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, required userEmail, required userName, required userPassword, userGoals, createdAt, updatedAt}): _userEmail = userEmail, _userName = userName, _userPassword = userPassword, _userGoals = userGoals, _createdAt = createdAt, _updatedAt = updatedAt;
+  String? get userUserIntegrationsId {
+    return _userUserIntegrationsId;
+  }
   
-  factory User({String? id, required String userEmail, required String userName, required String userPassword, List<Goal>? userGoals}) {
+  const User._internal({required this.id, required userEmail, required userName, required userPassword, userGoals, required userFirstName, required userLastName, required userGender, required userBirthDate, required userAvatar, userIntegrations, createdAt, updatedAt, userUserIntegrationsId}): _userEmail = userEmail, _userName = userName, _userPassword = userPassword, _userGoals = userGoals, _userFirstName = userFirstName, _userLastName = userLastName, _userGender = userGender, _userBirthDate = userBirthDate, _userAvatar = userAvatar, _userIntegrations = userIntegrations, _createdAt = createdAt, _updatedAt = updatedAt, _userUserIntegrationsId = userUserIntegrationsId;
+  
+  factory User({String? id, required String userEmail, required String userName, required String userPassword, List<Goal>? userGoals, required String userFirstName, required String userLastName, required GenderTypes userGender, required TemporalDate userBirthDate, required String userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
     return User._internal(
       id: id == null ? UUID.getUUID() : id,
       userEmail: userEmail,
       userName: userName,
       userPassword: userPassword,
-      userGoals: userGoals != null ? List<Goal>.unmodifiable(userGoals) : userGoals);
+      userGoals: userGoals != null ? List<Goal>.unmodifiable(userGoals) : userGoals,
+      userFirstName: userFirstName,
+      userLastName: userLastName,
+      userGender: userGender,
+      userBirthDate: userBirthDate,
+      userAvatar: userAvatar,
+      userIntegrations: userIntegrations,
+      userUserIntegrationsId: userUserIntegrationsId);
   }
   
   bool equals(Object other) {
@@ -119,7 +206,14 @@ class User extends Model {
       _userEmail == other._userEmail &&
       _userName == other._userName &&
       _userPassword == other._userPassword &&
-      DeepCollectionEquality().equals(_userGoals, other._userGoals);
+      DeepCollectionEquality().equals(_userGoals, other._userGoals) &&
+      _userFirstName == other._userFirstName &&
+      _userLastName == other._userLastName &&
+      _userGender == other._userGender &&
+      _userBirthDate == other._userBirthDate &&
+      _userAvatar == other._userAvatar &&
+      _userIntegrations == other._userIntegrations &&
+      _userUserIntegrationsId == other._userUserIntegrationsId;
   }
   
   @override
@@ -134,20 +228,33 @@ class User extends Model {
     buffer.write("userEmail=" + "$_userEmail" + ", ");
     buffer.write("userName=" + "$_userName" + ", ");
     buffer.write("userPassword=" + "$_userPassword" + ", ");
+    buffer.write("userFirstName=" + "$_userFirstName" + ", ");
+    buffer.write("userLastName=" + "$_userLastName" + ", ");
+    buffer.write("userGender=" + (_userGender != null ? enumToString(_userGender)! : "null") + ", ");
+    buffer.write("userBirthDate=" + (_userBirthDate != null ? _userBirthDate!.format() : "null") + ", ");
+    buffer.write("userAvatar=" + "$_userAvatar" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
-    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
+    buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null") + ", ");
+    buffer.write("userUserIntegrationsId=" + "$_userUserIntegrationsId");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  User copyWith({String? id, String? userEmail, String? userName, String? userPassword, List<Goal>? userGoals}) {
+  User copyWith({String? id, String? userEmail, String? userName, String? userPassword, List<Goal>? userGoals, String? userFirstName, String? userLastName, GenderTypes? userGender, TemporalDate? userBirthDate, String? userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
     return User._internal(
       id: id ?? this.id,
       userEmail: userEmail ?? this.userEmail,
       userName: userName ?? this.userName,
       userPassword: userPassword ?? this.userPassword,
-      userGoals: userGoals ?? this.userGoals);
+      userGoals: userGoals ?? this.userGoals,
+      userFirstName: userFirstName ?? this.userFirstName,
+      userLastName: userLastName ?? this.userLastName,
+      userGender: userGender ?? this.userGender,
+      userBirthDate: userBirthDate ?? this.userBirthDate,
+      userAvatar: userAvatar ?? this.userAvatar,
+      userIntegrations: userIntegrations ?? this.userIntegrations,
+      userUserIntegrationsId: userUserIntegrationsId ?? this.userUserIntegrationsId);
   }
   
   User.fromJson(Map<String, dynamic> json)  
@@ -161,11 +268,20 @@ class User extends Model {
           .map((e) => Goal.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
+      _userFirstName = json['userFirstName'],
+      _userLastName = json['userLastName'],
+      _userGender = enumFromString<GenderTypes>(json['userGender'], GenderTypes.values),
+      _userBirthDate = json['userBirthDate'] != null ? TemporalDate.fromString(json['userBirthDate']) : null,
+      _userAvatar = json['userAvatar'],
+      _userIntegrations = json['userIntegrations']?['serializedData'] != null
+        ? Integrations.fromJson(new Map<String, dynamic>.from(json['userIntegrations']['serializedData']))
+        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
-      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
+      _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null,
+      _userUserIntegrationsId = json['userUserIntegrationsId'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'userEmail': _userEmail, 'userName': _userName, 'userPassword': _userPassword, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'userEmail': _userEmail, 'userName': _userName, 'userPassword': _userPassword, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'userFirstName': _userFirstName, 'userLastName': _userLastName, 'userGender': enumToString(_userGender), 'userBirthDate': _userBirthDate?.format(), 'userAvatar': _userAvatar, 'userIntegrations': _userIntegrations?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format(), 'userUserIntegrationsId': _userUserIntegrationsId
   };
 
   static final QueryField ID = QueryField(fieldName: "user.id");
@@ -175,6 +291,15 @@ class User extends Model {
   static final QueryField USERGOALS = QueryField(
     fieldName: "userGoals",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Goal).toString()));
+  static final QueryField USERFIRSTNAME = QueryField(fieldName: "userFirstName");
+  static final QueryField USERLASTNAME = QueryField(fieldName: "userLastName");
+  static final QueryField USERGENDER = QueryField(fieldName: "userGender");
+  static final QueryField USERBIRTHDATE = QueryField(fieldName: "userBirthDate");
+  static final QueryField USERAVATAR = QueryField(fieldName: "userAvatar");
+  static final QueryField USERINTEGRATIONS = QueryField(
+    fieldName: "userIntegrations",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Integrations).toString()));
+  static final QueryField USERUSERINTEGRATIONSID = QueryField(fieldName: "userUserIntegrationsId");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
     modelSchemaDefinition.pluralName = "Users";
@@ -217,6 +342,43 @@ class User extends Model {
       associatedKey: Goal.HOWTOGETU
     ));
     
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERFIRSTNAME,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERLASTNAME,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERGENDER,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERBIRTHDATE,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.date)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERAVATAR,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasOne(
+      key: User.USERINTEGRATIONS,
+      isRequired: false,
+      ofModelName: (Integrations).toString(),
+      associatedKey: Integrations.ID
+    ));
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
       fieldName: 'createdAt',
       isRequired: false,
@@ -229,6 +391,12 @@ class User extends Model {
       isRequired: false,
       isReadOnly: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: User.USERUSERINTEGRATIONSID,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });
 }

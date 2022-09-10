@@ -12,11 +12,18 @@ type User @model @auth(rules: [{allow: public}]) {
   userName: String!
   userPassword: String!
   userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
+  userFirstName: String!
+  userLastName: String!
+  userGender: GenderTypes!
+  userBirthDate: AWSDate!
+  userAvatar: String!
+  userIntegrations: Integrations @hasOne
 }
 
 type Goal @model @auth(rules: [{allow: public}]) {
   id: ID!
-  goalDay: AWSDate!
+  utcDate: AWSDate!
+  localDate: String!
   goalCategory: CategoryTypes!
   goalCurrentDuration: DurationBeat!
   goalTargetDuration: DurationBeat!
@@ -28,8 +35,8 @@ type Goal @model @auth(rules: [{allow: public}]) {
 
 type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
-  activityStart: AWSDateTime!
-  activityEnd: AWSDateTime!
+  utcStart: AWSDateTime!
+  localStart: String!
   activtyCategory: CategoryTypes!
   activityDuration: DurationBeat!
   howToGetG: ID! @index(name: "byGoal")
@@ -39,15 +46,28 @@ type Activity @model @auth(rules: [{allow: public}]) {
 
 type Metric @model @auth(rules: [{allow: public}]) {
   id: ID!
-  metricTimestamp: AWSDateTime!
+  utcDateTime: AWSDateTime!
+  localDateTime: String!
   metricLocation: String
   activities: [Activity] @manyToMany(relationName: "ActivityMetric")
   metricHeartRate: Int
+}
+
+type Integrations @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  wf_public_id: String!
+  wf_profile_bearer: String!
 }
 
 type DurationBeat {
   durationSeconds: Int
   durationMinutes: Int
   durationHours: Int
+}
+
+enum GenderTypes {
+  M
+  F
+  X
 }
  

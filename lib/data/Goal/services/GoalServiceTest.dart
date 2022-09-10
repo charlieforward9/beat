@@ -20,22 +20,17 @@ class GoalServiceTest extends GoalService {
     String testUserID = global.currentUser.id;
 
     try {
-      await setNewGoal(testUserID, category, newTargetDuration);
-      Future.delayed(
-          Duration(seconds: 2),
-          () async => {
-                getGoal(testUserID, category, null).then((value) => {
-                      dev.log("New goal created ${value.toString()}",
-                          time: DateTime.now(),
-                          name: 'GoalServiceTest createNewGoal')
-                    })
-              });
+      await createGoal(testUserID, category, newTargetDuration).whenComplete(
+          () => getGoal(testUserID, category, null).then((value) => {
+                dev.log("New goal created ${value.toString()}",
+                    time: DateTime.now(), name: 'GoalServiceTest createNewGoal')
+              }));
     } catch (e) {
       print(e);
     }
   }
 
-  void createAllPossibleGoalsWithRandomTargets() async {
+  void createAllPossibleGoalsWithRandomValues() async {
     //Create a goal for the user
     User user = global.currentUser;
     testUserID = user.id;

@@ -21,7 +21,8 @@ class MapGoalsFailure extends GoalState {
 
 class GoalCubit extends Cubit<GoalState> {
   final goalService = GoalService();
-  String userId = '190c7bd1-02ad-4ab1-970d-49b8e6f7a9f8';
+  //TODO LateInitException here when global user is used
+  String userId = '28377eec-214f-473a-8934-186852b20c64';
 
   GoalCubit() : super(LoadingGoals());
 
@@ -31,7 +32,7 @@ class GoalCubit extends Cubit<GoalState> {
     }
 
     try {
-      final goals = await goalService.getDailyGoals(userId);
+      final goals = await goalService.getLatestGoals(userId);
       emit(MapGoalsSuccess(goals: goals));
     } catch (e) {
       emit(MapGoalsFailure(exception: Exception(e)));

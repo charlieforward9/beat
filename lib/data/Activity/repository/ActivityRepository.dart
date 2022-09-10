@@ -6,20 +6,8 @@ class ActivityRepository {
   DateTime now = DateTime.now();
   Duration durationclass = Duration();
 
-  Future<void> newActivityRecord(CategoryTypes _category, String _goalId,
-      int _hours, int _minutes, int _seconds) async {
-    final newActivity = Activity(
-      activityStart: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
-      activityEnd: TemporalDateTime.fromString("2022-07-17T18:18:13.683Z"),
-      activtyCategory: _category, // 'Fitness',
-      activityDuration: DurationBeat(
-          durationHours: _hours,
-          durationMinutes: _minutes,
-          durationSeconds: _seconds), //DurationBeat(durationHours: 2),
-      howToGetG: _goalId,
-    );
-    await Amplify.DataStore.save(newActivity);
-    // TODO: Activities Stored in AmplifyDataStore not in Activity ??? Maybe ok.
+  Future<void> saveActivity(Activity activity) async {
+    await Amplify.DataStore.save(activity);
   }
 
   Future<Activity> fetchActivityRecordById(String _activityId) async {

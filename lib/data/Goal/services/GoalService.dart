@@ -1,6 +1,7 @@
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/controllers/time_budget_controller.dart';
+import 'package:beat/data/DateTimeService.dart';
 
 import '../../../models/ModelProvider.dart';
 import '../repository/GoalRepository.dart';
@@ -13,10 +14,19 @@ class GoalService {
 
   //Assigns the current date as goalEnd on the latest goal (with a null goalEnd)
   //Creates a new goal instance with goalStart as current date and goalEnd=null
-  Future<void> setNewGoal(String userID, CategoryTypes category,
-      DurationBeat newTargetDuration) async {
-    await _goalRepository.endGoal(userID, category);
-    await _goalRepository.createGoal(userID, category, newTargetDuration);
+  Future<void> createGoal(String userID, CategoryTypes category,
+      DurationBeat targetDuration) async {
+    DTService DTS = DTService();
+    final Goal goal = Goal(
+        howToGetU: userID,
+        goalCategory: category,
+        goalTargetDuration: targetDuration,
+        goalCurrentDuration: DurationBeat(
+            durationHours: 0, durationMinutes: 0, durationSeconds: 0),
+        goalPercentage: 0,
+        localDate: DTS.localD,
+        utcDate: DTS.utcD);
+    await _goalRepository.saveGoal(goal);
   }
 
   //Returns the requested goal based on its category and date
@@ -53,76 +63,6 @@ class GoalService {
     }
   }
 
-  //
-  //
-  //
-  //
-  //
-  // INDIVIDUAL ATTRIBUTE GETTERS
-  //
-  //
-  //
-  //
-  //
-  // Future<double> getPercentage(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalPercentage!;
-  // }
-
-  // Future<DurationBeat> getCurrentDurationBeat(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalCurrentDuration;
-  // }
-
-  // Future<DurationBeat> getTargetDurationBeat(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalTargetDuration;
-  // }
-
-  // Future<CategoryTypes> getCategory(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalCategory;
-  // }
-
-  // Future<TemporalDateTime> getStart(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalStart;
-  // }
-
-  // Future<TemporalDateTime?> getEnd(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.goalEnd;
-  // }
-
-  // Future<String> getGoalId(
-  //     CategoryTypes category, String userId, DateTime? date) async {
-  //   final historicDate = date == null ? null : TemporalDateTime(date);
-  //   Goal record = await getGoal(userId, category, historicDate);
-  //   return record.id;
-  // }
-  //
-  //
-  //
-  //
-  //
-  // INDIVIDUAL ATTRIBUTE GETTERS
-  //
-  //
-  //
-  //
-  //
   // get list of corresponding activites given goal id
 
   Future<Goal> getGoalByGoalID(String goalID) async {
@@ -130,18 +70,16 @@ class GoalService {
     return tempGoal;
   }
 
-  Future<Map<CategoryTypes, Goal>> getDailyGoals(String userID) async {
-    TemporalDate now = TemporalDate(DateTime.utc(2022, 08, 19));
-    //TemporalDate now = TemporalDate.now();
+  Future<Map<CategoryTypes, Goal>> getLatestGoals(String userID) async {
     Map<CategoryTypes, Goal> goals = {};
     goals[CategoryTypes.FITNESS] =
-        await getGoal(userID, CategoryTypes.FITNESS, now);
-    goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST, now);
+        await getGoal(userID, CategoryTypes.FITNESS, null);
+    goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST, null);
     goals[CategoryTypes.SOCIAL] =
-        await getGoal(userID, CategoryTypes.SOCIAL, now);
-    goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL, now);
+        await getGoal(userID, CategoryTypes.SOCIAL, null);
+    goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL, null);
     goals[CategoryTypes.PRODUCTIVITY] =
-        await getGoal(userID, CategoryTypes.PRODUCTIVITY, now);
+        await getGoal(userID, CategoryTypes.PRODUCTIVITY, null);
 
     // goals[CategoryTypes.FITNESS] = await getGoal(userID, CategoryTypes.FITNESS,now);
     // goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST,now);
