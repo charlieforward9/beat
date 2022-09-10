@@ -80,6 +80,7 @@ class GoalService {
     final newPercentage = (newDuration.inSeconds / oldDuration.inSeconds) * 100;
     // print("newPercentage - test: $newPercentage");
     // send to repo to update the goal
+    // need to pass in goal instead of creating goal in the repository
     await _goalRepository.updateGoalDurationPercentage(
         _goalID, _newCurrentDuration, newPercentage);
   }
