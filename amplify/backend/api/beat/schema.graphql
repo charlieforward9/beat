@@ -1,53 +1,73 @@
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userEmail: AWSEmail!
+  userName: String!
+  userPassword: String!
+  userFirstName: String!
+  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
+  userLastName: String!
+  userGender: GenderTypes!
+  userBirthDate: AWSDate!
+  userAvatar: String!
+  userIntegrations: Integrations @hasOne
+}
+
+type Goal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  utcDate: AWSDate!
+  localDate: String!
+  goalCategory: CategoryTypes!
+  goalCurrentDuration: DurationBeat!
+  goalTargetDuration: DurationBeat!
+  goalPercentage: Float!
+  userOfGoal: ID! @index(name: "byUser")
+  goalOfUser: User @belongsTo
+  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
+}
+
+type Activity @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  utcStart: AWSDateTime!
+  localStart: String!
+  activityCategory: CategoryTypes!
+  activityDuration: DurationBeat!
+  goalOfActivity: ID! @index(name: "byGoal")
+  activityOfGoal: Goal @belongsTo
+  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
+}
+
+type Metric @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  utcDateTime: AWSDateTime!
+  localDateTime: String!
+  metricLocation: String
+  metricHeartRate: Int
+  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
+}
+
+type Integrations @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  wf_profile_bearer: String!
+  wf_public_id: String!
+}
+
+type DurationBeat {
+  hours: Int
+  minutes: Int
+  seconds: Int
+}
+
+enum GenderTypes {
+  M
+  F
+  X
+}
+
 enum CategoryTypes {
   FITNESS
   FUEL
   PRODUCTIVITY
   SOCIAL
   REST
-}
-
-type User @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  userEmail: AWSEmail!
-  userName: String!
-  userPassword: String!
-  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
-}
-
-type Goal @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  goalDay: AWSDate!
-  goalCategory: CategoryTypes!
-  goalCurrentDuration: DurationBeat!
-  goalTargetDuration: DurationBeat!
-  goalPercentage: Float
-  howToGetU: ID! @index(name: "byUser")
-  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
-  goalOfUser: User @belongsTo
-}
-
-type Activity @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  activityStart: AWSDateTime!
-  activityEnd: AWSDateTime!
-  activtyCategory: CategoryTypes!
-  activityDuration: DurationBeat!
-  howToGetG: ID! @index(name: "byGoal")
-  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
-  activityOfGoal: Goal @belongsTo
-}
-
-type Metric @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  metricTimestamp: AWSDateTime!
-  metricLocation: String
-  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
-  metricHeartRate: Int
-}
-
-type DurationBeat {
-  durationSeconds: Int
-  durationMinutes: Int
-  durationHours: Int
 }
  

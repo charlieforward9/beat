@@ -22,7 +22,7 @@ class TimeBudgetPage extends StatelessWidget {
       child: Container(
           child: FutureBuilder<List<Goal>>(
         future: controller
-            .getUsersLatestGoals("985924ea-f60a-4deb-89d9-ad6c71fec5c6"),
+            .getUsersLatestGoals("f998c35f-9ba3-4546-a4b6-7bdc21c54073"),
         builder: (BuildContext context, AsyncSnapshot<List<Goal>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData &&
@@ -35,7 +35,7 @@ class TimeBudgetPage extends StatelessWidget {
                     //cardName: '${snapshot.data!.goalCategory.name}',
                     cardName: '${snapshot.data![index].goalCategory.name}',
                     cardGoal:
-                        '${snapshot.data![index].goalTargetDuration.durationHours}h ${snapshot.data![index].goalTargetDuration.durationMinutes}m',
+                        '${snapshot.data![index].goalTargetDuration.hours}h ${snapshot.data![index].goalTargetDuration.minutes}m',
                     passedColor: BeatTheme.colors.fitnessColor);
               },
             );

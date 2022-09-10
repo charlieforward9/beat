@@ -22,101 +22,102 @@
 import 'package:amplify_core/amplify_core.dart';
 import 'package:flutter/foundation.dart';
 
-/** This is an auto generated class representing the DurationBeat type in your schema. */
+
+/** This is an auto generated class representing the DateTimeBeat type in your schema. */
 @immutable
-class DurationBeat {
-  final int? _hours;
-  final int? _minutes;
-  final int? _seconds;
+class DateTimeBeat {
+  final TemporalDateTime? _utc;
+  final String? _local;
 
-  int? get hours {
-    return _hours;
+  TemporalDateTime get utc {
+    try {
+      return _utc!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
-
   
-  int? get minutes {
-    return _minutes;
+  String get local {
+    try {
+      return _local!;
+    } catch(e) {
+      throw new AmplifyCodeGenModelException(
+          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
   }
   
-  int? get seconds {
-    return _seconds;
+  const DateTimeBeat._internal({required utc, required local}): _utc = utc, _local = local;
+  
+  factory DateTimeBeat({required TemporalDateTime utc, required String local}) {
+    return DateTimeBeat._internal(
+      utc: utc,
+      local: local);
   }
   
-  const DurationBeat._internal({hours, minutes, seconds}): _hours = hours, _minutes = minutes, _seconds = seconds;
-  
-  factory DurationBeat({int? hours, int? minutes, int? seconds}) {
-    return DurationBeat._internal(
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds);
-  }
-
   bool equals(Object other) {
     return this == other;
   }
-
+  
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DurationBeat &&
-      _hours == other._hours &&
-      _minutes == other._minutes &&
-      _seconds == other._seconds;
+    return other is DateTimeBeat &&
+      _utc == other._utc &&
+      _local == other._local;
   }
-
+  
   @override
   int get hashCode => toString().hashCode;
-
+  
   @override
   String toString() {
     var buffer = new StringBuffer();
-
-    buffer.write("DurationBeat {");
-    buffer.write("hours=" + (_hours != null ? _hours!.toString() : "null") + ", ");
-    buffer.write("minutes=" + (_minutes != null ? _minutes!.toString() : "null") + ", ");
-    buffer.write("seconds=" + (_seconds != null ? _seconds!.toString() : "null"));
+    
+    buffer.write("DateTimeBeat {");
+    buffer.write("utc=" + (_utc != null ? _utc!.format() : "null") + ", ");
+    buffer.write("local=" + "$_local");
     buffer.write("}");
-
+    
     return buffer.toString();
   }
   
-  DurationBeat copyWith({int? hours, int? minutes, int? seconds}) {
-    return DurationBeat._internal(
-      hours: hours ?? this.hours,
-      minutes: minutes ?? this.minutes,
-      seconds: seconds ?? this.seconds);
+  DateTimeBeat copyWith({TemporalDateTime? utc, String? local}) {
+    return DateTimeBeat._internal(
+      utc: utc ?? this.utc,
+      local: local ?? this.local);
   }
   
-  DurationBeat.fromJson(Map<String, dynamic> json)  
-    : _hours = (json['hours'] as num?)?.toInt(),
-      _minutes = (json['minutes'] as num?)?.toInt(),
-      _seconds = (json['seconds'] as num?)?.toInt();
+  DateTimeBeat.fromJson(Map<String, dynamic> json)  
+    : _utc = json['utc'] != null ? TemporalDateTime.fromString(json['utc']) : null,
+      _local = json['local'];
   
   Map<String, dynamic> toJson() => {
-    'hours': _hours, 'minutes': _minutes, 'seconds': _seconds
+    'utc': _utc?.format(), 'local': _local
   };
 
-  static var schema =
-      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "DurationBeat";
-    modelSchemaDefinition.pluralName = "DurationBeats";
-
+  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+    modelSchemaDefinition.name = "DateTimeBeat";
+    modelSchemaDefinition.pluralName = "DateTimeBeats";
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'hours',
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
+      fieldName: 'utc',
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'minutes',
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'seconds',
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.int)
+      fieldName: 'local',
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });
 }

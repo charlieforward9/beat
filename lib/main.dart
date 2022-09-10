@@ -1,3 +1,6 @@
+//DONT DELETE
+//export PATH=/Users/crich/Documents/flutter/bin:$PATH
+
 //***********Backend-related Imports***********//
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -34,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    _configureAmplifyDev(); //TODO Switch to prod when ready
   }
 
   //Pages in the navBar, in order of display from left to right
@@ -92,7 +95,7 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 
-  void _configureAmplify() async {
+  void _configureAmplifyProd() async {
     final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
     );
@@ -105,9 +108,39 @@ class _MyAppState extends State<MyApp> {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
+    UserService().initUser(userEmail);
     setState(() {
-      UserService(userEmail);
       amplifyConfigured = true;
     });
+  }
+
+  void _configureAmplifyDev() async {
+    final datastorePlugin = AmplifyDataStore(
+      modelProvider: ModelProvider.instance,
+    );
+    // Add the following line and update your function call with `addPlugins`
+    final api = AmplifyAPI();
+    await Amplify.addPlugins([datastorePlugin, api]);
+    try {
+      await Amplify.configure(amplifyconfig).whenComplete(
+        () => Amplify.DataStore.clear().whenComplete(
+          () => Amplify.DataStore.start().whenComplete(
+            () => Future.delayed(Duration(seconds: 2)).whenComplete(
+              () => {
+                UserService().initUser(userEmail),
+                setState(
+                  () {
+                    amplifyConfigured = true;
+                  },
+                ),
+              },
+            ),
+          ),
+        ),
+      );
+    } on AmplifyAlreadyConfiguredException {
+      debugPrint(
+          'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
+    }
   }
 }

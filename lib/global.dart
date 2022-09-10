@@ -7,5 +7,7 @@
 //
 import 'models/ModelProvider.dart';
 
-
 late User currentUser;
+
+//For testing purposes
+late Uri connectionUri;

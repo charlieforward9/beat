@@ -30,13 +30,13 @@ import 'package:flutter/foundation.dart';
 class Activity extends Model {
   static const classType = const _ActivityModelType();
   final String id;
-  final TemporalDateTime? _activityStart;
-  final TemporalDateTime? _activityEnd;
-  final CategoryTypes? _activtyCategory;
+  final TemporalDateTime? _utcStart;
+  final String? _localStart;
+  final CategoryTypes? _activityCategory;
   final DurationBeat? _activityDuration;
-  final String? _howToGetG;
-  final List<ActivityMetric>? _activityMetrics;
+  final String? _goalOfActivity;
   final Goal? _activityOfGoal;
+  final List<ActivityMetric>? _activityMetrics;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -48,9 +48,9 @@ class Activity extends Model {
     return id;
   }
   
-  TemporalDateTime get activityStart {
+  TemporalDateTime get utcStart {
     try {
-      return _activityStart!;
+      return _utcStart!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -61,9 +61,9 @@ class Activity extends Model {
     }
   }
   
-  TemporalDateTime get activityEnd {
+  String get localStart {
     try {
-      return _activityEnd!;
+      return _localStart!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -74,9 +74,9 @@ class Activity extends Model {
     }
   }
   
-  CategoryTypes get activtyCategory {
+  CategoryTypes get activityCategory {
     try {
-      return _activtyCategory!;
+      return _activityCategory!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -100,9 +100,9 @@ class Activity extends Model {
     }
   }
   
-  String get howToGetG {
+  String get goalOfActivity {
     try {
-      return _howToGetG!;
+      return _goalOfActivity!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -113,12 +113,12 @@ class Activity extends Model {
     }
   }
   
-  List<ActivityMetric>? get activityMetrics {
-    return _activityMetrics;
-  }
-  
   Goal? get activityOfGoal {
     return _activityOfGoal;
+  }
+  
+  List<ActivityMetric>? get activityMetrics {
+    return _activityMetrics;
   }
   
   TemporalDateTime? get createdAt {
@@ -129,18 +129,18 @@ class Activity extends Model {
     return _updatedAt;
   }
   
-  const Activity._internal({required this.id, required activityStart, required activityEnd, required activtyCategory, required activityDuration, required howToGetG, activityMetrics, activityOfGoal, createdAt, updatedAt}): _activityStart = activityStart, _activityEnd = activityEnd, _activtyCategory = activtyCategory, _activityDuration = activityDuration, _howToGetG = howToGetG, _activityMetrics = activityMetrics, _activityOfGoal = activityOfGoal, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Activity._internal({required this.id, required utcStart, required localStart, required activityCategory, required activityDuration, required goalOfActivity, activityOfGoal, activityMetrics, createdAt, updatedAt}): _utcStart = utcStart, _localStart = localStart, _activityCategory = activityCategory, _activityDuration = activityDuration, _goalOfActivity = goalOfActivity, _activityOfGoal = activityOfGoal, _activityMetrics = activityMetrics, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Activity({String? id, required TemporalDateTime activityStart, required TemporalDateTime activityEnd, required CategoryTypes activtyCategory, required DurationBeat activityDuration, required String howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
+  factory Activity({String? id, required TemporalDateTime utcStart, required String localStart, required CategoryTypes activityCategory, required DurationBeat activityDuration, required String goalOfActivity, Goal? activityOfGoal, List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
       id: id == null ? UUID.getUUID() : id,
-      activityStart: activityStart,
-      activityEnd: activityEnd,
-      activtyCategory: activtyCategory,
+      utcStart: utcStart,
+      localStart: localStart,
+      activityCategory: activityCategory,
       activityDuration: activityDuration,
-      howToGetG: howToGetG,
-      activityMetrics: activityMetrics != null ? List<ActivityMetric>.unmodifiable(activityMetrics) : activityMetrics,
-      activityOfGoal: activityOfGoal);
+      goalOfActivity: goalOfActivity,
+      activityOfGoal: activityOfGoal,
+      activityMetrics: activityMetrics != null ? List<ActivityMetric>.unmodifiable(activityMetrics) : activityMetrics);
   }
   
   bool equals(Object other) {
@@ -152,13 +152,13 @@ class Activity extends Model {
     if (identical(other, this)) return true;
     return other is Activity &&
       id == other.id &&
-      _activityStart == other._activityStart &&
-      _activityEnd == other._activityEnd &&
-      _activtyCategory == other._activtyCategory &&
+      _utcStart == other._utcStart &&
+      _localStart == other._localStart &&
+      _activityCategory == other._activityCategory &&
       _activityDuration == other._activityDuration &&
-      _howToGetG == other._howToGetG &&
-      DeepCollectionEquality().equals(_activityMetrics, other._activityMetrics) &&
-      _activityOfGoal == other._activityOfGoal;
+      _goalOfActivity == other._goalOfActivity &&
+      _activityOfGoal == other._activityOfGoal &&
+      DeepCollectionEquality().equals(_activityMetrics, other._activityMetrics);
   }
   
   @override
@@ -170,11 +170,11 @@ class Activity extends Model {
     
     buffer.write("Activity {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("activityStart=" + (_activityStart != null ? _activityStart!.format() : "null") + ", ");
-    buffer.write("activityEnd=" + (_activityEnd != null ? _activityEnd!.format() : "null") + ", ");
-    buffer.write("activtyCategory=" + (_activtyCategory != null ? enumToString(_activtyCategory)! : "null") + ", ");
+    buffer.write("utcStart=" + (_utcStart != null ? _utcStart!.format() : "null") + ", ");
+    buffer.write("localStart=" + "$_localStart" + ", ");
+    buffer.write("activityCategory=" + (_activityCategory != null ? enumToString(_activityCategory)! : "null") + ", ");
     buffer.write("activityDuration=" + (_activityDuration != null ? _activityDuration!.toString() : "null") + ", ");
-    buffer.write("howToGetG=" + "$_howToGetG" + ", ");
+    buffer.write("goalOfActivity=" + "$_goalOfActivity" + ", ");
     buffer.write("activityOfGoal=" + (_activityOfGoal != null ? _activityOfGoal!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
@@ -183,55 +183,55 @@ class Activity extends Model {
     return buffer.toString();
   }
   
-  Activity copyWith({String? id, TemporalDateTime? activityStart, TemporalDateTime? activityEnd, CategoryTypes? activtyCategory, DurationBeat? activityDuration, String? howToGetG, List<ActivityMetric>? activityMetrics, Goal? activityOfGoal}) {
+  Activity copyWith({String? id, TemporalDateTime? utcStart, String? localStart, CategoryTypes? activityCategory, DurationBeat? activityDuration, String? goalOfActivity, Goal? activityOfGoal, List<ActivityMetric>? activityMetrics}) {
     return Activity._internal(
       id: id ?? this.id,
-      activityStart: activityStart ?? this.activityStart,
-      activityEnd: activityEnd ?? this.activityEnd,
-      activtyCategory: activtyCategory ?? this.activtyCategory,
+      utcStart: utcStart ?? this.utcStart,
+      localStart: localStart ?? this.localStart,
+      activityCategory: activityCategory ?? this.activityCategory,
       activityDuration: activityDuration ?? this.activityDuration,
-      howToGetG: howToGetG ?? this.howToGetG,
-      activityMetrics: activityMetrics ?? this.activityMetrics,
-      activityOfGoal: activityOfGoal ?? this.activityOfGoal);
+      goalOfActivity: goalOfActivity ?? this.goalOfActivity,
+      activityOfGoal: activityOfGoal ?? this.activityOfGoal,
+      activityMetrics: activityMetrics ?? this.activityMetrics);
   }
   
   Activity.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _activityStart = json['activityStart'] != null ? TemporalDateTime.fromString(json['activityStart']) : null,
-      _activityEnd = json['activityEnd'] != null ? TemporalDateTime.fromString(json['activityEnd']) : null,
-      _activtyCategory = enumFromString<CategoryTypes>(json['activtyCategory'], CategoryTypes.values),
+      _utcStart = json['utcStart'] != null ? TemporalDateTime.fromString(json['utcStart']) : null,
+      _localStart = json['localStart'],
+      _activityCategory = enumFromString<CategoryTypes>(json['activityCategory'], CategoryTypes.values),
       _activityDuration = json['activityDuration']?['serializedData'] != null
         ? DurationBeat.fromJson(new Map<String, dynamic>.from(json['activityDuration']['serializedData']))
         : null,
-      _howToGetG = json['howToGetG'],
+      _goalOfActivity = json['goalOfActivity'],
+      _activityOfGoal = json['activityOfGoal']?['serializedData'] != null
+        ? Goal.fromJson(new Map<String, dynamic>.from(json['activityOfGoal']['serializedData']))
+        : null,
       _activityMetrics = json['activityMetrics'] is List
         ? (json['activityMetrics'] as List)
           .where((e) => e?['serializedData'] != null)
           .map((e) => ActivityMetric.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
-      _activityOfGoal = json['activityOfGoal']?['serializedData'] != null
-        ? Goal.fromJson(new Map<String, dynamic>.from(json['activityOfGoal']['serializedData']))
-        : null,
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'activityStart': _activityStart?.format(), 'activityEnd': _activityEnd?.format(), 'activtyCategory': enumToString(_activtyCategory), 'activityDuration': _activityDuration?.toJson(), 'howToGetG': _howToGetG, 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'activityOfGoal': _activityOfGoal?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'utcStart': _utcStart?.format(), 'localStart': _localStart, 'activityCategory': enumToString(_activityCategory), 'activityDuration': _activityDuration?.toJson(), 'goalOfActivity': _goalOfActivity, 'activityOfGoal': _activityOfGoal?.toJson(), 'activityMetrics': _activityMetrics?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "activity.id");
-  static final QueryField ACTIVITYSTART = QueryField(fieldName: "activityStart");
-  static final QueryField ACTIVITYEND = QueryField(fieldName: "activityEnd");
-  static final QueryField ACTIVTYCATEGORY = QueryField(fieldName: "activtyCategory");
+  static final QueryField UTCSTART = QueryField(fieldName: "utcStart");
+  static final QueryField LOCALSTART = QueryField(fieldName: "localStart");
+  static final QueryField ACTIVITYCATEGORY = QueryField(fieldName: "activityCategory");
   static final QueryField ACTIVITYDURATION = QueryField(fieldName: "activityDuration");
-  static final QueryField HOWTOGETG = QueryField(fieldName: "howToGetG");
-  static final QueryField ACTIVITYMETRICS = QueryField(
-    fieldName: "activityMetrics",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (ActivityMetric).toString()));
+  static final QueryField GOALOFACTIVITY = QueryField(fieldName: "goalOfActivity");
   static final QueryField ACTIVITYOFGOAL = QueryField(
     fieldName: "activityOfGoal",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Goal).toString()));
+  static final QueryField ACTIVITYMETRICS = QueryField(
+    fieldName: "activityMetrics",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (ActivityMetric).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Activity";
     modelSchemaDefinition.pluralName = "Activities";
@@ -250,19 +250,19 @@ class Activity extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYSTART,
+      key: Activity.UTCSTART,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVITYEND,
+      key: Activity.LOCALSTART,
       isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.dateTime)
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.ACTIVTYCATEGORY,
+      key: Activity.ACTIVITYCATEGORY,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.enumeration)
     ));
@@ -274,16 +274,9 @@ class Activity extends Model {
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Activity.HOWTOGETG,
+      key: Activity.GOALOFACTIVITY,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Activity.ACTIVITYMETRICS,
-      isRequired: false,
-      ofModelName: (ActivityMetric).toString(),
-      associatedKey: ActivityMetric.ACTIVITY
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
@@ -291,6 +284,13 @@ class Activity extends Model {
       isRequired: false,
       targetName: "goalGoalActivitiesId",
       ofModelName: (Goal).toString()
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
+      key: Activity.ACTIVITYMETRICS,
+      isRequired: false,
+      ofModelName: (ActivityMetric).toString(),
+      associatedKey: ActivityMetric.ACTIVITY
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(
