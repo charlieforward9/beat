@@ -2,6 +2,8 @@ import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/controllers/time_budget_controller.dart';
 import 'package:beat/data/DateTimeService.dart';
+import 'package:beat/data/User/repository/UserRepository.dart';
+import 'package:beat/data/User/services/UserService.dart';
 
 import '../../../models/ModelProvider.dart';
 import '../repository/GoalRepository.dart';
@@ -10,6 +12,7 @@ import '../repository/GoalRepository.dart';
 //GoalRepository.dart for more specific function.
 //DO NOT IMPORT OTHER SCHEMAS' REPOS OR SERVICES
 class GoalService {
+  final UserService _userService = UserService();
   final GoalRepository _goalRepository = GoalRepository();
 
   //Assigns the current date as goalEnd on the latest goal (with a null goalEnd)
@@ -18,15 +21,15 @@ class GoalService {
       DurationBeat targetDuration) async {
     DTService DTS = DTService();
     final Goal goal = Goal(
-        howToGetU: userID,
+        userOfGoal: userID,
         goalCategory: category,
         goalTargetDuration: targetDuration,
-        goalCurrentDuration: DurationBeat(
-            durationHours: 0, durationMinutes: 0, durationSeconds: 0),
+        goalCurrentDuration: DurationBeat(hours: 0, minutes: 0, seconds: 0),
         goalPercentage: 0,
         localDate: DTS.localD,
         utcDate: DTS.utcD);
     await _goalRepository.saveGoal(goal);
+    //await _userService.saveGoalToUser(goal);
   }
 
   //Returns the requested goal based on its category and date

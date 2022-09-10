@@ -50,7 +50,7 @@ Future<void> createActivity() async {
   final loc = DTService().localDT;
   final utc = DTService().utcDT;
   DurationBeat dur = DurationBeat(
-      durationHours: rand, durationMinutes: rand, durationSeconds: rand);
+      hours: rand, minutes: rand, seconds: rand);
 
   activityService.createActivity(
     loc,
@@ -66,7 +66,7 @@ Future<List<Activity>> getGoalActivities(String goalID) async {
   int sumMinutes = 0;
   int sumSeconds = 0;
   DurationBeat sumOfActivities =
-      DurationBeat(durationHours: 0, durationMinutes: 0, durationSeconds: 0);
+      DurationBeat(hours: 0, minutes: 0, seconds: 0);
   List<Activity> allActivities =
       await activityService.getActivitiesByGoalID(goalID);
 
@@ -75,9 +75,9 @@ Future<List<Activity>> getGoalActivities(String goalID) async {
   } else {
     for (int i = 0; i < allActivities.length; i++) {
       // add the hours, minutes, seconds
-      sumHours += allActivities[i].activityDuration.durationHours!;
-      sumMinutes += allActivities[i].activityDuration.durationMinutes!;
-      sumSeconds += allActivities[i].activityDuration.durationSeconds!;
+      sumHours += allActivities[i].activityDuration.hours!;
+      sumMinutes += allActivities[i].activityDuration.minutes!;
+      sumSeconds += allActivities[i].activityDuration.seconds!;
       print(allActivities[i]);
     }
   }

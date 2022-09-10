@@ -15,7 +15,7 @@ class UserService {
   }
 
   //User instance saved to <global.currentUser> import file for simple reference
-  UserService(String email) {
+  initUser(email) {
     getUser(email).then((user) => {global.currentUser = user, _logUser(user)});
   }
 
@@ -63,4 +63,14 @@ class UserService {
     User user = await getUser(email);
     return user.userGoals;
   }
+
+  //Testing out some new bidirectional swag, still working on it
+  // Future<void> saveGoalToUser(Goal goal) async {
+  //   if (currentUser.userGoals == null) {
+  //     currentUser = currentUser.copyWith(userGoals: [goal]);
+  //   } else {
+  //     currentUser.userGoals!.add(goal);
+  //   }
+  //   return userRepository.saveUser(currentUser);
+  // }
 }

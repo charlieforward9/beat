@@ -16,15 +16,17 @@ class GoalServiceTest extends GoalService {
 
   void createAndConfirmNewGoal(
       CategoryTypes category, DurationBeat newTargetDuration) async {
-    Goal newGoalConfirmation;
     String testUserID = global.currentUser.id;
 
     try {
       await createGoal(testUserID, category, newTargetDuration).whenComplete(
-          () => getGoal(testUserID, category, null).then((value) => {
-                dev.log("New goal created ${value.toString()}",
-                    time: DateTime.now(), name: 'GoalServiceTest createNewGoal')
-              }));
+        () => getGoal(testUserID, category, null).then(
+          (value) => {
+            dev.log("New goal created ${value.toString()}",
+                time: DateTime.now(), name: 'GoalServiceTest createNewGoal')
+          },
+        ),
+      );
     } catch (e) {
       print(e);
     }
@@ -38,10 +40,8 @@ class GoalServiceTest extends GoalService {
     for (var cat in _allCategories) {
       var randHour = Random().nextInt(3);
       var randMinute = Random().nextInt(30);
-      var target = DurationBeat(
-          durationHours: randHour,
-          durationMinutes: randMinute,
-          durationSeconds: 0);
+      var target =
+          DurationBeat(hours: randHour, minutes: randMinute, seconds: 0);
       createAndConfirmNewGoal(cat, target);
     }
   }

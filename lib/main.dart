@@ -108,8 +108,8 @@ class _MyAppState extends State<MyApp> {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
+    UserService().initUser(userEmail);
     setState(() {
-      UserService(userEmail);
       amplifyConfigured = true;
     });
   }
@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
           () => Amplify.DataStore.start().whenComplete(
             () => Future.delayed(Duration(seconds: 2)).whenComplete(
               () => {
-                UserService(userEmail),
+                UserService().initUser(userEmail),
                 setState(
                   () {
                     amplifyConfigured = true;

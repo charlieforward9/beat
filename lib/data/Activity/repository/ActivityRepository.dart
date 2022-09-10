@@ -23,7 +23,7 @@ class ActivityRepository {
       CategoryTypes _newCategory, String _activityId) async {
     Activity oldActivity = (await fetchActivityRecordById(_activityId));
     final newActivity =
-        oldActivity.copyWith(id: oldActivity.id, activtyCategory: _newCategory);
+        oldActivity.copyWith(id: oldActivity.id, activityCategory: _newCategory);
     await Amplify.DataStore.save(newActivity);
   }
 
@@ -32,20 +32,20 @@ class ActivityRepository {
     Activity oldActivity = (await fetchActivityRecordById(_activityId));
     final newActivity = oldActivity.copyWith(
         id: oldActivity.id,
-        activtyCategory: oldActivity.activtyCategory,
+        activityCategory: oldActivity.activityCategory,
         activityDuration: _newDuration);
     await Amplify.DataStore.save(newActivity);
   }
 
   Future<List<Activity>> getAllActivitiesBelongingToGoal(String goalID) async {
     final activities = await Amplify.DataStore.query(Activity.classType,
-        where: Activity.ACTIVITYOFGOAL.eq(goalID));
+        where: Activity.GOALOFACTIVITY.eq(goalID));
     return activities;
   }
 
   Future<List<Activity>> getActivityByGoalID(String goalID) async {
     final activities = await Amplify.DataStore.query(Activity.classType,
-        where: Activity.HOWTOGETG.eq(goalID));
+        where: Activity.GOALOFACTIVITY.eq(goalID));
     return activities;
   }
 }

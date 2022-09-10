@@ -3,6 +3,7 @@ import 'package:beat/models/ModelProvider.dart';
 
 class UserRepository {
   Future<void> saveUser(User user) async {
+    print(user);
     await Amplify.DataStore.save(user);
   }
 
@@ -10,7 +11,7 @@ class UserRepository {
     return await Amplify.DataStore.query(User.classType,
             where: User.USEREMAIL.eq(email))
         .then((user) => user.first);
-    }
+  }
 
   Future<User> fetchCurrentUser(String id) async {
     return Amplify.DataStore.query(User.classType, where: User.ID.eq(id))

@@ -32,9 +32,9 @@ class Metric extends Model {
   final String id;
   final TemporalDateTime? _utcDateTime;
   final String? _localDateTime;
-  final List<ActivityMetric>? _activities;
-  final int? _metricHeartRate;
   final String? _metricLocation;
+  final int? _metricHeartRate;
+  final List<ActivityMetric>? _activities;
   final TemporalDateTime? _createdAt;
   final TemporalDateTime? _updatedAt;
 
@@ -72,16 +72,16 @@ class Metric extends Model {
     }
   }
   
-  List<ActivityMetric>? get activities {
-    return _activities;
+  String? get metricLocation {
+    return _metricLocation;
   }
   
   int? get metricHeartRate {
     return _metricHeartRate;
   }
   
-  String? get metricLocation {
-    return _metricLocation;
+  List<ActivityMetric>? get activities {
+    return _activities;
   }
   
   TemporalDateTime? get createdAt {
@@ -92,16 +92,16 @@ class Metric extends Model {
     return _updatedAt;
   }
   
-  const Metric._internal({required this.id, required utcDateTime, required localDateTime, activities, metricHeartRate, metricLocation, createdAt, updatedAt}): _utcDateTime = utcDateTime, _localDateTime = localDateTime, _activities = activities, _metricHeartRate = metricHeartRate, _metricLocation = metricLocation, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Metric._internal({required this.id, required utcDateTime, required localDateTime, metricLocation, metricHeartRate, activities, createdAt, updatedAt}): _utcDateTime = utcDateTime, _localDateTime = localDateTime, _metricLocation = metricLocation, _metricHeartRate = metricHeartRate, _activities = activities, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Metric({String? id, required TemporalDateTime utcDateTime, required String localDateTime, List<ActivityMetric>? activities, int? metricHeartRate, String? metricLocation}) {
+  factory Metric({String? id, required TemporalDateTime utcDateTime, required String localDateTime, String? metricLocation, int? metricHeartRate, List<ActivityMetric>? activities}) {
     return Metric._internal(
       id: id == null ? UUID.getUUID() : id,
       utcDateTime: utcDateTime,
       localDateTime: localDateTime,
-      activities: activities != null ? List<ActivityMetric>.unmodifiable(activities) : activities,
+      metricLocation: metricLocation,
       metricHeartRate: metricHeartRate,
-      metricLocation: metricLocation);
+      activities: activities != null ? List<ActivityMetric>.unmodifiable(activities) : activities);
   }
   
   bool equals(Object other) {
@@ -115,9 +115,9 @@ class Metric extends Model {
       id == other.id &&
       _utcDateTime == other._utcDateTime &&
       _localDateTime == other._localDateTime &&
-      DeepCollectionEquality().equals(_activities, other._activities) &&
+      _metricLocation == other._metricLocation &&
       _metricHeartRate == other._metricHeartRate &&
-      _metricLocation == other._metricLocation;
+      DeepCollectionEquality().equals(_activities, other._activities);
   }
   
   @override
@@ -131,8 +131,8 @@ class Metric extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("utcDateTime=" + (_utcDateTime != null ? _utcDateTime!.format() : "null") + ", ");
     buffer.write("localDateTime=" + "$_localDateTime" + ", ");
-    buffer.write("metricHeartRate=" + (_metricHeartRate != null ? _metricHeartRate!.toString() : "null") + ", ");
     buffer.write("metricLocation=" + "$_metricLocation" + ", ");
+    buffer.write("metricHeartRate=" + (_metricHeartRate != null ? _metricHeartRate!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -140,43 +140,43 @@ class Metric extends Model {
     return buffer.toString();
   }
   
-  Metric copyWith({String? id, TemporalDateTime? utcDateTime, String? localDateTime, List<ActivityMetric>? activities, int? metricHeartRate, String? metricLocation}) {
+  Metric copyWith({String? id, TemporalDateTime? utcDateTime, String? localDateTime, String? metricLocation, int? metricHeartRate, List<ActivityMetric>? activities}) {
     return Metric._internal(
       id: id ?? this.id,
       utcDateTime: utcDateTime ?? this.utcDateTime,
       localDateTime: localDateTime ?? this.localDateTime,
-      activities: activities ?? this.activities,
+      metricLocation: metricLocation ?? this.metricLocation,
       metricHeartRate: metricHeartRate ?? this.metricHeartRate,
-      metricLocation: metricLocation ?? this.metricLocation);
+      activities: activities ?? this.activities);
   }
   
   Metric.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _utcDateTime = json['utcDateTime'] != null ? TemporalDateTime.fromString(json['utcDateTime']) : null,
       _localDateTime = json['localDateTime'],
+      _metricLocation = json['metricLocation'],
+      _metricHeartRate = (json['metricHeartRate'] as num?)?.toInt(),
       _activities = json['activities'] is List
         ? (json['activities'] as List)
           .where((e) => e?['serializedData'] != null)
           .map((e) => ActivityMetric.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
-      _metricHeartRate = (json['metricHeartRate'] as num?)?.toInt(),
-      _metricLocation = json['metricLocation'],
       _createdAt = json['createdAt'] != null ? TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'utcDateTime': _utcDateTime?.format(), 'localDateTime': _localDateTime, 'activities': _activities?.map((ActivityMetric? e) => e?.toJson()).toList(), 'metricHeartRate': _metricHeartRate, 'metricLocation': _metricLocation, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'utcDateTime': _utcDateTime?.format(), 'localDateTime': _localDateTime, 'metricLocation': _metricLocation, 'metricHeartRate': _metricHeartRate, 'activities': _activities?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
   static final QueryField ID = QueryField(fieldName: "metric.id");
   static final QueryField UTCDATETIME = QueryField(fieldName: "utcDateTime");
   static final QueryField LOCALDATETIME = QueryField(fieldName: "localDateTime");
+  static final QueryField METRICLOCATION = QueryField(fieldName: "metricLocation");
+  static final QueryField METRICHEARTRATE = QueryField(fieldName: "metricHeartRate");
   static final QueryField ACTIVITIES = QueryField(
     fieldName: "activities",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (ActivityMetric).toString()));
-  static final QueryField METRICHEARTRATE = QueryField(fieldName: "metricHeartRate");
-  static final QueryField METRICLOCATION = QueryField(fieldName: "metricLocation");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Metric";
     modelSchemaDefinition.pluralName = "Metrics";
@@ -206,11 +206,10 @@ class Metric extends Model {
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
-      key: Metric.ACTIVITIES,
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Metric.METRICLOCATION,
       isRequired: false,
-      ofModelName: (ActivityMetric).toString(),
-      associatedKey: ActivityMetric.METRIC
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
@@ -219,10 +218,11 @@ class Metric extends Model {
       ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Metric.METRICLOCATION,
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
+      key: Metric.ACTIVITIES,
       isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+      ofModelName: (ActivityMetric).toString(),
+      associatedKey: ActivityMetric.METRIC
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.nonQueryField(

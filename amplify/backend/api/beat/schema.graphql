@@ -1,18 +1,10 @@
-enum CategoryTypes {
-  FITNESS
-  FUEL
-  PRODUCTIVITY
-  SOCIAL
-  REST
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   userEmail: AWSEmail!
   userName: String!
   userPassword: String!
-  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
   userFirstName: String!
+  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
   userLastName: String!
   userGender: GenderTypes!
   userBirthDate: AWSDate!
@@ -27,21 +19,21 @@ type Goal @model @auth(rules: [{allow: public}]) {
   goalCategory: CategoryTypes!
   goalCurrentDuration: DurationBeat!
   goalTargetDuration: DurationBeat!
-  goalPercentage: Float
-  howToGetU: ID! @index(name: "byUser")
-  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
+  goalPercentage: Float!
+  userOfGoal: ID! @index(name: "byUser")
   goalOfUser: User @belongsTo
+  goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
 }
 
 type Activity @model @auth(rules: [{allow: public}]) {
   id: ID!
   utcStart: AWSDateTime!
   localStart: String!
-  activtyCategory: CategoryTypes!
+  activityCategory: CategoryTypes!
   activityDuration: DurationBeat!
-  howToGetG: ID! @index(name: "byGoal")
-  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
+  goalOfActivity: ID! @index(name: "byGoal")
   activityOfGoal: Goal @belongsTo
+  activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
 }
 
 type Metric @model @auth(rules: [{allow: public}]) {
@@ -49,25 +41,33 @@ type Metric @model @auth(rules: [{allow: public}]) {
   utcDateTime: AWSDateTime!
   localDateTime: String!
   metricLocation: String
-  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
   metricHeartRate: Int
+  activities: [Activity] @manyToMany(relationName: "ActivityMetric")
 }
 
 type Integrations @model @auth(rules: [{allow: public}]) {
   id: ID!
-  wf_public_id: String!
   wf_profile_bearer: String!
+  wf_public_id: String!
 }
 
 type DurationBeat {
-  durationSeconds: Int
-  durationMinutes: Int
-  durationHours: Int
+  hours: Int
+  minutes: Int
+  seconds: Int
 }
 
 enum GenderTypes {
   M
   F
   X
+}
+
+enum CategoryTypes {
+  FITNESS
+  FUEL
+  PRODUCTIVITY
+  SOCIAL
+  REST
 }
  

@@ -26,29 +26,29 @@ import 'package:flutter/foundation.dart';
 /** This is an auto generated class representing the DurationBeat type in your schema. */
 @immutable
 class DurationBeat {
-  final int? _durationSeconds;
-  final int? _durationMinutes;
-  final int? _durationHours;
+  final int? _hours;
+  final int? _minutes;
+  final int? _seconds;
 
-  int? get durationSeconds {
-    return _durationSeconds;
+  int? get hours {
+    return _hours;
   }
   
-  int? get durationMinutes {
-    return _durationMinutes;
+  int? get minutes {
+    return _minutes;
   }
   
-  int? get durationHours {
-    return _durationHours;
+  int? get seconds {
+    return _seconds;
   }
   
-  const DurationBeat._internal({durationSeconds, durationMinutes, durationHours}): _durationSeconds = durationSeconds, _durationMinutes = durationMinutes, _durationHours = durationHours;
+  const DurationBeat._internal({hours, minutes, seconds}): _hours = hours, _minutes = minutes, _seconds = seconds;
   
-  factory DurationBeat({int? durationSeconds, int? durationMinutes, int? durationHours}) {
+  factory DurationBeat({int? hours, int? minutes, int? seconds}) {
     return DurationBeat._internal(
-      durationSeconds: durationSeconds,
-      durationMinutes: durationMinutes,
-      durationHours: durationHours);
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds);
   }
   
   bool equals(Object other) {
@@ -59,9 +59,9 @@ class DurationBeat {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is DurationBeat &&
-      _durationSeconds == other._durationSeconds &&
-      _durationMinutes == other._durationMinutes &&
-      _durationHours == other._durationHours;
+      _hours == other._hours &&
+      _minutes == other._minutes &&
+      _seconds == other._seconds;
   }
   
   @override
@@ -72,28 +72,28 @@ class DurationBeat {
     var buffer = new StringBuffer();
     
     buffer.write("DurationBeat {");
-    buffer.write("durationSeconds=" + (_durationSeconds != null ? _durationSeconds!.toString() : "null") + ", ");
-    buffer.write("durationMinutes=" + (_durationMinutes != null ? _durationMinutes!.toString() : "null") + ", ");
-    buffer.write("durationHours=" + (_durationHours != null ? _durationHours!.toString() : "null"));
+    buffer.write("hours=" + (_hours != null ? _hours!.toString() : "null") + ", ");
+    buffer.write("minutes=" + (_minutes != null ? _minutes!.toString() : "null") + ", ");
+    buffer.write("seconds=" + (_seconds != null ? _seconds!.toString() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  DurationBeat copyWith({int? durationSeconds, int? durationMinutes, int? durationHours}) {
+  DurationBeat copyWith({int? hours, int? minutes, int? seconds}) {
     return DurationBeat._internal(
-      durationSeconds: durationSeconds ?? this.durationSeconds,
-      durationMinutes: durationMinutes ?? this.durationMinutes,
-      durationHours: durationHours ?? this.durationHours);
+      hours: hours ?? this.hours,
+      minutes: minutes ?? this.minutes,
+      seconds: seconds ?? this.seconds);
   }
   
   DurationBeat.fromJson(Map<String, dynamic> json)  
-    : _durationSeconds = (json['durationSeconds'] as num?)?.toInt(),
-      _durationMinutes = (json['durationMinutes'] as num?)?.toInt(),
-      _durationHours = (json['durationHours'] as num?)?.toInt();
+    : _hours = (json['hours'] as num?)?.toInt(),
+      _minutes = (json['minutes'] as num?)?.toInt(),
+      _seconds = (json['seconds'] as num?)?.toInt();
   
   Map<String, dynamic> toJson() => {
-    'durationSeconds': _durationSeconds, 'durationMinutes': _durationMinutes, 'durationHours': _durationHours
+    'hours': _hours, 'minutes': _minutes, 'seconds': _seconds
   };
 
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
@@ -101,19 +101,19 @@ class DurationBeat {
     modelSchemaDefinition.pluralName = "DurationBeats";
     
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'durationSeconds',
+      fieldName: 'hours',
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'durationMinutes',
+      fieldName: 'minutes',
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.customTypeField(
-      fieldName: 'durationHours',
+      fieldName: 'seconds',
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.int)
     ));
