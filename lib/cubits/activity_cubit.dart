@@ -55,8 +55,8 @@ class ActivityCubit extends Cubit<ActivityState> {
     }
   }
 
-  void observeActivity() {
+  void presentChanges() {
     // print("OBSERVING ALL ACTIVITIES");
-    activityService.observeActivities().listen((_) => updateGoals());
+    activityService.streamChanges().listen((_) => updateGoals());
   }
 }
