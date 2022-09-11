@@ -39,7 +39,7 @@ class ActivityRepository {
     return activities;
   }
 
-  Stream observeActivityChanges() {
+  Stream observeChanges() {
     return Amplify.DataStore.observe(Activity.classType);
   }
 }
