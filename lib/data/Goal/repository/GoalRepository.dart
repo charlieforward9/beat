@@ -14,10 +14,9 @@ class GoalRepository {
   //Getting the latest goal respective to the category.
   Future<Goal> fetchLatestGoal(CategoryTypes category, String userId) async {
     //Check if a record exist
-    final record = await Amplify.DataStore.query(Goal.classType,
+    return await Amplify.DataStore.query(Goal.classType,
         where: Goal.USEROFGOAL.eq(userId).and(Goal.GOALCATEGORY.eq(category)),
-        sortBy: [Goal.UTCDATE.descending()]);
-    return record.first;
+        sortBy: [Goal.UTCDATE.descending()]).then((goals) => goals.first);
   }
 
   //Finds the goal whos start-end range hold the datetime
