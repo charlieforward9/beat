@@ -7,7 +7,7 @@ import '../../../data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 
 import '../../User/services/UserService.dart';
-import '../../../global.dart' as global;
+import '../../../config/global.dart' as global;
 
 class GoalServiceTest extends GoalService {
   late UserService userService;
@@ -28,7 +28,7 @@ class GoalServiceTest extends GoalService {
         ),
       );
     } catch (e) {
-      print(e);
+      dev.log(e.toString());
     }
   }
 

@@ -4,7 +4,7 @@ import 'package:beat/models/ModelProvider.dart';
 import 'time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:beat/views/home_widgets/app_theme.dart';
+import 'package:beat/config/app_theme.dart';
 
 import '../data/Goal/services/GoalServiceTest.dart';
 
