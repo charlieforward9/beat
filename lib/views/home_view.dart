@@ -1,4 +1,6 @@
+import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/cubits/goal_cubit.dart';
+import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -42,16 +44,19 @@ class CompletionViewState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<GoalCubit, GoalState>(builder: (context, state) {
-        if (state is MapGoalsSuccess) {
-          return state.goals.isEmpty
-              ? emptyGoals()
-              : completionView(state.goals);
-        } else if (state is MapGoalsFailure) {
-          return _exceptionView(state.exception);
-        } else {
-          return LoadingView();
-        }
+      body:
+          BlocBuilder<ActivityCubit, ActivityState>(builder: (context, state) {
+        return BlocBuilder<GoalCubit, GoalState>(builder: (context, state) {
+          if (state is MapGoalsSuccess) {
+            return state.goals.isEmpty
+                ? emptyGoals()
+                : completionView(state.goals);
+          } else if (state is MapGoalsFailure) {
+            return _exceptionView(state.exception);
+          } else {
+            return LoadingView();
+          }
+        });
       }),
     );
   }
@@ -74,11 +79,11 @@ class CompletionViewState extends State<HomePage> {
     Goal social = goals[CategoryTypes.SOCIAL]!;
     debugPrint(fitness.toString());
 
-    double goal1P = recovery.goalPercentage!;
-    double goal2P = fitness.goalPercentage!;
-    double goal3P = fuel.goalPercentage!;
-    double goal4P = productivity.goalPercentage!;
-    double goal5P = social.goalPercentage!;
+    double goal1P = recovery.goalPercentage;
+    double goal2P = fitness.goalPercentage;
+    double goal3P = fuel.goalPercentage;
+    double goal4P = productivity.goalPercentage;
+    double goal5P = social.goalPercentage;
 
     final goal1 = recovery.goalCategory.name;
     final goal2 = fitness.goalCategory.name;

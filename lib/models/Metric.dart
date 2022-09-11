@@ -169,7 +169,7 @@ class Metric extends Model {
     'id': id, 'utcDateTime': _utcDateTime?.format(), 'localDateTime': _localDateTime, 'metricLocation': _metricLocation, 'metricHeartRate': _metricHeartRate, 'activities': _activities?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "metric.id");
+  static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField UTCDATETIME = QueryField(fieldName: "utcDateTime");
   static final QueryField LOCALDATETIME = QueryField(fieldName: "localDateTime");
   static final QueryField METRICLOCATION = QueryField(fieldName: "metricLocation");

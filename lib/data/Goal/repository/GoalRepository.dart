@@ -10,24 +10,8 @@ class GoalRepository {
     await Amplify.DataStore.delete(goal);
   }
 
-  // Get goal by the goalID
-  // UPDATE
-  // need to pass in goal instead of creating goal in the repository
-  Future<void> updateGoalPercentage(
-      String _goalID, double newPercentage) async {
-    Goal oldGoal = await fetchGoalByGoalID(_goalID);
-    final newGoal = oldGoal.copyWith(goalPercentage: newPercentage);
-    await Amplify.DataStore.save(newGoal);
-  }
-
-  // need to pass in goal instead of creating goal in the repository
-  // UPDATE
-  Future<void> updateGoalDurationPercentage(
-      String _goalID, DurationBeat newDuration, newPercentage) async {
-    Goal oldGoal = await fetchGoalByGoalID(_goalID);
-    final newGoal = oldGoal.copyWith(
-        goalPercentage: newPercentage, goalCurrentDuration: newDuration);
-    await Amplify.DataStore.save(newGoal);
+  Future<void> updateGoal(Goal goal) async {
+    await Amplify.DataStore.save(goal);
   }
 
   //SEARCHING

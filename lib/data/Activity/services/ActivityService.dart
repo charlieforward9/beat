@@ -29,12 +29,22 @@ class ActivityService {
 
   Future<void> updateActivityCategory(
       CategoryTypes _newCategory, String _activityId) async {
-    return activityRepository.updateActivityCategory(_newCategory, _activityId);
+    Activity oldActivity =
+        (await activityRepository.fetchActivityRecordById(_activityId));
+    final newActivity = oldActivity.copyWith(
+        id: oldActivity.id, activityCategory: _newCategory);
+    return activityRepository.updateActivityCategory(newActivity);
   }
 
   Future<void> updateActivityDuration(
       String _activityId, DurationBeat _newDuration) async {
-    return activityRepository.updateActivityDuration(_activityId, _newDuration);
+    Activity oldActivity =
+        (await activityRepository.fetchActivityRecordById(_activityId));
+    final newActivity = oldActivity.copyWith(
+        id: oldActivity.id,
+        activityCategory: oldActivity.activityCategory,
+        activityDuration: _newDuration);
+    return activityRepository.updateActivityDuration(newActivity);
   }
 
   Future<List<Activity>> getActivitiesGoal(String _goalID) async {
@@ -47,7 +57,10 @@ class ActivityService {
     List<Activity> activities =
         await activityRepository.getActivityByGoalID(_goalID);
     int size = activities.length;
-    //print("Array Size: $size");
     return activities;
+  }
+
+  Stream observeActivities() {
+    return activityRepository.observeActivityChanges();
   }
 }
