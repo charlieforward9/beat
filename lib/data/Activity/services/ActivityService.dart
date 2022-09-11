@@ -60,7 +60,7 @@ class ActivityService {
     return activities;
   }
 
-  Stream observeActivities() {
-    return activityRepository.observeActivityChanges();
+  Stream streamChanges() {
+    return activityRepository.observeChanges();
   }
 }
