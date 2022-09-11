@@ -50,4 +50,15 @@ class ActivityService {
     print("Array Size: $size");
     return activities;
   }
+
+  //Checks if the activity already exists in the database
+  Future<bool> isDuplicate(String _goalID, String _local) {
+    return activityRepository.doesExist(_goalID, _local);
+  }
+
+  Future<List<Activity>> fetchByAttribute(String? goalID, String? _local,
+      TemporalDateTime? _utc, CategoryTypes? _category) {
+    return Future.value([]);
+    //TODO Implement!
+  }
 }

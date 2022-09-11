@@ -15,9 +15,9 @@ class GoalService {
   final UserService _userService = UserService();
   final GoalRepository _goalRepository = GoalRepository();
 
-  //Assigns the current date as goalEnd on the latest goal (with a null goalEnd)
-  //Creates a new goal instance with goalStart as current date and goalEnd=null
-  Future<void> createGoal(String userID, CategoryTypes category,
+  //Creates a goal and returns the instance
+  //NOTE: It is not necessary to use the instance
+  Future<Goal> createGoal(String userID, CategoryTypes category,
       DurationBeat targetDuration) async {
     DTService DTS = DTService();
     final Goal goal = Goal(
@@ -29,6 +29,7 @@ class GoalService {
         localDate: DTS.localD,
         utcDate: DTS.utcD);
     await _goalRepository.saveGoal(goal);
+    return goal;
     //await _userService.saveGoalToUser(goal);
   }
 
