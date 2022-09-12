@@ -8,7 +8,7 @@ class DTService {
   late String localDT;
 
   DTService() {
-    _now = DateTime.now().add(Duration(days: 1));
+    _now = DateTime.now();
     utcD = TemporalDate(_now);
     utcDT = TemporalDateTime(_now);
     localD = _now.toIso8601String().substring(0, 10);
