@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                     ..observeGoals(),
                 ),
                 BlocProvider<ActivityCubit>(
-                    create: ((context) => ActivityCubit()..observeActivity())),
+                    create: ((context) => ActivityCubit()..presentChanges())),
               ],
               child: Scaffold(
                 body: Center(
