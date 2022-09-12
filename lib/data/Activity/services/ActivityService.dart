@@ -59,6 +59,18 @@ class ActivityService {
     int size = activities.length;
     return activities;
   }
+  
+  //Checks if the activity already exists in the database
+  Future<bool> isDuplicate(String _goalID, String _local) {
+    return activityRepository.doesExist(_goalID, _local);
+  }
+
+  //Gets Activity based on the parameters provided, at least one must be present.
+  Future<List<Activity>> fetchByAttribute(String? goalID, String? _local,
+      TemporalDateTime? _utc, CategoryTypes? _category) {
+    return Future.value([]);
+    //TODO Implement!
+  }
 
   Stream streamChanges() {
     return activityRepository.observeChanges();

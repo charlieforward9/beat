@@ -6,7 +6,7 @@ import 'package:beat/data/Activity/repository/ActivityRepository.dart';
 import 'package:beat/data/Activity/services/ActivityService.dart';
 import 'package:beat/data/DateTimeService.dart';
 import 'package:beat/data/Goal/services/GoalService.dart';
-import 'package:beat/global.dart' as global;
+import 'package:beat/config/global.dart' as global;
 import 'package:beat/models/ModelProvider.dart';
 
 class ActivityServiceTest {

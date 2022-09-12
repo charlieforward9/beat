@@ -4,7 +4,7 @@ import '../../data/Goal/services/GoalService.dart';
 //^ I moved the test functions to this path
 import '../../data/Goal/services/GoalServiceTest.dart';
 
-import '../../global.dart' as globalTest;
+import '../../config/global.dart' as globalTest;
 import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:beat/views/home_widgets/app_theme.dart';
+import 'package:beat/config/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CompletionRing extends StatefulWidget {

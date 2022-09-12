@@ -18,7 +18,7 @@ class ActivityRepository {
     return activityRecord.first;
     // call and return index 0 [0]
   }
-
+  
   Future<void> updateActivityCategory(Activity _activity) async {
     await Amplify.DataStore.save(_activity);
   }
@@ -38,8 +38,16 @@ class ActivityRepository {
         where: Activity.GOALOFACTIVITY.eq(goalID));
     return activities;
   }
+  
+    Future<bool> doesExist(String _goalID, String? _local) async {
+    return Amplify.DataStore.query(Activity.classType,
+            where: Activity.GOALOFACTIVITY
+                .eq(_goalID)
+                .and(Activity.LOCALSTART.eq(_local)))
+        .then((activites) => activites.isNotEmpty);
+  }
 
   Stream observeChanges() {
     return Amplify.DataStore.observe(Activity.classType);
-  }
+
 }

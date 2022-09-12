@@ -19,7 +19,7 @@ import '../data/Metrics/repository/MetricRepository.dart';
 import '../data/User/services/UserService.dart';
 
 // testing global
-import '../global.dart' as globalTest;
+import '../config/global.dart' as globalTest;
 
 GoalService goalService = GoalService();
 ActivityService activityService = ActivityService();

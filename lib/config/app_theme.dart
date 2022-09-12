@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:beat/views/home_widgets/appcolors.dart';
+import 'package:beat/config/appcolors.dart';
 
 @immutable
 class BeatTheme {

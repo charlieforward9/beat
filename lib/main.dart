@@ -2,15 +2,19 @@
 //export PATH=/Users/crich/Documents/flutter/bin:$PATH
 
 //***********Backend-related Imports***********//
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
+import 'package:beat/config/locale_config.dart';
 import 'package:beat/cubits/goal_cubit.dart';
 import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/data/User/services/UserService.dart';
-import 'package:beat/views/loading_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'amplifyconfiguration.dart';
+import 'config/amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
 
@@ -18,6 +22,7 @@ import 'models/ModelProvider.dart';
 import 'views/home_view.dart';
 import 'views/weekly_progress_view.dart';
 import 'views/time_budget_view.dart';
+import 'package:beat/views/settings_view.dart';
 
 import 'package:flutter/material.dart';
 
@@ -34,11 +39,12 @@ class _MyAppState extends State<MyApp> {
   int _selectedPage = 0;
   String userEmail = "charlesrichardsonusa@gmail.com";
   bool amplifyConfigured = false;
+  StreamSubscription<HubEvent>? stream;
 
   @override
   void initState() {
     super.initState();
-    _configureAmplifyDev(); //TODO Switch to prod when ready
+    kDebugMode ? _configureAmplifyDev() : _configureAmplifyProd();
   }
 
   //Pages in the navBar, in order of display from left to right
@@ -47,6 +53,7 @@ class _MyAppState extends State<MyApp> {
     HomePage(),
     WeeklyLog(),
     TimeBudgetPage(),
+    SettingsPage(),
   ];
 
   void _onNavBarTapped(int index) {
@@ -59,6 +66,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     if (amplifyConfigured) {
       return MaterialApp(
+          localizationsDelegates: localizationsDelegates,
+          supportedLocales: supportedLocales,
           title: 'Flutter Demo',
           home: MultiBlocProvider(
               providers: [
@@ -88,9 +97,12 @@ class _MyAppState extends State<MyApp> {
                       icon: Icon(Icons.edit),
                       label: 'Edit',
                     ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.settings), label: 'Settings')
                   ],
                   currentIndex: _selectedPage,
                   selectedItemColor: Colors.amber[800],
+                  unselectedItemColor: Colors.amber[500],
                   onTap: _onNavBarTapped,
                 ),
               )));
@@ -103,51 +115,55 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _configureAmplifyProd() async {
+    log("Production (local storage persistant on app restart)",
+        name: "Amplify Config Mode");
     final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
     );
     // Add the following line and update your function call with `addPlugins`
     final api = AmplifyAPI();
     await Amplify.addPlugins([datastorePlugin, api]);
+    syncListener();
     try {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
-    UserService().initUser(userEmail);
-    setState(() {
-      amplifyConfigured = true;
-    });
   }
 
   void _configureAmplifyDev() async {
+    log("Development (local storage cleared and resynced upon app restarted)",
+        name: "Amplify Config Mode");
     final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
     );
-    // Add the following line and update your function call with `addPlugins`
     final api = AmplifyAPI();
     await Amplify.addPlugins([datastorePlugin, api]);
+    syncListener();
     try {
       await Amplify.configure(amplifyconfig).whenComplete(
         () => Amplify.DataStore.clear().whenComplete(
-          () => Amplify.DataStore.start().whenComplete(
-            () => Future.delayed(Duration(seconds: 2)).whenComplete(
-              () => {
-                UserService().initUser(userEmail),
-                setState(
-                  () {
-                    amplifyConfigured = true;
-                  },
-                ),
-              },
-            ),
-          ),
+          () => Amplify.DataStore.start(),
         ),
       );
     } on AmplifyAlreadyConfiguredException {
       debugPrint(
           'Tried to reconfigure Amplify; this can occur when your app restarts on Android. To solve: Reset App.');
     }
+  }
+
+  //Delays queries until DataStore is completely synced
+  void syncListener() {
+    Amplify.Hub.listen(([HubChannel.DataStore]), (hubEvent) {
+      if (hubEvent.eventName == 'ready') {
+        UserService().initUser(userEmail);
+        setState(
+          () {
+            amplifyConfigured = true;
+          },
+        );
+      }
+    });
   }
 }
