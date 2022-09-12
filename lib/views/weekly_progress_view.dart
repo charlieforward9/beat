@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/weekly_progress_controller.dart' as controller;
+import '../data/Activity/services/ActivityServiceTest.dart';
+import '../data/Goal/services/GoalServiceTest.dart';
 
 class WeeklyLog extends StatefulWidget {
   WeeklyLog({Key? key}) : super(key: key);
@@ -75,10 +77,8 @@ class _WeeklyLogState extends State<WeeklyLog> {
                       ),
                       //HELPER FOR SIMPLE TESTING
                       // FloatingActionButton(
-                      //     onPressed: () => ActivityServiceTest()
-                      //         .createAnActivityForEachGoal())
-                      //GoalServiceTest().createAllPossibleGoalsWithRandomValues()
-                      //ActivityServiceTest().createAnActivityForEachGoal()
+                      //     onPressed: () => ActivityServiceTest().createAndConfirmActivity(Activity());)
+                      // ActivityServiceTest().createAnActivityForEachGoal()
                     ],
                   ),
                 )

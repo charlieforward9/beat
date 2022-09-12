@@ -1,150 +1,97 @@
-import 'package:beat/models/CategoryTypes.dart';
 import 'package:beat/models/ModelProvider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/views/loading_view.dart';
+import 'package:beat/views/home_widgets/app_theme.dart';
 import 'package:beat/config/app_theme.dart';
-
-import '../data/Goal/services/GoalServiceTest.dart';
-
-import '../../controllers/time_budget_controller.dart' as controller;
+import '../cubits/goal_cubit.dart';
 
 class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
   final timeNow = TemporalDateTime.now();
-
-  //final test = controller.TimeBudgetController().logOnlyLatestGoals();
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-          child: FutureBuilder<List<Goal>>(
-        future: controller
-            .getUsersLatestGoals("f998c35f-9ba3-4546-a4b6-7bdc21c54073"),
-        builder: (BuildContext context, AsyncSnapshot<List<Goal>> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData &&
-              snapshot.connectionState == ConnectionState.done) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                //String name_of_activity = snapshot.data![index].id;
-                return GoalCard(
-                    //cardName: '${snapshot.data!.goalCategory.name}',
-                    cardName: '${snapshot.data![index].goalCategory.name}',
-                    cardGoal:
-                        '${snapshot.data![index].goalTargetDuration.hours}h ${snapshot.data![index].goalTargetDuration.minutes}m',
-                    passedColor: BeatTheme.colors.fitnessColor);
-              },
-            );
-          }
+    return Scaffold(
+        body: BlocBuilder<GoalCubit, GoalState>(builder: (context, state) {
+      if (state is MapGoalsSuccess) {
+        return state.goals.isEmpty ? emptyGoals() : completionView(state.goals);
+      } else if (state is MapGoalsFailure) {
+        return _exceptionView(state.exception);
+      } else {
+        return LoadingView();
+      }
+    }));
+  }
 
-          /// handles others as you did on question
-          else {
-            return CircularProgressIndicator();
-          }
-        },
-      )),
+  Widget _exceptionView(Exception exception) {
+    return Center(child: Text(exception.toString()));
+  }
+
+  Widget emptyGoals() {
+    return const Center(
+      child: Text('No goals yet'),
     );
   }
 
-  // Widget build(BuildContext context) {
-  //   return Center(
-  //     child: Container(
-  //         child: FutureBuilder<Goal>(
-  //       future:
-  //           controller.getAllActivities("f49cf805-6ada-4731-87a6-8b1fb027660c"),
-  //       builder: (BuildContext context, AsyncSnapshot<Goal> snapshot) {
-  //         List<Widget> children;
-  //         if (snapshot.connectionState == ConnectionState.done) {
-  //           try {
-  //             children = <Widget>[
-  //               Spacer(),
-  //               GoalCard(
-  //                   //cardName: '${snapshot.data!.goalCategory.name}',
-  //                   cardName: '${snapshot.data!.goalCategory.name}',
-  //                   cardGoal:
-  //                       '${snapshot.data!.goalTargetDuration.durationHours}h ${snapshot.data!.goalTargetDuration.durationMinutes}m',
-  //                   passedColor: BeatTheme.colors.fitnessColor),
-  //               SizedBox(height: 125),
-  //               ButtonRow(
-  //                   buttonOneName: "Manual Entry", buttonTwoName: "New Goal"),
-  //               Spacer(),
-  //             ];
-  //           } catch (e) {
-  //             print(e);
-  //             children = [Text('error')];
-  //           }
-  //         } else if (snapshot.hasError) {
-  //           children = <Widget>[
-  //             Padding(
-  //               padding: const EdgeInsets.only(top: 16),
-  //               child: Text('Error: ${snapshot.error}'),
-  //             )
-  //           ];
-  //         } else {
-  //           children = const <Widget>[
-  //             Padding(
-  //               padding: EdgeInsets.only(top: 16),
-  //               child: Text('Awaiting result... (dummy data)'),
-  //             )
-  //           ];
-  //         }
-  //         return Center(
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: children,
-  //           ),
-  //         );
-  //       },
-  //     )),
-  //   );
-  // }
+  Widget completionView(Map<CategoryTypes, Goal> goals) {
+    Goal recovery = goals[CategoryTypes.REST]!;
+    Goal fitness = goals[CategoryTypes.FITNESS]!;
+    Goal fuel = goals[CategoryTypes.FUEL]!;
+    Goal productivity = goals[CategoryTypes.PRODUCTIVITY]!;
+    Goal social = goals[CategoryTypes.SOCIAL]!;
+    debugPrint(fitness.toString());
+
+    final goal1 = recovery.goalCategory.name;
+    final goal2 = fitness.goalCategory.name;
+    final goal3 = fuel.goalCategory.name;
+    final goal4 = productivity.goalCategory.name;
+    final goal5 = social.goalCategory.name;
+
+    final goal1Duration = recovery.goalTargetDuration;
+    final goal2Duration = fitness.goalTargetDuration;
+    final goal3Duration = fuel.goalTargetDuration;
+    final goal4Duration = productivity.goalTargetDuration;
+    final goal5Duration = social.goalTargetDuration;
+
+    return SingleChildScrollView(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        const SizedBox(
+          height: 40,
+        ),
+        GoalCard(
+          cardName: goal1,
+          cardGoal: '${goal1Duration.hours}h ${goal1Duration.minutes}m',
+          passedColor: BeatTheme.colors
+              .restColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        GoalCard(
+          cardName: goal2,
+          cardGoal: '${goal2Duration.hours}h ${goal2Duration.minutes}m',
+          passedColor: BeatTheme.colors
+              .fitnessColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        GoalCard(
+          cardName: goal3,
+          cardGoal: '${goal3Duration.hours}h ${goal3Duration.minutes}m',
+          passedColor: BeatTheme.colors
+              .socialColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        GoalCard(
+          cardName: goal4,
+          cardGoal: '${goal4Duration.hours}h ${goal4Duration.minutes}m',
+          passedColor: BeatTheme.colors
+              .fuelingColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        GoalCard(
+          cardName: goal5,
+          cardGoal: '${goal5Duration.hours}h ${goal5Duration.minutes}m',
+          passedColor: BeatTheme.colors
+              .workColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+      ]),
+    );
+  }
 }
-
-/*
-
-GoalCard(
-              cardName: "Fitness",
-              cardGoal: "1.5hr",
-              passedColor: BeatTheme.colors.fuelingColor),
-          GoalCard(
-              cardName: "Fuel",
-              cardGoal: "2000cal",
-              passedColor: BeatTheme.colors.restColor),
-          GoalCard(
-              cardName: "Social",
-              cardGoal: "1hr",
-              passedColor: BeatTheme.colors.socialColor),
-          GoalCard(
-              cardName: "Productivity",
-              cardGoal: "8hr",
-              passedColor: BeatTheme.colors.workColor),
- */
-
-/*
-GoalCard(
-    cardName: "Rest",
-    cardGoal:
-        "8hr", //await controller.getGoal(CategoryTypes.FITNESS, timeNow).then((value) => value),
-    passedColor: BeatTheme.colors.fitnessColor),
-  GoalCard(
-    cardName: "Fitness",
-    cardGoal: "1.5hr",
-    passedColor: BeatTheme.colors.fuelingColor),
-  GoalCard(
-    cardName: "Fuel",
-    cardGoal: "2000cal",
-    passedColor: BeatTheme.colors.restColor),
-  GoalCard(
-    cardName: "Social",
-    cardGoal: "1hr",
-    passedColor: BeatTheme.colors.socialColor),
-  GoalCard(
-    cardName: "Productivity",
-    cardGoal: "8hr",
-    passedColor: BeatTheme.colors.workColor),
-  SizedBox(height: 125),
-*/

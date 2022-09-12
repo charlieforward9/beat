@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/data/Activity/repository/ActivityRepository.dart';
 import 'package:beat/data/Activity/services/ActivityService.dart';
 import 'package:beat/data/DateTimeService.dart';
 import 'package:beat/data/Goal/services/GoalService.dart';
@@ -23,7 +24,7 @@ class ActivityServiceTest {
 
   Future<void> testActivityTimestamp() async {
     const category = CategoryTypes.FUEL;
-    final goalDate = TemporalDate(DateTime(2022, 09, 02));
+    final goalDate = TemporalDate(DateTime(2022, 09, 10));
     dev.log("Teting ${category.name} Activity Timestamp, check Database");
     gService
         .getGoal(userID, category, goalDate)
@@ -33,7 +34,7 @@ class ActivityServiceTest {
   }
 
   Future<void> createAnActivityForEachGoal() async {
-    final uid = global.currentUser.id;
+    final uid = "f39a7c72-b41a-433f-8939-da0779c465dc"; //global.currentUser.id;
     final randDur = Random().nextInt(50);
     final dur =
         DurationBeat(hours: randDur, minutes: randDur, seconds: randDur);

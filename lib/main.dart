@@ -10,6 +10,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:beat/config/locale_config.dart';
 import 'package:beat/cubits/goal_cubit.dart';
+import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/data/User/services/UserService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,10 +69,16 @@ class _MyAppState extends State<MyApp> {
           localizationsDelegates: localizationsDelegates,
           supportedLocales: supportedLocales,
           title: 'Flutter Demo',
-          home: BlocProvider(
-              create: (context) => GoalCubit()
-                ..getDayGoals()
-                ..observeGoals(),
+          home: MultiBlocProvider(
+              providers: [
+                BlocProvider<GoalCubit>(
+                  create: (context) => GoalCubit()
+                    ..getDayGoals()
+                    ..observeGoals(),
+                ),
+                BlocProvider<ActivityCubit>(
+                    create: ((context) => ActivityCubit()..observeActivity())),
+              ],
               child: Scaffold(
                 body: Center(
                   child: _widgetOptions.elementAt(_selectedPage),
