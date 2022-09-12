@@ -74,11 +74,11 @@ class CompletionViewState extends State<HomePage> {
     Goal social = goals[CategoryTypes.SOCIAL]!;
     debugPrint(fitness.toString());
 
-    double goal1P = recovery.goalPercentage!;
-    double goal2P = fitness.goalPercentage!;
-    double goal3P = fuel.goalPercentage!;
-    double goal4P = productivity.goalPercentage!;
-    double goal5P = social.goalPercentage!;
+    double goal1P = recovery.goalPercentage;
+    double goal2P = fitness.goalPercentage;
+    double goal3P = fuel.goalPercentage;
+    double goal4P = productivity.goalPercentage;
+    double goal5P = social.goalPercentage;
 
     final goal1 = recovery.goalCategory.name;
     final goal2 = fitness.goalCategory.name;

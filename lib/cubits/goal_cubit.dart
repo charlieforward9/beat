@@ -34,7 +34,7 @@ class GoalCubit extends Cubit<GoalState> {
     }
 
     try {
-      final goals = await goalService.getDailyGoals(userId);
+      final goals = await goalService.getLatestGoals(userId);
       goals.forEach((key, value) {
         final goalID = value.id;
         // print('Key: $key');
