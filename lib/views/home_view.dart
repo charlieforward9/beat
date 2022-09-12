@@ -2,7 +2,7 @@ import 'package:beat/cubits/goal_cubit.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:flutter/material.dart';
-import 'package:beat/views/home_widgets/app_theme.dart';
+import 'package:beat/config/app_theme.dart';
 
 import 'home_widgets/completion_widget.dart';
 import 'home_widgets/home_progress_card.dart';

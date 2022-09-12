@@ -1,7 +1,7 @@
 import 'package:beat/data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../global.dart' as global;
+import '../config/global.dart' as global;
 
 abstract class GoalState {}
 

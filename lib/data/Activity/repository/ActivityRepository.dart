@@ -22,8 +22,8 @@ class ActivityRepository {
   Future<void> updateActivityCategory(
       CategoryTypes _newCategory, String _activityId) async {
     Activity oldActivity = (await fetchActivityRecordById(_activityId));
-    final newActivity =
-        oldActivity.copyWith(id: oldActivity.id, activityCategory: _newCategory);
+    final newActivity = oldActivity.copyWith(
+        id: oldActivity.id, activityCategory: _newCategory);
     await Amplify.DataStore.save(newActivity);
   }
 
@@ -47,5 +47,13 @@ class ActivityRepository {
     final activities = await Amplify.DataStore.query(Activity.classType,
         where: Activity.GOALOFACTIVITY.eq(goalID));
     return activities;
+  }
+
+  Future<bool> doesExist(String _goalID, String? _local) async {
+    return Amplify.DataStore.query(Activity.classType,
+            where: Activity.GOALOFACTIVITY
+                .eq(_goalID)
+                .and(Activity.LOCALSTART.eq(_local)))
+        .then((activites) => activites.isNotEmpty);
   }
 }
