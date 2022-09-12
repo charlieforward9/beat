@@ -19,22 +19,12 @@ class ActivityRepository {
     // call and return index 0 [0]
   }
 
-  Future<void> updateActivityCategory(
-      CategoryTypes _newCategory, String _activityId) async {
-    Activity oldActivity = (await fetchActivityRecordById(_activityId));
-    final newActivity = oldActivity.copyWith(
-        id: oldActivity.id, activityCategory: _newCategory);
-    await Amplify.DataStore.save(newActivity);
+  Future<void> updateActivityCategory(Activity _activity) async {
+    await Amplify.DataStore.save(_activity);
   }
 
-  Future<void> updateActivityDuration(
-      String _activityId, DurationBeat _newDuration) async {
-    Activity oldActivity = (await fetchActivityRecordById(_activityId));
-    final newActivity = oldActivity.copyWith(
-        id: oldActivity.id,
-        activityCategory: oldActivity.activityCategory,
-        activityDuration: _newDuration);
-    await Amplify.DataStore.save(newActivity);
+  Future<void> updateActivityDuration(Activity _activity) async {
+    await Amplify.DataStore.save(_activity);
   }
 
   Future<List<Activity>> getAllActivitiesBelongingToGoal(String goalID) async {
@@ -55,5 +45,9 @@ class ActivityRepository {
                 .eq(_goalID)
                 .and(Activity.LOCALSTART.eq(_local)))
         .then((activites) => activites.isNotEmpty);
+  }
+
+  Stream observeChanges() {
+    return Amplify.DataStore.observe(Activity.classType);
   }
 }

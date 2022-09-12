@@ -133,7 +133,7 @@ class Integrations extends Model {
     'id': id, 'wf_profile_bearer': _wf_profile_bearer, 'wf_public_id': _wf_public_id, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
 
-  static final QueryField ID = QueryField(fieldName: "integrations.id");
+  static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField WF_PROFILE_BEARER = QueryField(fieldName: "wf_profile_bearer");
   static final QueryField WF_PUBLIC_ID = QueryField(fieldName: "wf_public_id");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {

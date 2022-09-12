@@ -29,12 +29,22 @@ class ActivityService {
 
   Future<void> updateActivityCategory(
       CategoryTypes _newCategory, String _activityId) async {
-    return activityRepository.updateActivityCategory(_newCategory, _activityId);
+    Activity oldActivity =
+        (await activityRepository.fetchActivityRecordById(_activityId));
+    final newActivity = oldActivity.copyWith(
+        id: oldActivity.id, activityCategory: _newCategory);
+    return activityRepository.updateActivityCategory(newActivity);
   }
 
   Future<void> updateActivityDuration(
       String _activityId, DurationBeat _newDuration) async {
-    return activityRepository.updateActivityDuration(_activityId, _newDuration);
+    Activity oldActivity =
+        (await activityRepository.fetchActivityRecordById(_activityId));
+    final newActivity = oldActivity.copyWith(
+        id: oldActivity.id,
+        activityCategory: oldActivity.activityCategory,
+        activityDuration: _newDuration);
+    return activityRepository.updateActivityDuration(newActivity);
   }
 
   Future<List<Activity>> getActivitiesGoal(String _goalID) async {
@@ -47,18 +57,22 @@ class ActivityService {
     List<Activity> activities =
         await activityRepository.getActivityByGoalID(_goalID);
     int size = activities.length;
-    //print("Array Size: $size");
     return activities;
   }
-
+  
   //Checks if the activity already exists in the database
   Future<bool> isDuplicate(String _goalID, String _local) {
     return activityRepository.doesExist(_goalID, _local);
   }
 
+  //Gets Activity based on the parameters provided, at least one must be present.
   Future<List<Activity>> fetchByAttribute(String? goalID, String? _local,
       TemporalDateTime? _utc, CategoryTypes? _category) {
     return Future.value([]);
     //TODO Implement!
+  }
+
+  Stream streamChanges() {
+    return activityRepository.observeChanges();
   }
 }

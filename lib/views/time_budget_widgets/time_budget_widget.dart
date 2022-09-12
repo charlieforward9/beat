@@ -1,11 +1,6 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:beat/models/CategoryTypes.dart';
-import 'package:beat/models/DurationBeat.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/Goal/services/GoalService.dart';
-//import '../../data/Activity/services/ActivityServiceTest.dart';
-import '../../controllers/time_budget_controller.dart' as controller;
 //^ I moved the test functions to this path
 import '../../data/Goal/services/GoalServiceTest.dart';
 
@@ -44,10 +39,6 @@ class _GoalCardState extends State<GoalCard> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
-            // controller
-            //     .getGoalActivities("f49cf805-6ada-4731-87a6-8b1fb027660c");
-            controller
-                .updateCurrentDuration("015ad3d8-868b-4153-9cf5-f7c49a024582");
             debugPrint('Card tapped - ${widget.cardName} Card.');
           },
           child: SizedBox(
@@ -64,7 +55,6 @@ class _GoalCardState extends State<GoalCard> {
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    controller.createActivity();
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
@@ -116,62 +106,6 @@ class _GoalCardState extends State<GoalCard> {
           ],
         ),
       );
-
-  // void getGoal() async {
-  //   @override
-  //   String userID = globalTest.currentUser.id;
-  //   CategoryTypes tmp = CategoryTypes.FITNESS;
-  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
-  //   String goalID = tempGoal.getId();
-  //   print("Testing GoalID: $goalID");
-  // }
-
-  // String getGoal2() {
-  //   @override
-  //   String userID = globalTest.currentUser.id;
-  //   CategoryTypes tmp = CategoryTypes.FITNESS;
-  //   String tempGoalID = "99999";
-  //   var result = Future.delayed(Duration(seconds: 2),
-  //       () => widget.goalService.getGoal(userID, tmp, null));
-  //   print("result: $result");
-  //   widget.goalService
-  //       .getGoal(userID, tmp, null)
-  //       .then((value) => tempGoalID = value.getId());
-  //   //String goalID = tempGoal.getId();
-  //   //print("Testing GoalID: $tempGoalID");
-  //   return tempGoalID;
-  // }
-
-  // void getGoal3() async{
-  //   @override
-  //   String userID = globalTest.currentUser.id;
-  //   CategoryTypes tmp = CategoryTypes.FITNESS;
-  //   String tempGoalID = "99999";
-  //   Goal tempGoal = await widget.goalService.getGoal(userID, tmp, null);
-  //   print("result: $result");
-
-  // }
-
-  void _updatedSpecificGoal(_goal, _progress) async {
-    if (widget.cardName == "Recovery") {
-      //   await widget.recoveryService.resetGoal(widget.recoveryID, _goal);
-      //   widget.recoveryService.updateProgress(widget.recoveryID, _progress);
-      // } else if (widget.cardName == "Fitness") {
-      //   await widget.fitnessService.resetGoal(widget.fitnessID, _goal);
-      //   widget.fitnessService.updateProgress(widget.fitnessID, _progress);
-      // } else if (widget.cardName == "Network") {
-      //   await widget.networkService.resetGoal(widget.networkID, _goal);
-      //   widget.networkService.updateProgress(widget.networkID, _progress);
-      // } else if (widget.cardName == "Fuel") {
-      //   await widget.fuelService.resetGoal(widget.fuelID, _goal);
-      //   widget.fuelService.updateProgress(widget.fuelID, _progress);
-      // } else if (widget.cardName == "Productivity") {
-      //   await widget.productivityService.resetGoal(widget.productivityID, _goal);
-      //   widget.productivityService
-      //       .updateProgress(widget.productivityID, _progress);
-      // }
-    }
-  }
 }
 
 class ButtonRow extends StatefulWidget {

@@ -50,21 +50,14 @@ class GoalService {
         sumHours += allActivities[i].activityDuration.hours!;
         sumMinutes += allActivities[i].activityDuration.minutes!;
         sumSeconds += allActivities[i].activityDuration.seconds!;
-        //print(allActivities[i]);
       }
     }
-    // print("sumHours: $sumHours");
-    // print("sumMinutes: $sumMinutes");
-    // print("sumSeconds: $sumSeconds");
 
     return DurationBeat(
-        hours: sumHours,
-        minutes: sumMinutes,
-        seconds: sumSeconds);
+        hours: sumHours, minutes: sumMinutes, seconds: sumSeconds);
   }
 
   Future<void> updateGoalCurrentDuration(String _goalID) async {
-    // _goalID = "015ad3d8-868b-4153-9cf5-f7c49a024582";
     DurationBeat _newCurrentDuration =
         await getDurationOfAllGoalActivities(_goalID);
     // get the old goal
@@ -79,11 +72,16 @@ class GoalService {
         minutes: _newCurrentDuration.minutes!,
         seconds: _newCurrentDuration.seconds!);
     final newPercentage = (newDuration.inSeconds / oldDuration.inSeconds) * 100;
-    // print("newPercentage - test: $newPercentage");
-    // send to repo to update the goal
     // need to pass in goal instead of creating goal in the repository
-    await _goalRepository.updateGoalDurationPercentage(
-        _goalID, _newCurrentDuration, newPercentage);
+    // print("NEW DURATION: $newDuration");
+    oldGoal = await _goalRepository.fetchGoalByGoalID(_goalID);
+    final newGoal = oldGoal.copyWith(
+        goalPercentage: newPercentage,
+        goalCurrentDuration: DurationBeat(
+            hours: _newCurrentDuration.hours!,
+            minutes: _newCurrentDuration.minutes!,
+            seconds: _newCurrentDuration.seconds!));
+    await _goalRepository.updateGoal(newGoal);
   }
 
   //Returns the requested goal based on its category and date
@@ -137,18 +135,11 @@ class GoalService {
     goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL, null);
     goals[CategoryTypes.PRODUCTIVITY] =
         await getGoal(userID, CategoryTypes.PRODUCTIVITY, null);
-
-    // goals[CategoryTypes.FITNESS] = await getGoal(userID, CategoryTypes.FITNESS,now);
-    // goals[CategoryTypes.REST] = await getGoal(userID, CategoryTypes.REST,now);
-    // goals[CategoryTypes.SOCIAL] = await getGoal(userID, CategoryTypes.SOCIAL,now);
-    // goals[CategoryTypes.FUEL] = await getGoal(userID, CategoryTypes.FUEL,now);
-    // goals[CategoryTypes.PRODUCTIVITY] = await getGoal(userID, CategoryTypes.PRODUCTIVITY,now);
     return goals;
   }
 
   Stream observeGoals() {
     return _goalRepository.observeGoalChanges();
-    // .listen((_) => getDailyGoals(userID));
   }
 
   Future<List<Activity>> getAllGoalActivities(String goalID) async {
