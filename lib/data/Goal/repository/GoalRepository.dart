@@ -47,7 +47,7 @@ class GoalRepository {
       Goal.classType,
       where: Goal.USEROFGOAL.eq(userID).and(
             Goal.GOALCATEGORY.eq(category).and(
-                  Goal.UTCDATE.eq(date),
+                  Goal.LOCALDATE.eq(date),
                 ),
           ),
     );
