@@ -26,7 +26,7 @@ import 'package:beat/views/settings_view.dart';
 
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
   runApp(MyApp());
 }
 
