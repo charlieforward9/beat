@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +9,8 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:beat/config/app_theme.dart';
 import '../cubits/goal_cubit.dart';
+
+import '../controllers/health_controller.dart' as health_controller;
 
 class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
@@ -89,6 +93,13 @@ class TimeBudgetPage extends StatelessWidget {
           cardGoal: '${goal5Duration.hours}h ${goal5Duration.minutes}m',
           passedColor: BeatTheme.colors
               .workColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        IconButton(
+          icon: const Icon(Icons.android),
+          color: Colors.red,
+          onPressed: () {
+            health_controller.testingHealth();
+          },
         ),
       ]),
     );

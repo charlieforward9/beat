@@ -34,14 +34,6 @@ Future<Goal> getGoal() async {
   return tempGoal;
 }
 
-// Future<Goal> getAllActivities(String goalID) async {
-//   // testGetGoalActivities();
-//   Goal tempGoal = await goalService.getGoalByGoalID(goalID);
-//   // print(tempGoal);
-
-//   return tempGoal;
-// }
-
 //TODO double check that this contoller works with a non-hard-coded values
 Future<void> createActivity() async {
   debugPrint("Creating Activity....");
@@ -49,8 +41,7 @@ Future<void> createActivity() async {
   DateTime now = DateTime.now();
   final loc = DTService().localDT;
   final utc = DTService().utcDT;
-  DurationBeat dur = DurationBeat(
-      hours: rand, minutes: rand, seconds: rand);
+  DurationBeat dur = DurationBeat(hours: rand, minutes: rand, seconds: rand);
 
   activityService.createActivity(
     loc,
@@ -65,8 +56,7 @@ Future<List<Activity>> getGoalActivities(String goalID) async {
   int sumHours = 0;
   int sumMinutes = 0;
   int sumSeconds = 0;
-  DurationBeat sumOfActivities =
-      DurationBeat(hours: 0, minutes: 0, seconds: 0);
+  DurationBeat sumOfActivities = DurationBeat(hours: 0, minutes: 0, seconds: 0);
   List<Activity> allActivities =
       await activityService.getActivitiesByGoalID(goalID);
 
@@ -91,19 +81,17 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
   List<Goal> storage = List.empty(growable: true);
   Goal fitnessGoal = await goalService.getGoal(
       userID, CategoryTypes.FITNESS, null); // TemporalDate.now()
-      //goalService.updateGoalCurrentDuration(fuelGoal.id);
+  //goalService.updateGoalCurrentDuration(fuelGoal.id);
   storage.add(fitnessGoal);
   Goal socialGoal =
       await goalService.getGoal(userID, CategoryTypes.SOCIAL, null);
   storage.add(socialGoal);
-  Goal restGoal =
-      await goalService.getGoal(userID, CategoryTypes.REST, null);
+  Goal restGoal = await goalService.getGoal(userID, CategoryTypes.REST, null);
   storage.add(restGoal);
   Goal productivityGoal =
       await goalService.getGoal(userID, CategoryTypes.PRODUCTIVITY, null);
   storage.add(productivityGoal);
-  Goal fuelGoal =
-      await goalService.getGoal(userID, CategoryTypes.FUEL, null);
+  Goal fuelGoal = await goalService.getGoal(userID, CategoryTypes.FUEL, null);
   storage.add(fuelGoal);
   return storage;
 }

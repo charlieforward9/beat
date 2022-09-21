@@ -23,9 +23,9 @@ class GoalCubit extends Cubit<GoalState> {
   final goalService = GoalService();
   //TODO LateInitException here when global user is used
   // For Local Testing userID manual entry
-  // String userID = 'f39a7c72-b41a-433f-8939-da0779c465dc';
+  String userID = 'f39a7c72-b41a-433f-8939-da0779c465dc';
   // For producting use the global user
-  String userID = global.currentUser.id;
+  // String userID = global.currentUser.id;
 
   GoalCubit() : super(LoadingGoals());
 
