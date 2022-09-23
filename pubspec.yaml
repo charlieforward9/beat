@@ -49,6 +49,7 @@ dependencies:
   flutter_inappwebview: ^5.4.3+7
   google_place: ^0.4.7
   flutter_config: ^2.0.0
+  geolocator: ^9.0.1
 
 dev_dependencies:
   flutter_test:

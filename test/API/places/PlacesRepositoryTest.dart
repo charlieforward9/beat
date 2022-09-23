@@ -1,4 +1,4 @@
-import 'package:beat/API/places/repository/PlaceRepository.dart';
+import 'package:beat/API/places/repository/place_repository.dart';
 import 'package:google_place/google_place.dart';
 import 'package:test/test.dart';
 
