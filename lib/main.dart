@@ -8,12 +8,15 @@ import 'dart:developer';
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_api/amplify_api.dart';
+import 'package:beat/API/location/repository/location_repository.dart';
+import 'package:beat/API/location/service/location_service.dart';
 import 'package:beat/config/locale_config.dart';
 import 'package:beat/cubits/goal_cubit.dart';
 import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/data/User/services/UserService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:workmanager/workmanager.dart';
 import 'config/amplifyconfiguration.dart';
 
 import 'models/ModelProvider.dart';
@@ -27,6 +30,16 @@ import 'package:beat/views/settings_view.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
+  Workmanager().initialize(
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode:
+          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+      );
+  Workmanager().registerPeriodicTask(
+    "location",
+    "get location every 15 min",
+    initialDelay: const Duration(minutes: 15),
+  );
   runApp(MyApp());
 }
 
@@ -166,4 +179,13 @@ class _MyAppState extends State<MyApp> {
       }
     });
   }
+}
+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    debugPrint(task); //simpleTask will be emitted here.
+    LocationService locationService = LocationService();
+    // locationService.compareLocations(); // todo: test
+    return Future.value(true);
+  });
 }
