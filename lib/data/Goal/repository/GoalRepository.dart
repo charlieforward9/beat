@@ -25,6 +25,7 @@ class GoalRepository {
 
   //Finds the goal whos start-end range hold the datetime
   //Assumes date is null
+  //TODO CASE: return nullable
   Future<Goal> fetchGoalFromDate(
       CategoryTypes category, String userID, TemporalDate date) async {
     final goalList = await Amplify.DataStore.query(

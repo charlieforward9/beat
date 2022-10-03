@@ -1,6 +1,8 @@
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/config/global.dart';
 import 'package:beat/controllers/time_budget_controller.dart';
+import 'package:beat/data/Activity/services/ActivityService.dart';
 import 'package:beat/data/DateTimeService.dart';
 import 'package:beat/data/User/repository/UserRepository.dart';
 import 'package:beat/data/User/services/UserService.dart';
@@ -145,5 +147,22 @@ class GoalService {
   Future<List<Activity>> getAllGoalActivities(String goalID) async {
     Goal tempGoal = await _goalRepository.fetchGoalByGoalID(goalID);
     return tempGoal.goalActivities ?? [];
+  }
+
+  Future<void> saveActivityWithoutKnownParentGoal(String local, TemporalDateTime utc,
+      CategoryTypes cat, DurationBeat dur) async {
+    late Goal _goal;
+    try {
+      TemporalDate utcDate =
+          TemporalDate.fromString(utc.toString().split('T')[0]);
+      _goal = (await GoalService().getGoal(currentUser.id, cat, utcDate));
+      if (await ActivityService().isDuplicate(_goal.id, local)) {
+      } else {
+        ActivityService().createActivity(local, utc, cat, dur, _goal.id);
+      }
+    } catch (e) {
+      _goal = await createGoal(currentUser.id, cat, defaultTargets[cat]!);
+    }
+    ActivityService().createActivity(local, utc, cat, dur, _goal.id);
   }
 }
