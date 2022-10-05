@@ -380,6 +380,10 @@ class Goal extends Model {
       ])
     ];
 
+    // modelSchemaDefinition.indexes = [
+    //   ModelIndex(fields: const ["userOfGoal"], name: "byUser")
+    // ];
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
 
     modelSchemaDefinition.addField(ModelFieldDefinition.field(

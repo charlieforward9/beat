@@ -321,6 +321,10 @@ class Activity extends Model {
       ])
     ];
 
+    // modelSchemaDefinition.indexes = [
+    //   ModelIndex(fields: const ["goalOfActivity"], name: "byGoal")
+    // ];
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
 
     modelSchemaDefinition.addField(ModelFieldDefinition.field(

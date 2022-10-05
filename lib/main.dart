@@ -15,6 +15,7 @@ import 'package:beat/data/User/services/UserService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/amplifyconfiguration.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 
 import 'models/ModelProvider.dart';
 
@@ -123,6 +124,9 @@ class _MyAppState extends State<MyApp> {
     // Add the following line and update your function call with `addPlugins`
     final api = AmplifyAPI();
     await Amplify.addPlugins([datastorePlugin, api]);
+    final auth = AmplifyAuthCognito();
+    await Amplify.addPlugin(auth);
+
     syncListener();
     try {
       await Amplify.configure(amplifyconfig);
@@ -140,6 +144,9 @@ class _MyAppState extends State<MyApp> {
     );
     final api = AmplifyAPI();
     await Amplify.addPlugins([datastorePlugin, api]);
+    final auth = AmplifyAuthCognito();
+    await Amplify.addPlugin(auth);
+
     syncListener();
     try {
       await Amplify.configure(amplifyconfig).whenComplete(

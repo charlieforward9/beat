@@ -47,6 +47,7 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   flutter_inappwebview: ^5.4.3+7
+  amplify_auth_cognito: ^0.6.8
 
 dev_dependencies:
   flutter_test:
