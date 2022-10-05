@@ -4,8 +4,6 @@ import 'package:beat/config/global.dart';
 import 'package:beat/controllers/time_budget_controller.dart';
 import 'package:beat/data/Activity/services/ActivityService.dart';
 import 'package:beat/data/DateTimeService.dart';
-import 'package:beat/data/User/repository/UserRepository.dart';
-import 'package:beat/data/User/services/UserService.dart';
 
 import '../../../models/ModelProvider.dart';
 import '../repository/GoalRepository.dart';
@@ -14,25 +12,30 @@ import '../repository/GoalRepository.dart';
 //GoalRepository.dart for more specific function.
 //DO NOT IMPORT OTHER SCHEMAS' REPOS OR SERVICES
 class GoalService {
-  final UserService _userService = UserService();
   final GoalRepository _goalRepository = GoalRepository();
 
-  //Creates a goal and returns the instance
-  //NOTE: It is not necessary to use the instance
-  Future<Goal> createGoal(String userID, CategoryTypes category,
-      DurationBeat targetDuration) async {
-    DTService DTS = DTService();
-    final Goal goal = Goal(
-        userOfGoal: userID,
+  ///Creates and returns instance of a [Goal] with specified category
+  ///If dates is not specified, [DTService] sets the current date
+  ///If durations are not specified, [goalCurrentDuration] is 0
+  /// and [goalTargetDuration] is pulled from config/global.dart:defaultTarget
+  Goal createGoal(CategoryTypes category,
+      {TemporalDate? utcDate,
+      String? localDate,
+      DurationBeat? current,
+      DurationBeat? target}) {
+    DTService dts = DTService();
+    current = current ?? DurationBeat(hours: 0, minutes: 0, seconds: 0);
+    target = target ?? defaultTargets[category]!;
+    final goal = Goal(
+        userOfGoal: currentUser.id,
         goalCategory: category,
-        goalTargetDuration: targetDuration,
-        goalCurrentDuration: DurationBeat(hours: 0, minutes: 0, seconds: 0),
-        goalPercentage: 0,
-        localDate: DTS.localD,
-        utcDate: DTS.utcD);
-    await _goalRepository.saveGoal(goal);
+        utcDate: utcDate ?? dts.utcD,
+        localDate: localDate ?? dts.localD,
+        goalCurrentDuration: current,
+        goalTargetDuration: target,
+        goalPercentage: current / target);
+    _goalRepository.saveGoal(goal);
     return goal;
-    //await _userService.saveGoalToUser(goal);
   }
 
   Future<DurationBeat> getDurationOfAllGoalActivities(String goalID) async {
@@ -149,8 +152,8 @@ class GoalService {
     return tempGoal.goalActivities ?? [];
   }
 
-  Future<void> saveActivityWithoutKnownParentGoal(String local, TemporalDateTime utc,
-      CategoryTypes cat, DurationBeat dur) async {
+  Future<void> saveActivityWithoutKnownParentGoal(String local,
+      TemporalDateTime utc, CategoryTypes cat, DurationBeat dur) async {
     late Goal _goal;
     try {
       TemporalDate utcDate =
@@ -161,7 +164,7 @@ class GoalService {
         ActivityService().createActivity(local, utc, cat, dur, _goal.id);
       }
     } catch (e) {
-      _goal = await createGoal(currentUser.id, cat, defaultTargets[cat]!);
+      _goal = await createGoal(cat);
     }
     ActivityService().createActivity(local, utc, cat, dur, _goal.id);
   }
