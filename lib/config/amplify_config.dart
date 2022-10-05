@@ -17,8 +17,21 @@ class AmplifyConfiguration {
       SignUpFormField.birthdate(required: true),
       SignUpFormField.givenName(required: true),
       SignUpFormField.familyName(required: true),
-      SignUpFormField.gender(required: true),
-      SignUpFormField.nickname(required: true),
+      //SignUpFormField.custom(title: 'Gender', attributeKey: )
+      SignUpFormField.custom(
+          attributeKey: CognitoUserAttributeKey.gender,
+          title: "Gender",
+          required: true,
+          hintText: "M , F , X",
+          validator: (value) {
+            if (value != null &&
+                value.contains(RegExp('[MFX]')) &&
+                value.length == 1) {
+              return null;
+            } else {
+              return 'M , F or X (case sensitive)';
+            }
+          }),
     ],
   );
 
