@@ -42,6 +42,8 @@ dependencies:
   safeprint: ^0.0.2
   amplify_datastore: ^0.6.0
   amplify_api: ^0.6.0
+  amplify_auth_cognito: ^0.6.0
+  amplify_authenticator: ^0.2.0
   amplify_flutter: ^0.6.0
   flutter_bloc: ^8.0.1
   http: ^0.13.5
