@@ -1,6 +1,5 @@
 import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/cubits/goal_cubit.dart';
-import 'package:beat/cubits/activity_cubit.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:flutter/material.dart';

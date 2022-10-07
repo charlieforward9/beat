@@ -1,14 +1,13 @@
 //IMPORT STATEMENT SHOULD LOOK LIKE THIS
 //import '<PATH>' as TimeBudgetController;
 import 'dart:developer';
-
 import 'dart:math';
-
 // import data models
 import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:beat/data/DateTimeService.dart';
 import 'package:beat/data/Goal/repository/GoalRepository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../models/ModelProvider.dart';
 
@@ -99,3 +98,4 @@ Future<List<Goal>> getUsersLatestGoals(String userID) async {
 Future<void> updateCurrentDuration(String _goalID) async {
   await goalService.updateGoalCurrentDuration(_goalID);
 }
+

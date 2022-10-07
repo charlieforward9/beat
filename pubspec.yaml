@@ -49,6 +49,7 @@ dependencies:
   flutter_inappwebview: ^5.4.3+7
   health: ^4.1.1
   permission_handler: ^9.2.0
+  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:
