@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +9,8 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:beat/config/app_theme.dart';
 import '../cubits/goal_cubit.dart';
+
+import '../controllers/health_controller.dart' as health_controller;
 
 class TimeBudgetPage extends StatelessWidget {
   TimeBudgetPage({Key? key}) : super(key: key);
@@ -61,34 +65,56 @@ class TimeBudgetPage extends StatelessWidget {
           height: 40,
         ),
         GoalCard(
+          goalID: recovery.id,
           cardName: goal1,
-          cardGoal: '${goal1Duration.hours}h ${goal1Duration.minutes}m',
+          cardGoalHours: goal1Duration.hours!,
+          cardGoalMinutes: goal1Duration.minutes!,
+          cardPercentage: recovery.goalPercentage,
           passedColor: BeatTheme.colors
               .restColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
         ),
         GoalCard(
+          goalID: fitness.id,
           cardName: goal2,
-          cardGoal: '${goal2Duration.hours}h ${goal2Duration.minutes}m',
+          cardGoalHours: goal2Duration.hours!,
+          cardGoalMinutes: goal2Duration.minutes!,
+          cardPercentage: fitness.goalPercentage,
           passedColor: BeatTheme.colors
               .fitnessColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
         ),
         GoalCard(
+          goalID: fuel.id,
           cardName: goal3,
-          cardGoal: '${goal3Duration.hours}h ${goal3Duration.minutes}m',
+          cardGoalHours: goal3Duration.hours!,
+          cardGoalMinutes: goal3Duration.minutes!,
+          cardPercentage: fuel.goalPercentage,
           passedColor: BeatTheme.colors
               .socialColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
         ),
         GoalCard(
+          goalID: productivity.id,
           cardName: goal4,
-          cardGoal: '${goal4Duration.hours}h ${goal4Duration.minutes}m',
+          cardGoalHours: goal4Duration.hours!,
+          cardGoalMinutes: goal4Duration.minutes!,
+          cardPercentage: productivity.goalPercentage,
           passedColor: BeatTheme.colors
               .fuelingColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
         ),
         GoalCard(
+          goalID: social.id,
           cardName: goal5,
-          cardGoal: '${goal5Duration.hours}h ${goal5Duration.minutes}m',
+          cardGoalHours: goal5Duration.hours!,
+          cardGoalMinutes: goal5Duration.minutes!,
+          cardPercentage: social.goalPercentage,
           passedColor: BeatTheme.colors
               .workColor, //TODO Dillan (is this fixed?) clash with current AppTheme class in completion_ring.dart
+        ),
+        IconButton(
+          icon: const Icon(Icons.android),
+          color: Colors.red,
+          onPressed: () {
+            health_controller.testingHealth();
+          },
         ),
       ]),
     );

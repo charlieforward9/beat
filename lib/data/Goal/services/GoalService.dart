@@ -84,6 +84,33 @@ class GoalService {
     await _goalRepository.updateGoal(newGoal);
   }
 
+  Future<void> updateGoalTargettDuration(
+      String _goalID, int hours, int minutes) async {
+    DurationBeat newTargetDuration =
+        DurationBeat(hours: hours, minutes: minutes);
+    // get the old goal
+    Goal oldGoal = await _goalRepository.fetchGoalByGoalID(_goalID);
+    // sum old duration
+    final currentDuration = Duration(
+        hours: oldGoal.goalCurrentDuration.hours!,
+        minutes: oldGoal.goalCurrentDuration.minutes!,
+        seconds: oldGoal.goalCurrentDuration.seconds!);
+    final newGoalDuration = Duration(
+        hours: newTargetDuration.hours!, minutes: newTargetDuration.minutes!);
+    // get the current duration / newGoalDuration
+    final newPercentage =
+        (currentDuration.inSeconds / newGoalDuration.inSeconds) * 100;
+    // need to pass in goal instead of creating goal in the repository
+    // print("NEW DURATION: $newDuration");
+    oldGoal = await _goalRepository.fetchGoalByGoalID(_goalID);
+    final newGoal = oldGoal.copyWith(
+        goalPercentage: newPercentage,
+        goalTargetDuration: DurationBeat(
+            hours: newTargetDuration.hours!,
+            minutes: newTargetDuration.minutes!));
+    await _goalRepository.updateGoal(newGoal);
+  }
+
   //Returns the requested goal based on its category and date
   //If date is null, it returns the current goal
   //If date specified, it finds the goal whose goalStart and goalEnd range holds this date
