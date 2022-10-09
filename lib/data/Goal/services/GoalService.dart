@@ -84,7 +84,7 @@ class GoalService {
     await _goalRepository.updateGoal(newGoal);
   }
 
-  Future<void> updateGoalTargettDuration(
+  Future<void> updateTargetDuration(
       String _goalID, int hours, int minutes) async {
     DurationBeat newTargetDuration =
         DurationBeat(hours: hours, minutes: minutes);

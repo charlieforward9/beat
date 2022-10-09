@@ -190,7 +190,7 @@ class _GoalCardState extends State<GoalCard> {
                     actions: <Widget>[
                       TextButton(
                           onPressed: () {
-                            widget.goalService.updateGoalTargettDuration(
+                            widget.goalService.updateTargetDuration(
                                 widget.goalID, hours, minutes);
                             Navigator.of(context).pop();
                           },
