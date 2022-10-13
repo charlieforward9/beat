@@ -45,7 +45,7 @@ class AmplifyConfiguration {
     await Amplify.addPlugins([datastorePlugin, api, auth]);
   }
 
-  void configProd() async {
+  Future<void> configProd() async {
     log("Production (local storage persistant on app restart)",
         name: "Amplify Config Mode");
     try {
@@ -55,7 +55,7 @@ class AmplifyConfiguration {
     }
   }
 
-  void configDev() async {
+  Future<void> configDev() async {
     log("Development (local storage cleared and resynced upon app restarted)",
         name: "Amplify Config Mode");
     try {

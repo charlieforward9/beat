@@ -64,6 +64,7 @@ class DurationBeat {
       _seconds == other._seconds;
   }
 
+    //Helper function for DurationBeat type, do not remove
     ///Returns percentage value
   double operator /(DurationBeat other) {
     if (identical(other, this)) return 100.00;

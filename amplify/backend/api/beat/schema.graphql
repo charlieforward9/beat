@@ -1,8 +1,6 @@
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: owner}]) {
   id: ID!
   userEmail: AWSEmail!
-  userName: String!
-  userPassword: String!
   userFirstName: String!
   userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
   userLastName: String!
@@ -12,7 +10,7 @@ type User @model @auth(rules: [{allow: public}]) {
   userIntegrations: Integrations @hasOne
 }
 
-type Goal @model @auth(rules: [{allow: public}]) {
+type Goal @model @auth(rules: [{allow: owner}]) {
   id: ID!
   utcDate: AWSDate!
   localDate: String!
@@ -25,7 +23,7 @@ type Goal @model @auth(rules: [{allow: public}]) {
   goalActivities: [Activity] @hasMany(indexName: "byGoal", fields: ["id"])
 }
 
-type Activity @model @auth(rules: [{allow: public}]) {
+type Activity @model @auth(rules: [{allow: owner}]) {
   id: ID!
   utcStart: AWSDateTime!
   localStart: String!
@@ -36,7 +34,7 @@ type Activity @model @auth(rules: [{allow: public}]) {
   activityMetrics: [Metric] @manyToMany(relationName: "ActivityMetric")
 }
 
-type Metric @model @auth(rules: [{allow: public}]) {
+type Metric @model @auth(rules: [{allow: owner}]) {
   id: ID!
   utcDateTime: AWSDateTime!
   localDateTime: String!
@@ -45,7 +43,7 @@ type Metric @model @auth(rules: [{allow: public}]) {
   activities: [Activity] @manyToMany(relationName: "ActivityMetric")
 }
 
-type Integrations @model @auth(rules: [{allow: public}]) {
+type Integrations @model @auth(rules: [{allow: owner}]) {
   id: ID!
   wf_profile_bearer: String!
   wf_public_id: String!

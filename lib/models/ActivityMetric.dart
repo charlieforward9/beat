@@ -177,6 +177,11 @@ class ActivityMetric extends Model {
     modelSchemaDefinition.name = "ActivityMetric";
     modelSchemaDefinition.pluralName = "ActivityMetrics";
 
+    modelSchemaDefinition.indexes = [
+      ModelIndex(fields: const ["activityID"], name: "byActivity"),
+      ModelIndex(fields: const ["metricID"], name: "byMetric")
+    ];
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
 
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(

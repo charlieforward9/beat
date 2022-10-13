@@ -46,7 +46,7 @@ class WFService {
     var body = {
       'given_name': currentUser.userFirstName,
       'family_name': currentUser.userLastName,
-      'nickname': currentUser.userName,
+      'nickname': currentUser.userFirstName + " " + currentUser.userLastName,
       'gender': currentUser.userGender.name,
       'birthdate': currentUser.userBirthDate.toString(),
       'locale':

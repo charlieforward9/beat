@@ -31,8 +31,6 @@ class User extends Model {
   static const classType = const _UserModelType();
   final String id;
   final String? _userEmail;
-  final String? _userName;
-  final String? _userPassword;
   final String? _userFirstName;
   final List<Goal>? _userGoals;
   final String? _userLastName;
@@ -55,32 +53,6 @@ class User extends Model {
   String get userEmail {
     try {
       return _userEmail!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
-  }
-  
-  String get userName {
-    try {
-      return _userName!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
-  }
-  
-  String get userPassword {
-    try {
-      return _userPassword!;
     } catch(e) {
       throw new AmplifyCodeGenModelException(
           AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -176,14 +148,12 @@ class User extends Model {
     return _userUserIntegrationsId;
   }
   
-  const User._internal({required this.id, required userEmail, required userName, required userPassword, required userFirstName, userGoals, required userLastName, required userGender, required userBirthDate, required userAvatar, userIntegrations, createdAt, updatedAt, userUserIntegrationsId}): _userEmail = userEmail, _userName = userName, _userPassword = userPassword, _userFirstName = userFirstName, _userGoals = userGoals, _userLastName = userLastName, _userGender = userGender, _userBirthDate = userBirthDate, _userAvatar = userAvatar, _userIntegrations = userIntegrations, _createdAt = createdAt, _updatedAt = updatedAt, _userUserIntegrationsId = userUserIntegrationsId;
+  const User._internal({required this.id, required userEmail, required userFirstName, userGoals, required userLastName, required userGender, required userBirthDate, required userAvatar, userIntegrations, createdAt, updatedAt, userUserIntegrationsId}): _userEmail = userEmail, _userFirstName = userFirstName, _userGoals = userGoals, _userLastName = userLastName, _userGender = userGender, _userBirthDate = userBirthDate, _userAvatar = userAvatar, _userIntegrations = userIntegrations, _createdAt = createdAt, _updatedAt = updatedAt, _userUserIntegrationsId = userUserIntegrationsId;
   
-  factory User({String? id, required String userEmail, required String userName, required String userPassword, required String userFirstName, List<Goal>? userGoals, required String userLastName, required GenderTypes userGender, required TemporalDate userBirthDate, required String userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
+  factory User({String? id, required String userEmail, required String userFirstName, List<Goal>? userGoals, required String userLastName, required GenderTypes userGender, required TemporalDate userBirthDate, required String userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
     return User._internal(
       id: id == null ? UUID.getUUID() : id,
       userEmail: userEmail,
-      userName: userName,
-      userPassword: userPassword,
       userFirstName: userFirstName,
       userGoals: userGoals != null ? List<Goal>.unmodifiable(userGoals) : userGoals,
       userLastName: userLastName,
@@ -204,8 +174,6 @@ class User extends Model {
     return other is User &&
       id == other.id &&
       _userEmail == other._userEmail &&
-      _userName == other._userName &&
-      _userPassword == other._userPassword &&
       _userFirstName == other._userFirstName &&
       DeepCollectionEquality().equals(_userGoals, other._userGoals) &&
       _userLastName == other._userLastName &&
@@ -226,8 +194,6 @@ class User extends Model {
     buffer.write("User {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("userEmail=" + "$_userEmail" + ", ");
-    buffer.write("userName=" + "$_userName" + ", ");
-    buffer.write("userPassword=" + "$_userPassword" + ", ");
     buffer.write("userFirstName=" + "$_userFirstName" + ", ");
     buffer.write("userLastName=" + "$_userLastName" + ", ");
     buffer.write("userGender=" + (_userGender != null ? enumToString(_userGender)! : "null") + ", ");
@@ -241,12 +207,10 @@ class User extends Model {
     return buffer.toString();
   }
   
-  User copyWith({String? id, String? userEmail, String? userName, String? userPassword, String? userFirstName, List<Goal>? userGoals, String? userLastName, GenderTypes? userGender, TemporalDate? userBirthDate, String? userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
+  User copyWith({String? id, String? userEmail, String? userFirstName, List<Goal>? userGoals, String? userLastName, GenderTypes? userGender, TemporalDate? userBirthDate, String? userAvatar, Integrations? userIntegrations, String? userUserIntegrationsId}) {
     return User._internal(
       id: id ?? this.id,
       userEmail: userEmail ?? this.userEmail,
-      userName: userName ?? this.userName,
-      userPassword: userPassword ?? this.userPassword,
       userFirstName: userFirstName ?? this.userFirstName,
       userGoals: userGoals ?? this.userGoals,
       userLastName: userLastName ?? this.userLastName,
@@ -260,8 +224,6 @@ class User extends Model {
   User.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _userEmail = json['userEmail'],
-      _userName = json['userName'],
-      _userPassword = json['userPassword'],
       _userFirstName = json['userFirstName'],
       _userGoals = json['userGoals'] is List
         ? (json['userGoals'] as List)
@@ -281,13 +243,11 @@ class User extends Model {
       _userUserIntegrationsId = json['userUserIntegrationsId'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'userEmail': _userEmail, 'userName': _userName, 'userPassword': _userPassword, 'userFirstName': _userFirstName, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'userLastName': _userLastName, 'userGender': enumToString(_userGender), 'userBirthDate': _userBirthDate?.format(), 'userAvatar': _userAvatar, 'userIntegrations': _userIntegrations?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format(), 'userUserIntegrationsId': _userUserIntegrationsId
+    'id': id, 'userEmail': _userEmail, 'userFirstName': _userFirstName, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'userLastName': _userLastName, 'userGender': enumToString(_userGender), 'userBirthDate': _userBirthDate?.format(), 'userAvatar': _userAvatar, 'userIntegrations': _userIntegrations?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format(), 'userUserIntegrationsId': _userUserIntegrationsId
   };
 
   static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField USEREMAIL = QueryField(fieldName: "userEmail");
-  static final QueryField USERNAME = QueryField(fieldName: "userName");
-  static final QueryField USERPASSWORD = QueryField(fieldName: "userPassword");
   static final QueryField USERFIRSTNAME = QueryField(fieldName: "userFirstName");
   static final QueryField USERGOALS = QueryField(
     fieldName: "userGoals",
@@ -306,7 +266,10 @@ class User extends Model {
     
     modelSchemaDefinition.authRules = [
       AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
+        authStrategy: AuthStrategy.OWNER,
+        ownerField: "owner",
+        identityClaim: "cognito:username",
+        provider: AuthRuleProvider.USERPOOLS,
         operations: [
           ModelOperation.CREATE,
           ModelOperation.UPDATE,
@@ -319,18 +282,6 @@ class User extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.USEREMAIL,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.USERNAME,
-      isRequired: true,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.USERPASSWORD,
       isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));

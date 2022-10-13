@@ -372,12 +372,21 @@ class Goal extends Model {
     modelSchemaDefinition.pluralName = "Goals";
 
     modelSchemaDefinition.authRules = [
-      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
-        ModelOperation.CREATE,
-        ModelOperation.UPDATE,
-        ModelOperation.DELETE,
-        ModelOperation.READ
-      ])
+      AuthRule(
+          authStrategy: AuthStrategy.OWNER,
+          ownerField: "owner",
+          identityClaim: "cognito:username",
+          provider: AuthRuleProvider.USERPOOLS,
+          operations: [
+            ModelOperation.CREATE,
+            ModelOperation.UPDATE,
+            ModelOperation.DELETE,
+            ModelOperation.READ
+          ])
+    ];
+
+    modelSchemaDefinition.indexes = [
+      ModelIndex(fields: const ["userOfGoal"], name: "byUser")
     ];
 
     modelSchemaDefinition.addField(ModelFieldDefinition.id());

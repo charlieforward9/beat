@@ -313,12 +313,21 @@ class Activity extends Model {
     modelSchemaDefinition.pluralName = "Activities";
 
     modelSchemaDefinition.authRules = [
-      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
-        ModelOperation.CREATE,
-        ModelOperation.UPDATE,
-        ModelOperation.DELETE,
-        ModelOperation.READ
-      ])
+      AuthRule(
+          authStrategy: AuthStrategy.OWNER,
+          ownerField: "owner",
+          identityClaim: "cognito:username",
+          provider: AuthRuleProvider.USERPOOLS,
+          operations: [
+            ModelOperation.CREATE,
+            ModelOperation.UPDATE,
+            ModelOperation.DELETE,
+            ModelOperation.READ
+          ])
+    ];
+
+    modelSchemaDefinition.indexes = [
+      ModelIndex(fields: const ["goalOfActivity"], name: "byGoal")
     ];
 
     modelSchemaDefinition.addField(ModelFieldDefinition.id());

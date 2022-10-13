@@ -52,6 +52,7 @@ dependencies:
   google_maps_flutter: ^2.1.10
   equatable: ^2.0.0
   webview_flutter: ^3.0.4
+  amplify_core: ^0.6.8
 
 dev_dependencies:
   flutter_test:
