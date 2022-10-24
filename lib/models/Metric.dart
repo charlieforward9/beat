@@ -168,6 +168,10 @@ class Metric extends Model {
   Map<String, dynamic> toJson() => {
     'id': id, 'utcDateTime': _utcDateTime?.format(), 'localDateTime': _localDateTime, 'metricLocation': _metricLocation, 'metricHeartRate': _metricHeartRate, 'activities': _activities?.map((ActivityMetric? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
+  
+  Map<String, Object?> toMap() => {
+    'id': id, 'utcDateTime': _utcDateTime, 'localDateTime': _localDateTime, 'metricLocation': _metricLocation, 'metricHeartRate': _metricHeartRate, 'activities': _activities, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+  };
 
   static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField UTCDATETIME = QueryField(fieldName: "utcDateTime");

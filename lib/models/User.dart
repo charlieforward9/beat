@@ -245,6 +245,10 @@ class User extends Model {
   Map<String, dynamic> toJson() => {
     'id': id, 'userEmail': _userEmail, 'userFirstName': _userFirstName, 'userGoals': _userGoals?.map((Goal? e) => e?.toJson()).toList(), 'userLastName': _userLastName, 'userGender': enumToString(_userGender), 'userBirthDate': _userBirthDate?.format(), 'userAvatar': _userAvatar, 'userIntegrations': _userIntegrations?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format(), 'userUserIntegrationsId': _userUserIntegrationsId
   };
+  
+  Map<String, Object?> toMap() => {
+    'id': id, 'userEmail': _userEmail, 'userFirstName': _userFirstName, 'userGoals': _userGoals, 'userLastName': _userLastName, 'userGender': _userGender, 'userBirthDate': _userBirthDate, 'userAvatar': _userAvatar, 'userIntegrations': _userIntegrations, 'createdAt': _createdAt, 'updatedAt': _updatedAt, 'userUserIntegrationsId': _userUserIntegrationsId
+  };
 
   static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField USEREMAIL = QueryField(fieldName: "userEmail");
