@@ -52,6 +52,8 @@ dependencies:
   google_maps_flutter: ^2.1.10
   equatable: ^2.0.0
   webview_flutter: ^3.0.4
+  flutter_inappwebview: ^5.4.3+7
+  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:
