@@ -132,6 +132,10 @@ class Integrations extends Model {
   Map<String, dynamic> toJson() => {
     'id': id, 'wf_profile_bearer': _wf_profile_bearer, 'wf_public_id': _wf_public_id, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
+  
+  Map<String, Object?> toMap() => {
+    'id': id, 'wf_profile_bearer': _wf_profile_bearer, 'wf_public_id': _wf_public_id, 'createdAt': _createdAt, 'updatedAt': _updatedAt
+  };
 
   static final QueryField ID = QueryField(fieldName: "id");
   static final QueryField WF_PROFILE_BEARER = QueryField(fieldName: "wf_profile_bearer");
@@ -142,7 +146,10 @@ class Integrations extends Model {
     
     modelSchemaDefinition.authRules = [
       AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
+        authStrategy: AuthStrategy.OWNER,
+        ownerField: "owner",
+        identityClaim: "cognito:username",
+        provider: AuthRuleProvider.USERPOOLS,
         operations: [
           ModelOperation.CREATE,
           ModelOperation.UPDATE,

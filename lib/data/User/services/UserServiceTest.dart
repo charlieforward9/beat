@@ -1,18 +1,19 @@
+import 'dart:developer';
+
 import 'package:beat/data/User/services/UserService.dart';
 
-class UserServiceTest {
-  UserService userService = UserService();
-
-  // void testCreateUser(){
-  //   String email= "email", name = "name", password = "psswd";
-  //   userService.createUser(_email, _userName, _userPassword, _userFirstName, _userLastName, _userGender, _userBirthDate, _userAvatar);
-  // }
+class UserServiceTest extends UserService {
+  void saveAndRetrieveUser() {
+    log("Creating a new user");
+    createUser("sample@sample.com", "FirstNameSample", "LastNameSample", "X",
+            "2000-01-01")
+        .then((usr) => getUser(usr.email))
+        .then((user) => log("Saved and retrieved the user, $user"));
+  }
 
   void logAllUserGoals() {
-    userService
-        .getUserGoals("charlesrichardsonusa@gmail.com")
-        .then(
-          (value) => print("This $value"),
-        );
+    getUserGoals("charlesrichardsonusa@gmail.com").then(
+      (value) => log("This $value"),
+    );
   }
 }

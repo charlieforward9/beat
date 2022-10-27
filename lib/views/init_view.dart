@@ -13,35 +13,36 @@ class InitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BlocProvider(
+    return BlocProvider(
       create: (context) => GoalCubit()..getFirstGoals(),
       child: BlocBuilder<GoalCubit, GoalState>(builder: (context, state) {
         if (state is MapGoalsSuccess) {
           return state.goals.isEmpty
               ? _emptyGoals()
-              : Column(
+              : SafeArea(
+                  child: Column(
                   children: [
+                    const Text("Set your target goals"),
                     _goalCardColumn(state.goals),
                     ElevatedButton(
                         onPressed: () => _openMainView(context),
-                        child: const Text("Hello"))
+                        child: const Text("Done"))
                   ],
-                );
+                ));
         } else if (state is MapGoalsFailure) {
           return _exceptionView(state.exception);
         } else {
           return LoadingView();
         }
       }),
-    ));
+    );
   }
 
   void _openMainView(context) {
     Navigator.push<void>(
       context,
       MaterialPageRoute<void>(
-        builder: (BuildContext context) => const NavTabs(),
+        builder: (BuildContext context) => NavTabs(),
       ),
     );
   }

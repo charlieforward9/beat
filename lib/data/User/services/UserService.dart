@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/data/Integration/services/IntegrationServices.dart';
 
 import '../../User/repository/UserRepository.dart';
@@ -8,7 +9,6 @@ import '../../../config/global.dart' as global;
 
 class UserService {
   UserRepository userRepository = UserRepository();
-  late User currentUser;
 
   void _logUser(user) {
     log("access by importing <lib/config/global> and calling currentUser: \n $user",
@@ -16,68 +16,88 @@ class UserService {
   }
 
   //User instance saved to <global.currentUser> import file for simple reference
-  Future<void> initUser(email) async {
-    await getUser(email).then((user) => {
-          global.currentUser = user,
-          _logUser(user),
-        });
+  Future<User> initUser() async {
+    final userData = await Amplify.Auth.fetchUserAttributes();
+    log("userData has returned with the values $userData");
+    late String email, givenname, familyname, birthdate, gender;
 
-    //TODO OPTIMIZATION put this into a global file
-    if (global.currentUser.userUserIntegrationsId != null) {
-      await IntegrationService()
-          .initIntegration(global.currentUser.userUserIntegrationsId!);
-    } else {
-      log("Integrations not set up, go to settings page and link Strava account to sync workouts to activities");
+    for (var element in userData) {
+      switch (element.userAttributeKey.key) {
+        case "email":
+          email = element.value;
+          break;
+        case "given_name":
+          givenname = element.value;
+          break;
+        case "family_name":
+          familyname = element.value;
+          break;
+        case "birthdate":
+          birthdate = element.value;
+          break;
+        case "gender":
+          gender = element.value;
+          break;
+      }
     }
+    return getUser(email).then((user) async {
+      if (user != null) {
+        log("User found");
+        return user;
+      } else {
+        log("Registering the User");
+        return await createUser(
+            email, givenname, familyname, gender, birthdate);
+      }
+    });
+
+    //If the code reaches here, the user is created (registered) to storage
   }
 
-  Future<void> createUser(
-      String _email,
-      String _userName,
-      String _userPassword,
-      String _userFirstName,
-      String _userLastName,
-      GenderTypes _userGender,
-      TemporalDate _userBirthDate,
-      String _userAvatar) async {
+  Future<User> createUser(
+    String email,
+    String userFirstName,
+    String userLastName,
+    String userGender,
+    String userBirthDate,
+    // TODO create an input for a profile picture
+    {
+    String userAvatar =
+        "https://dgalywyr863hv.cloudfront.net/pictures/athletes/45046621/12580522/19/large.jpg",
+  }) async {
     final User user = User(
-        userEmail: _email,
-        userName: _userName,
-        userPassword: _userPassword,
-        userFirstName: _userFirstName,
-        userLastName: _userLastName,
-        userGender: _userGender,
-        userBirthDate: _userBirthDate,
-        userAvatar: _userAvatar);
+        email: email,
+        firstName: userFirstName,
+        lastName: userLastName,
+        gender: fromString(userGender)!,
+        birthDate: TemporalDate.fromString(userBirthDate),
+        avatar: userAvatar);
     await userRepository.saveUser(user);
+    return user;
   }
 
-  Future<User> getUser(String email) {
+  Future<User?> getUser(String email) {
     return userRepository.fetchUserByEmail(email);
   }
 
-  Future<String> getUserName(String email) async {
-    User user = await getUser(email);
-    return user.userName;
-  }
-
-  Future<String> getUserEmail(String email) async {
-    User user = await getUser(email);
-    return user.userEmail;
-  }
-
-  Future<String> getUserId(String email) async {
-    User user = await getUser(email);
-    return user.id;
-  }
-
   Future<List<Goal>?> getUserGoals(String email) async {
-    User user = await getUser(email);
-    return user.userGoals;
+    User? user = await getUser(email);
+    return user?.goals;
   }
 
   Future<void> updateUser(User _user) async {
     await userRepository.saveUser(_user);
+  }
+
+  void populateGlobal(User user) async {
+    global.currentUser = user;
+    _logUser(global.currentUser);
+    if (global.currentUser.userIntegrationId != null) {
+      await IntegrationService()
+          .initIntegration(global.currentUser.userIntegrationId!);
+    } else {
+      log("Integrations not set up, go to settings page and link Strava account to sync workouts to activities");
+    }
   }
 
   //Testing out some new bidirectional swag, still working on it

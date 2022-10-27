@@ -44,15 +44,15 @@ class WFService {
       'Cookie': 'SERVERID=s4'
     };
     var body = {
-      'given_name': currentUser.userFirstName,
-      'family_name': currentUser.userLastName,
-      'nickname': currentUser.userName,
-      'gender': currentUser.userGender.name,
-      'birthdate': currentUser.userBirthDate.toString(),
+      'given_name': currentUser.firstName,
+      'family_name': currentUser.lastName,
+      'nickname': currentUser.firstName + " " + currentUser.lastName,
+      'gender': currentUser.gender.name,
+      'birthdate': currentUser.birthDate.toString(),
       'locale':
           "${supportedLocales[0].languageCode}-${supportedLocales[0].languageCode}",
       'reference': currentUser.id,
-      'avatar': currentUser.userAvatar
+      'avatar': currentUser.avatar
     };
 
     final response = await http.post(
@@ -114,7 +114,7 @@ class WFService {
         wf_public_id: _profileResponse['public_id'],
         wf_profile_bearer: _profileResponse['bearer']);
     final updatedUser = currentUser.copyWith(
-        userUserIntegrationsId: currentUserIntegrations.id);
+        userIntegrationId: currentUserIntegrations.id);
 
     await IntegrationService().createIntegration(currentUserIntegrations);
     await UserService().updateUser(updatedUser);

@@ -8,7 +8,6 @@ import 'package:beat/config/amplifyconfiguration.dart';
 import 'package:beat/models/ModelProvider.dart';
 
 class AmplifyConfiguration {
-  final String userEmail = "charlesrichardsonusa@gmail.com";
   final signUpForm = SignUpForm.custom(
     fields: [
       SignUpFormField.username(),
@@ -38,6 +37,7 @@ class AmplifyConfiguration {
   Future<void> init() async {
     final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
+      authModeStrategy: AuthModeStrategy.multiAuth,
     );
     // Add the following line and update your function call with `addPlugins`
     final api = AmplifyAPI();
@@ -45,7 +45,7 @@ class AmplifyConfiguration {
     await Amplify.addPlugins([datastorePlugin, api, auth]);
   }
 
-  void configProd() async {
+  Future<void> configProd() async {
     log("Production (local storage persistant on app restart)",
         name: "Amplify Config Mode");
     try {
@@ -55,7 +55,7 @@ class AmplifyConfiguration {
     }
   }
 
-  void configDev() async {
+  Future<void> configDev() async {
     log("Development (local storage cleared and resynced upon app restarted)",
         name: "Amplify Config Mode");
     try {

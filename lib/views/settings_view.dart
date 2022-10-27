@@ -15,7 +15,10 @@ class SettingsPage extends StatelessWidget {
       child: Column(
         children: [
           ElevatedButton(
-              onPressed: () => Amplify.Auth.signOut(),
+              onPressed: () {
+                Amplify.DataStore.clear();
+                Amplify.Auth.signOut();
+              },
               child: const Text("Sign out")),
           ElevatedButton(
             onPressed: () {
