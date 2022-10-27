@@ -8,7 +8,6 @@ import 'package:beat/config/amplifyconfiguration.dart';
 import 'package:beat/models/ModelProvider.dart';
 
 class AmplifyConfiguration {
-  final String userEmail = "charlesrichardsonusa@gmail.com";
   final signUpForm = SignUpForm.custom(
     fields: [
       SignUpFormField.username(),

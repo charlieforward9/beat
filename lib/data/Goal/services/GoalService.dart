@@ -143,7 +143,16 @@ class GoalService {
     return goals;
   }
 
-  Stream observeGoals() {
+  Future<Map<CategoryTypes, Goal>> get latestGoals async {
+    Map<CategoryTypes, Goal> goals = {};
+
+    for (CategoryTypes cat in CategoryTypes.values) {
+      goals[cat] = await getGoal(currentUser.id, cat, null);
+    }
+    return goals;
+  }
+
+  Stream<SubscriptionEvent<Goal>> observeGoals() {
     return _goalRepository.observeGoalChanges();
   }
 

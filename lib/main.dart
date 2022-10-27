@@ -54,24 +54,28 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: supportedLocales,
           builder: Authenticator.builder(),
           title: 'BEAT',
-          home: BlocProvider(
-            create: (context) => AuthCubit()..authUser(),
-            child: BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                if (state is AuthSuccess) {
-                  return const InitPage();
-                } else if (state is AuthFail) {
-                  return Text("Auth Failed with state ${state.exception}");
-                } else {
-                  //state is Unauth()
-                  return Center(
-                    child: Column(children: const [
-                      Text("Unauthorized"),
-                      CircularProgressIndicator()
-                    ]),
-                  );
-                }
-              },
+          home: Scaffold(
+            body: BlocProvider(
+              create: (context) => AuthCubit()..authUser(),
+              child: BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthSuccess) {
+                    return const InitPage();
+                  } else if (state is AuthFail) {
+                    return Center(
+                        child:
+                            Text("Auth Failed with state ${state.exception}"));
+                  } else {
+                    //state is Unauth()
+                    return Center(
+                      child: Column(children: const [
+                        Text("Unauthorized"),
+                        CircularProgressIndicator()
+                      ]),
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),
@@ -86,13 +90,24 @@ class _MyAppState extends State<MyApp> {
 
   //Delays queries until DataStore is completely synced
   void syncListener() {
-    Amplify.Hub.listen(([HubChannel.DataStore]), (hubEvent) {
-      if (hubEvent.eventName == 'ready') {
-        log("Datastore ready to query");
+    //Only do this if the user is logged in
+    Amplify.Auth.fetchAuthSession().then(((session) {
+      if (session.isSignedIn) {
+        Amplify.Hub.listen(([HubChannel.DataStore]), (hubEvent) {
+          log("${hubEvent.eventName} ${hubEvent.payload}");
+
+          if (hubEvent.eventName == 'ready') {
+            log("Datastore ready to query");
+            setState(() {
+              _amplifyConfigured = true;
+            });
+          }
+        });
+      } else {
         setState(() {
           _amplifyConfigured = true;
         });
       }
-    });
+    }));
   }
 }

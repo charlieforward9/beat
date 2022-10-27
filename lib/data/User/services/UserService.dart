@@ -20,35 +20,38 @@ class UserService {
     final userData = await Amplify.Auth.fetchUserAttributes();
     log("userData has returned with the values $userData");
     late String email, givenname, familyname, birthdate, gender;
-    bool registered = false;
+
     for (var element in userData) {
-      if (!registered) {
-        switch (element.userAttributeKey.key) {
-          case "email":
-            email = element.value;
-            await getUser(email).then((user) async {
-              if (user != null) {
-                return Future.value(user);
-              }
-            });
-            continue;
-          case "given_name":
-            givenname = element.value;
-            continue;
-          case "family_name":
-            familyname = element.value;
-            continue;
-          case "birthdate":
-            birthdate = element.value;
-            continue;
-          case "gender":
-            gender = element.value;
-            continue;
-        }
+      switch (element.userAttributeKey.key) {
+        case "email":
+          email = element.value;
+          break;
+        case "given_name":
+          givenname = element.value;
+          break;
+        case "family_name":
+          familyname = element.value;
+          break;
+        case "birthdate":
+          birthdate = element.value;
+          break;
+        case "gender":
+          gender = element.value;
+          break;
       }
     }
+    return getUser(email).then((user) async {
+      if (user != null) {
+        log("User found");
+        return user;
+      } else {
+        log("Registering the User");
+        return await createUser(
+            email, givenname, familyname, gender, birthdate);
+      }
+    });
+
     //If the code reaches here, the user is created (registered) to storage
-    return await createUser(email, givenname, familyname, gender, birthdate);
   }
 
   Future<User> createUser(
@@ -63,12 +66,12 @@ class UserService {
         "https://dgalywyr863hv.cloudfront.net/pictures/athletes/45046621/12580522/19/large.jpg",
   }) async {
     final User user = User(
-        userEmail: email,
-        userFirstName: userFirstName,
-        userLastName: userLastName,
-        userGender: fromString(userGender)!,
-        userBirthDate: TemporalDate.fromString(userBirthDate),
-        userAvatar: userAvatar);
+        email: email,
+        firstName: userFirstName,
+        lastName: userLastName,
+        gender: fromString(userGender)!,
+        birthDate: TemporalDate.fromString(userBirthDate),
+        avatar: userAvatar);
     await userRepository.saveUser(user);
     return user;
   }
@@ -79,7 +82,7 @@ class UserService {
 
   Future<List<Goal>?> getUserGoals(String email) async {
     User? user = await getUser(email);
-    return user?.userGoals;
+    return user?.goals;
   }
 
   Future<void> updateUser(User _user) async {
@@ -89,9 +92,9 @@ class UserService {
   void populateGlobal(User user) async {
     global.currentUser = user;
     _logUser(global.currentUser);
-    if (global.currentUser.userUserIntegrationsId != null) {
+    if (global.currentUser.userIntegrationId != null) {
       await IntegrationService()
-          .initIntegration(global.currentUser.userUserIntegrationsId!);
+          .initIntegration(global.currentUser.userIntegrationId!);
     } else {
       log("Integrations not set up, go to settings page and link Strava account to sync workouts to activities");
     }
