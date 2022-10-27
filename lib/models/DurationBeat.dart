@@ -107,6 +107,10 @@ class DurationBeat {
   Map<String, dynamic> toJson() => {
     'hours': _hours, 'minutes': _minutes, 'seconds': _seconds
   };
+  
+  Map<String, Object?> toMap() => {
+    'hours': _hours, 'minutes': _minutes, 'seconds': _seconds
+  };
 
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "DurationBeat";

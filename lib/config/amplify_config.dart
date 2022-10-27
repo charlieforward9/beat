@@ -38,6 +38,7 @@ class AmplifyConfiguration {
   Future<void> init() async {
     final datastorePlugin = AmplifyDataStore(
       modelProvider: ModelProvider.instance,
+      authModeStrategy: AuthModeStrategy.multiAuth,
     );
     // Add the following line and update your function call with `addPlugins`
     final api = AmplifyAPI();

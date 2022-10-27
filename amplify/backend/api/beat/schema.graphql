@@ -1,13 +1,13 @@
 type User @model @auth(rules: [{allow: owner}]) {
   id: ID!
-  userEmail: AWSEmail!
-  userFirstName: String!
-  userGoals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
-  userLastName: String!
-  userGender: GenderTypes!
-  userBirthDate: AWSDate!
-  userAvatar: String!
-  userIntegrations: Integrations @hasOne
+  email: AWSEmail!
+  firstName: String!
+  goals: [Goal] @hasMany(indexName: "byUser", fields: ["id"])
+  lastName: String!
+  gender: GenderTypes!
+  birthDate: AWSDate!
+  avatar: String!
+  integration: Integrations @hasOne
 }
 
 type Goal @model @auth(rules: [{allow: owner}]) {

@@ -11,7 +11,7 @@ class UserRepository {
   Future<User?> fetchUserByEmail(String email) async {
     try {
       return await Amplify.DataStore.query(User.classType,
-              where: User.USEREMAIL.eq(email))
+              where: User.EMAIL.eq(email))
           .then((user) => user.first);
     } catch (e) {
       log("fetchByUserEmail function failed to return a User with error $e");

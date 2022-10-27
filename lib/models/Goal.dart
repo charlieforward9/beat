@@ -347,7 +347,7 @@ class Goal extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
       key: Goal.GOALOFUSER,
       isRequired: false,
-      targetName: "userUserGoalsId",
+      targetName: "userGoalsId",
       ofModelName: (User).toString()
     ));
     
