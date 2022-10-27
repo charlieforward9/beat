@@ -9,6 +9,12 @@ PODS:
     - Flutter
     - SwiftFormat/CLI
     - SwiftLint
+  - amplify_auth_cognito_ios (0.0.1):
+    - Amplify (= 1.23.0)
+    - amplify_core
+    - AmplifyPlugins/AWSCognitoAuthPlugin (= 1.23.0)
+    - Flutter
+    - ObjectMapper
   - amplify_core (0.0.1):
     - Flutter
     - SwiftFormat/CLI
@@ -43,45 +49,53 @@ PODS:
     - SQLite.swift (= 0.13.2)
   - AppSyncRealTimeClient (1.10.0):
     - Starscream (~> 4.0.4)
-  - AWSAuthCore (2.27.10):
-    - AWSCore (= 2.27.10)
-  - AWSCognitoIdentityProvider (2.27.10):
-    - AWSCognitoIdentityProviderASF (= 2.27.10)
-    - AWSCore (= 2.27.10)
-  - AWSCognitoIdentityProviderASF (2.27.10):
-    - AWSCore (= 2.27.10)
-  - AWSCore (2.27.10)
-  - AWSMobileClient (2.27.10):
-    - AWSAuthCore (= 2.27.10)
-    - AWSCognitoIdentityProvider (= 2.27.10)
-    - AWSCognitoIdentityProviderASF (= 2.27.10)
-    - AWSCore (= 2.27.10)
+  - AWSAuthCore (2.27.13):
+    - AWSCore (= 2.27.13)
+  - AWSCognitoIdentityProvider (2.27.13):
+    - AWSCognitoIdentityProviderASF (= 2.27.13)
+    - AWSCore (= 2.27.13)
+  - AWSCognitoIdentityProviderASF (2.27.13):
+    - AWSCore (= 2.27.13)
+  - AWSCore (2.27.13)
+  - AWSMobileClient (2.27.13):
+    - AWSAuthCore (= 2.27.13)
+    - AWSCognitoIdentityProvider (= 2.27.13)
+    - AWSCognitoIdentityProviderASF (= 2.27.13)
+    - AWSCore (= 2.27.13)
   - AWSPluginsCore (1.23.0):
     - Amplify (= 1.23.0)
     - AWSCore (~> 2.27.0)
   - Flutter (1.0.0)
-  - flutter_inappwebview (0.0.1):
+  - geolocator_apple (1.2.0):
     - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
+  - google_maps_flutter_ios (0.0.1):
     - Flutter
-    - OrderedSet (~> 5.0)
-  - OrderedSet (5.0.0)
+    - GoogleMaps
+  - GoogleMaps (7.0.0):
+    - GoogleMaps/Maps (= 7.0.0)
+  - GoogleMaps/Base (7.0.0)
+  - GoogleMaps/Maps (7.0.0):
+    - GoogleMaps/Base
+  - ObjectMapper (4.2.0)
   - SQLite.swift (0.13.2):
     - SQLite.swift/standard (= 0.13.2)
   - SQLite.swift/standard (0.13.2)
   - Starscream (4.0.4)
-  - SwiftFormat/CLI (0.49.10)
+  - SwiftFormat/CLI (0.49.13)
   - SwiftLint (0.47.1)
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - amplify_api_ios (from `.symlinks/plugins/amplify_api_ios/ios`)
+  - amplify_auth_cognito_ios (from `.symlinks/plugins/amplify_auth_cognito_ios/ios`)
   - amplify_core (from `.symlinks/plugins/amplify_core/ios`)
   - amplify_datastore (from `.symlinks/plugins/amplify_datastore/ios`)
   - amplify_flutter_ios (from `.symlinks/plugins/amplify_flutter_ios/ios`)
   - Flutter (from `Flutter`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
@@ -94,7 +108,8 @@ SPEC REPOS:
     - AWSCore
     - AWSMobileClient
     - AWSPluginsCore
-    - OrderedSet
+    - GoogleMaps
+    - ObjectMapper
     - SQLite.swift
     - Starscream
     - SwiftFormat
@@ -103,6 +118,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplify_api_ios:
     :path: ".symlinks/plugins/amplify_api_ios/ios"
+  amplify_auth_cognito_ios:
+    :path: ".symlinks/plugins/amplify_auth_cognito_ios/ios"
   amplify_core:
     :path: ".symlinks/plugins/amplify_core/ios"
   amplify_datastore:
@@ -111,31 +128,39 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplify_flutter_ios/ios"
   Flutter:
     :path: Flutter
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
+  google_maps_flutter_ios:
+    :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   Amplify: 010d6a71db20812d9e3062db1fe827393d01e584
   amplify_api_ios: df3f5e3ddd5ae4e0d2ce48dce18a23e787bac884
+  amplify_auth_cognito_ios: c67d4bf0901717cb193f16ed24c389be7f4d7daf
   amplify_core: e67fe0c53845db08aced670bfc7370b1329d2798
   amplify_datastore: 8c35a89e553716222b33cc8cc587ea978a982244
   amplify_flutter_ios: a2cf41c13161ffefedab76055a29b2d4e78c91e8
   AmplifyPlugins: d939707cf36dfcd53c5fd6533e842e323a2287ab
   AppSyncRealTimeClient: 656ab4215e05f6ca47fe6d8c73f416d9984a8aac
-  AWSAuthCore: ea9baff143a5ff4a98cea3954b006cedc96cd47e
-  AWSCognitoIdentityProvider: 7ef13d7a86298db707165208f01b92997cc3b5af
-  AWSCognitoIdentityProviderASF: d745c40a37815ef1c547f9677145d4e522f582f3
-  AWSCore: dbad318b7ff0fd86fb8387d3ad1f30049c05bc58
-  AWSMobileClient: 523cdb04d21cfd7523eb8db77b2fa2a00b6a95b4
+  AWSAuthCore: 9898614783bd6375742b58a1df38c6a8b8276eda
+  AWSCognitoIdentityProvider: c105df15533a029230c325acd2be60ff45e8f3f9
+  AWSCognitoIdentityProviderASF: e0f40ef2f5c2c357b77553144e8f41a6c0b0b81b
+  AWSCore: 05edadb5f3d0b92a50ea8c66b06f1a10477878da
+  AWSMobileClient: a49361347ff5c0cff946b3f777936c0fdf9c190d
   AWSPluginsCore: 120cfa265293694921b6595fe00d1cb5ab558847
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
+  google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
+  GoogleMaps: 6e9c923ca035989709fcb5771544fda4cc5fa2a4
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   SQLite.swift: 4fc2be46c36392e3b87afe6fe7f1801c1daa07ef
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
-  SwiftFormat: 7e7b810d61b0518ea30d3753051ebde546ae4c0b
+  SwiftFormat: 53864d9acbae3a954eb413736729500fe7051435
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: edded55a40a5a9d74f353172d598d33f4289714a
+PODFILE CHECKSUM: 5b811a803d1eb375f07d9f1375b25ac8f6e610da
 
 COCOAPODS: 1.11.3

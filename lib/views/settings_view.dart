@@ -1,7 +1,10 @@
-import 'package:beat/config/global.dart';
+import 'dart:developer';
+
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/data/Integration/services/wfService.dart';
 import 'package:beat/data/Integration/services/wfServiceTest.dart';
+import 'package:beat/views/settings_widgets/web_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -11,36 +14,26 @@ class SettingsPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Row(
-            children: [
-              Text(
-                  "Creates profile using currentUser data\n then prompts auth with Strava account"),
-              FloatingActionButton(
-                onPressed: () async => InAppBrowser().openUrlRequest(
-                    urlRequest: URLRequest(
-                        url: await WFServiceTest().weFitterTestSequencePart1()),
-                    options: InAppBrowserClassOptions(
-                        crossPlatform: InAppBrowserOptions(hideUrlBar: false),
-                        inAppWebViewGroupOptions: InAppWebViewGroupOptions(
-                            crossPlatform: InAppWebViewOptions(
-                                javaScriptEnabled: true,
-                                userAgent: userAgent)))),
-                child: Icon(Icons.person),
-              ),
-            ],
+          ElevatedButton(
+              onPressed: () => Amplify.Auth.signOut(),
+              child: const Text("Sign out")),
+          ElevatedButton(
+            onPressed: () {
+              WFServiceTest().weFitterTestSequencePart1().then(
+                    (url) => url != null
+                        ? showDialog(
+                            context: context,
+                            builder: ((context) => WebPopup(url: url)),
+                          )
+                        : log("Unable to retrieve auth URL from strava"),
+                  );
+            },
+            child: Text(
+                "Creates profile using currentUser data\n then prompts auth with Strava account"),
           ),
-          Row(
-            children: [
-              Text(
-                "Maps all the workouts to activities\n on days that goals are set (no dupes)",
-                softWrap: false,
-              ),
-              FloatingActionButton(
-                onPressed: () => WFServiceTest().weFitterTestSequencePart2(),
-                child: Icon(Icons.fitness_center),
-              )
-            ],
-          )
+          ElevatedButton(
+              onPressed: () => WFService().mapWFWorkoutToBeatActivity(),
+              child: Text("Sync Strava")),
         ],
       ),
     );

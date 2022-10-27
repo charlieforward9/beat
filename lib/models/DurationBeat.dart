@@ -63,6 +63,17 @@ class DurationBeat {
       _minutes == other._minutes &&
       _seconds == other._seconds;
   }
+
+    ///Returns percentage value
+  double operator /(DurationBeat other) {
+    if (identical(other, this)) return 100.00;
+    final thisSeconds =
+        ((_hours ?? 0) * 3600) + ((_minutes ?? 0) * 60) + (_seconds ?? 0);
+    final otherSeconds = ((other._hours ?? 0) * 3600) +
+        ((other._minutes ?? 0) * 60) +
+        (other._seconds ?? 0);
+    return (thisSeconds / otherSeconds) * 100;
+  }
   
   @override
   int get hashCode => toString().hashCode;

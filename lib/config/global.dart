@@ -12,3 +12,12 @@ const String userAgent =
 
 late User currentUser;
 late Integrations currentUserIntegrations;
+
+//TODO Amplify data model
+Map<CategoryTypes, DurationBeat> defaultTargets = {
+  CategoryTypes.FITNESS: DurationBeat(hours: 1, minutes: 0, seconds: 0),
+  CategoryTypes.FUEL: DurationBeat(hours: 1, minutes: 0, seconds: 0),
+  CategoryTypes.PRODUCTIVITY: DurationBeat(hours: 8, minutes: 0, seconds: 0),
+  CategoryTypes.REST: DurationBeat(hours: 8, minutes: 0, seconds: 0),
+  CategoryTypes.SOCIAL: DurationBeat(hours: 1, minutes: 0, seconds: 0),
+};
