@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import '../../data/Goal/services/GoalService.dart';
 //^ I moved the test functions to this path
 import '../../data/Goal/services/GoalServiceTest.dart';
+import 'package:beat/controllers/time_budget_controller.dart' as controller;
+import '../number_picker_widget/number_picker_widget.dart';
 
 import '../../config/global.dart' as globalTest;
 import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
-  final String cardGoal;
+  // final String cardGoal;
+  final double cardPercentage;
   final Color passedColor;
+  final int cardGoalHours;
+  final int cardGoalMinutes;
+  final String goalID;
 
   final TextEditingController updatedGoal = TextEditingController();
   final TextEditingController updatedPercentage = TextEditingController();
@@ -21,8 +28,11 @@ class GoalCard extends StatefulWidget {
 
   GoalCard(
       {Key? key,
+      required this.goalID,
       required this.cardName,
-      required this.cardGoal,
+      required this.cardGoalHours,
+      required this.cardGoalMinutes,
+      required this.cardPercentage,
       required this.passedColor})
       : super(key: key);
 
@@ -31,6 +41,10 @@ class GoalCard extends StatefulWidget {
 }
 
 class _GoalCardState extends State<GoalCard> {
+  _setTime(int hours, int minutes) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -49,13 +63,28 @@ class _GoalCardState extends State<GoalCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(width: 5),
-                Expanded(child: Text('${widget.cardName}')),
-                //SizedBox(width: 25),
-                Expanded(flex: 1, child: Text('${widget.cardGoal}')),
+                Expanded(flex: 2, child: Text('${widget.cardName}')),
+                // SizedBox(width: 40),
+                SizedBox(width: 5),
+                Expanded(
+                    flex: 1,
+                    child: Text('${widget.cardGoalHours}h' +
+                        ' ' +
+                        '${widget.cardGoalMinutes}m')),
+                SizedBox(width: 5),
+                Expanded(
+                    flex: 1,
+                    child: Text(
+                        '${double.parse((widget.cardPercentage).toStringAsFixed(2))}%')),
                 //Spacer(),
                 TextButton.icon(
                   onPressed: () async {
-                    //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
+                    await openDialog(widget, context);
+                    setState(() {});
+                    // testDialog(
+                    //     cardGoalHours: widget.cardGoalHours,
+                    //     cardGoalMinutes: widget.cardGoalMinutes,
+                    //     cardPercentage: widget.cardPercentage);
                   },
                   icon: Icon(Icons.create_sharp, size: 18),
                   label: Text(""),
@@ -68,45 +97,111 @@ class _GoalCardState extends State<GoalCard> {
     );
   }
 
-  Future openDialog(_percentage, _goal, _metric, _id, _type) => showDialog(
+  Future<void> openDialog(widget, context) async {
+    bool isGoalPressed = false;
+    int hours = widget.cardGoalHours;
+    int minutes = widget.cardGoalMinutes;
+    showDialog(
         // TODO: Need to do error handeling for empty feilds.
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text("$_type Info:"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text("Goal: "),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: _goal,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                  controller: widget.updatedGoal,
-
-                  //initialValue: _goal,
-                ),
-                Text("Percentage: "),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: _percentage,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                  controller: widget.updatedPercentage,
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Update Goals')),
-          ],
-        ),
-      );
+        builder: (context) => StatefulBuilder(
+              builder: ((context, setState) => AlertDialog(
+                    title: Text("${widget.cardName} Info:"),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          TextButton(
+                            child: Text(
+                              "Goal: ${hours}h" + " ${minutes}m",
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            onPressed: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => StatefulBuilder(
+                                        builder: (context, setState) =>
+                                            AlertDialog(
+                                          title: Text("Set Goal Duration:"),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text("Hours: "),
+                                                        NumberPicker(
+                                                          value: hours,
+                                                          minValue: 0,
+                                                          maxValue: hours + 10,
+                                                          step: 1,
+                                                          haptics: true,
+                                                          onChanged: (value) =>
+                                                              setState(() =>
+                                                                  hours =
+                                                                      value),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        Text("Minutes: "),
+                                                        NumberPicker(
+                                                          value: minutes,
+                                                          minValue: 0,
+                                                          maxValue: 60,
+                                                          step: 1,
+                                                          haptics: true,
+                                                          onChanged: (value) =>
+                                                              setState(() =>
+                                                                  minutes =
+                                                                      value),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    debugPrint(
+                                                        "updated hours: $hours");
+                                                    debugPrint(
+                                                        "updated minutes: ${minutes}");
+                                                    setState(() {});
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                      'Update Goal Duration')),
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () {
+                            widget.goalService.updateTargetDuration(
+                                widget.goalID, hours, minutes);
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Update Goals')),
+                    ],
+                  )),
+            ));
+  }
 }
+
+Future<void> openSecondDialog(widget, context) async {}
 
 class ButtonRow extends StatefulWidget {
   final buttonOneName;
