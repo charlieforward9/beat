@@ -1,6 +1,6 @@
 # beat
 
-A new Flutter project.
+A mobile lifestyle tracker
 
 ## Onboarding
 
