@@ -76,35 +76,54 @@ class InitPage extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
+        //TODO Fix the Goal card and number picker functionality altogether
+        //TODO Less GoalCard widget entries
+        //TODO Bloc-controlled card view
+        //TODO Remove warnings
         GoalCard(
+          goalID: rest.id,
           cardName: rest.goalCategory.name,
-          cardGoal:
-              '${rest.goalTargetDuration.hours}h ${rest.goalTargetDuration.minutes}m',
-          passedColor: BeatTheme.colors.restColor,
+          cardGoalHours: rest.goalTargetDuration.hours!,
+          cardGoalMinutes: rest.goalTargetDuration.minutes!,
+          cardPercentage: rest.goalPercentage,
+          passedColor: BeatTheme.colors
+              .restColor, 
         ),
         GoalCard(
+          goalID: fitness.id,
           cardName: fitness.goalCategory.name,
-          cardGoal:
-              '${fitness.goalTargetDuration.hours}h ${fitness.goalTargetDuration.minutes}m',
-          passedColor: BeatTheme.colors.fitnessColor,
+          cardGoalHours: fitness.goalTargetDuration.hours!,
+          cardGoalMinutes: fitness.goalTargetDuration.minutes!,
+          cardPercentage: fitness.goalPercentage,
+          passedColor: BeatTheme.colors
+              .fitnessColor,
         ),
         GoalCard(
+          goalID: fuel.id,
           cardName: fuel.goalCategory.name,
-          cardGoal:
-              '${fuel.goalTargetDuration.hours}h ${fuel.goalTargetDuration.minutes}m',
-          passedColor: BeatTheme.colors.socialColor,
+          cardGoalHours: fuel.goalTargetDuration.hours!,
+          cardGoalMinutes: fuel.goalTargetDuration.minutes!,
+          cardPercentage: fuel.goalPercentage,
+          passedColor: BeatTheme.colors
+              .socialColor, 
         ),
         GoalCard(
+          goalID: productivity.id,
           cardName: productivity.goalCategory.name,
-          cardGoal:
-              '${productivity.goalTargetDuration.hours}h ${productivity.goalTargetDuration.minutes}m',
-          passedColor: BeatTheme.colors.fuelingColor,
+          cardGoalHours: productivity.goalTargetDuration.hours!,
+          cardGoalMinutes: productivity.goalTargetDuration.minutes!,
+          cardPercentage: productivity.goalPercentage,
+          passedColor: BeatTheme.colors
+              .fuelingColor, 
         ),
         GoalCard(
+          goalID: social.id,
           cardName: social.goalCategory.name,
-          cardGoal:
-              '${social.goalTargetDuration.hours}h ${social.goalTargetDuration.minutes}m',
-          passedColor: BeatTheme.colors.workColor,
+          cardGoalHours: social.goalTargetDuration.hours!,
+          cardGoalMinutes: social.goalTargetDuration.minutes!,
+          cardPercentage: social.goalPercentage,
+          passedColor: BeatTheme.colors
+              .workColor,
         ),
       ]),
     );
