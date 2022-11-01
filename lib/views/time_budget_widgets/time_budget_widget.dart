@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../data/Goal/services/GoalService.dart';
-//^ I moved the test functions to this path
 import '../../data/Goal/services/GoalServiceTest.dart';
 
-import '../../config/global.dart' as globalTest;
-import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -37,7 +34,7 @@ class _GoalCardState extends State<GoalCard> {
       child: Card(
         color: widget.passedColor,
         child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
+          splashColor: widget.passedColor.withAlpha(30),
           onTap: () {
             debugPrint('Card tapped - ${widget.cardName} Card.');
           },
@@ -57,7 +54,7 @@ class _GoalCardState extends State<GoalCard> {
                   onPressed: () async {
                     //openDialog("99", "1000", "CAL", "d3de16cd-89d7-40f2-bb27-34392de557c3", widget.cardName);
                   },
-                  icon: Icon(Icons.create_sharp, size: 18),
+                  icon: Icon(Icons.create_sharp, size: 25),
                   label: Text(""),
                 )
               ],

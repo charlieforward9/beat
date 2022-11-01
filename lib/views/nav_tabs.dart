@@ -39,9 +39,7 @@ class _NavTabsState extends State<NavTabs> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<GoalCubit>(
-            create: (context) => GoalCubit()
-              ..getDayGoals()
-              ..observeGoals(),
+            create: (context) => GoalCubit()..getDayGoals(),
           ),
           BlocProvider<ActivityCubit>(
               create: ((context) => ActivityCubit()..presentChanges())),
