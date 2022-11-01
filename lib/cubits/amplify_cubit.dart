@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 
-
 abstract class AmplifyState {}
 
 class AmplifyConfigured extends AmplifyState {}
@@ -23,7 +22,7 @@ class AmplifyFailure extends AmplifyState {
 }
 
 class AmplifyCubit extends Cubit<AmplifyState> {
-final signUpForm = SignUpForm.custom(
+  final signUpForm = SignUpForm.custom(
     fields: [
       SignUpFormField.username(),
       SignUpFormField.password(),
@@ -48,7 +47,6 @@ final signUpForm = SignUpForm.custom(
           }),
     ],
   );
-  
 
   AmplifyCubit() : super(AmplifyNotConfigured());
 
@@ -64,6 +62,7 @@ final signUpForm = SignUpForm.custom(
       await Amplify.addPlugins([datastorePlugin, api, auth]);
       try {
         await Amplify.configure(amplifyconfig).then((value) {
+          kDebugMode ? _verboseLogging() : null;
           Amplify.Auth.fetchAuthSession().then(((session) {
             if (session.isSignedIn && kDebugMode) {
               configDev();
@@ -98,10 +97,16 @@ final signUpForm = SignUpForm.custom(
   //Delays queries until DataStore is completely synced
   void syncListener() {
     Amplify.Hub.listen(([HubChannel.DataStore]), (hubEvent) {
-      //log("${hubEvent.eventName} ${hubEvent.payload}");
+      log("${hubEvent.eventName} ${hubEvent.payload}");
       if (hubEvent.eventName == 'ready') {
         emit(AmplifyConfigured());
       }
+    });
+  }
+
+  void _verboseLogging() {
+    Amplify.Hub.listen(([HubChannel.DataStore, HubChannel.Auth]), (hubEvent) {
+      log("${hubEvent.eventName} ${hubEvent.payload}", name: "Amplify");
     });
   }
 }

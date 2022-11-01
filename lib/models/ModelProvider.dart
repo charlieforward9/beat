@@ -22,6 +22,7 @@
 import 'package:amplify_core/amplify_core.dart';
 import 'Activity.dart';
 import 'ActivityMetric.dart';
+import 'DefaultTargets.dart';
 import 'Goal.dart';
 import 'Integrations.dart';
 import 'Metric.dart';
@@ -31,6 +32,7 @@ import 'DurationBeat.dart';
 export 'Activity.dart';
 export 'ActivityMetric.dart';
 export 'CategoryTypes.dart';
+export 'DefaultTargets.dart';
 export 'DurationBeat.dart';
 export 'GenderTypes.dart';
 export 'Goal.dart';
@@ -40,9 +42,9 @@ export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "d96698f7ecaf9e41ff6b5d3a89c2fbcd";
+  String version = "7b5bf6fcd549115b5498b0407a3d471f";
   @override
-  List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, Goal.schema, Integrations.schema, Metric.schema, User.schema];
+  List<ModelSchema> modelSchemas = [Activity.schema, ActivityMetric.schema, DefaultTargets.schema, Goal.schema, Integrations.schema, Metric.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
   @override
   List<ModelSchema> customTypeSchemas = [DurationBeat.schema];
@@ -55,6 +57,8 @@ class ModelProvider implements ModelProviderInterface {
         return Activity.classType;
       case "ActivityMetric":
         return ActivityMetric.classType;
+      case "DefaultTargets":
+        return DefaultTargets.classType;
       case "Goal":
         return Goal.classType;
       case "Integrations":

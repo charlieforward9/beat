@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:beat/data/DefaultTarget/service/target_service.dart';
 import 'package:beat/data/Integration/services/IntegrationServices.dart';
 
 import '../../User/repository/UserRepository.dart';
@@ -46,8 +46,10 @@ class UserService {
         return user;
       } else {
         log("Registering the User");
-        return await createUser(
-            email, givenname, familyname, gender, birthdate);
+        Amplify.DataStore.start();
+        return await DefaultTargetService().createDefaultTargets(null).then(
+            (targets) async => await createUser(
+                email, givenname, familyname, gender, birthdate, targets));
       }
     });
 
@@ -60,6 +62,7 @@ class UserService {
     String userLastName,
     String userGender,
     String userBirthDate,
+    DefaultTargets userTargets,
     // TODO create an input for a profile picture
     {
     String userAvatar =
@@ -71,7 +74,9 @@ class UserService {
         lastName: userLastName,
         gender: fromString(userGender)!,
         birthDate: TemporalDate.fromString(userBirthDate),
-        avatar: userAvatar);
+        avatar: userAvatar,
+        userTargetsId: userTargets.id,
+        targets: userTargets);
     await userRepository.saveUser(user);
     return user;
   }
@@ -98,6 +103,7 @@ class UserService {
     } else {
       log("Integrations not set up, go to settings page and link Strava account to sync workouts to activities");
     }
+    DefaultTargetService().initDefaultTargets(global.currentUser.userTargetsId);
   }
 
   //Testing out some new bidirectional swag, still working on it
