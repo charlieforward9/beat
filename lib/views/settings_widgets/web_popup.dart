@@ -14,7 +14,6 @@ class WebPopup extends StatelessWidget {
       content: Center(
         child: Column(
           children: [
-            //Text("Authenticate Strava"),
             SizedBox(
               height: MediaQuery.of(context).size.height * (2 / 3),
               width: MediaQuery.of(context).size.width,
@@ -35,7 +34,7 @@ class WebPopup extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           }, // function used to perform after pressing the button
-          child: const Text('Close'),
+          child: const Text('Click when authenticated'),
         ),
       ],
     );

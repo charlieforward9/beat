@@ -47,7 +47,7 @@ class GoalRepository {
     return allUserGoals.isEmpty ? null : allUserGoals;
   }
 
-  Stream observeGoalChanges() {
+  Stream<SubscriptionEvent<Goal>> observeGoalChanges() {
     return Amplify.DataStore.observe(Goal.classType);
   }
 

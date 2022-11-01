@@ -21,11 +21,6 @@ class MapActivitiesFailure extends ActivityState {
 class ActivityCubit extends Cubit<ActivityState> {
   final goalService = GoalService();
   final activityService = ActivityService();
-  //TODO LateInitException here when global user is used
-
-  // for local testing use manual userID
-  // String userID = 'f39a7c72-b41a-433f-8939-da0779c465dc';
-  // for deployment user the global userID
   String userID = global.currentUser.id;
 
   ActivityCubit() : super(LoadingActivities());

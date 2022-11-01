@@ -5,14 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'time_budget_widgets/time_budget_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:beat/views/loading_view.dart';
 import 'package:beat/config/app_theme.dart';
 import '../cubits/goal_cubit.dart';
 
 class TimeBudgetPage extends StatelessWidget {
-  TimeBudgetPage({Key? key}) : super(key: key);
-  final timeNow = TemporalDateTime.now();
+  const TimeBudgetPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

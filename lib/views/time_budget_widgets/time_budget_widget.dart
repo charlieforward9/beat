@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 import '../../data/Goal/services/GoalService.dart';
-//^ I moved the test functions to this path
 import '../../data/Goal/services/GoalServiceTest.dart';
 import 'package:beat/controllers/time_budget_controller.dart' as controller;
 import '../number_picker_widget/number_picker_widget.dart';
 
-import '../../config/global.dart' as globalTest;
-import '../../models/ModelProvider.dart';
 
 class GoalCard extends StatefulWidget {
   final String cardName;
@@ -51,7 +48,7 @@ class _GoalCardState extends State<GoalCard> {
       child: Card(
         color: widget.passedColor,
         child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
+          splashColor: widget.passedColor.withAlpha(30),
           onTap: () {
             debugPrint('Card tapped - ${widget.cardName} Card.');
           },
@@ -86,7 +83,7 @@ class _GoalCardState extends State<GoalCard> {
                     //     cardGoalMinutes: widget.cardGoalMinutes,
                     //     cardPercentage: widget.cardPercentage);
                   },
-                  icon: Icon(Icons.create_sharp, size: 18),
+                  icon: Icon(Icons.create_sharp, size: 25),
                   label: Text(""),
                 )
               ],

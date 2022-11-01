@@ -8,6 +8,17 @@ type User @model @auth(rules: [{allow: owner}]) {
   birthDate: AWSDate!
   avatar: String!
   integration: Integrations @hasOne
+  targets: DefaultTargets! @hasOne
+}
+
+type DefaultTargets @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  fitness: DurationBeat!
+  fuel: DurationBeat!
+  productivity: DurationBeat!
+  social: DurationBeat!
+  rest: DurationBeat!
+  firstTime: Boolean!
 }
 
 type Goal @model @auth(rules: [{allow: owner}]) {

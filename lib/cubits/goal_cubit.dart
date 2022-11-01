@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:beat/data/Goal/services/GoalService.dart';
 import 'package:beat/models/ModelProvider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../config/global.dart' as global;
 
 abstract class GoalState {}
 
@@ -21,13 +22,13 @@ class MapGoalsFailure extends GoalState {
 
 class GoalCubit extends Cubit<GoalState> {
   final goalService = GoalService();
-  //TODO LateInitException here when global user is used
-  // For Local Testing userID manual entry
-  String userID = 'f39a7c72-b41a-433f-8939-da0779c465dc';
-  // For producting use the global user
-  //String userID = global.currentUser.id;
 
   GoalCubit() : super(LoadingGoals());
+
+  @override
+  Future<void> close() async {
+    super.close();
+  }
 
   void getFirstGoals() async {
     if (state is MapGoalsSuccess == false) {
@@ -49,14 +50,11 @@ class GoalCubit extends Cubit<GoalState> {
       emit(LoadingGoals());
     }
     try {
-      final goals = await goalService.getLatestGoals(userID);
+      final goals = await goalService.latestGoals;
       emit(MapGoalsSuccess(goals: goals));
     } catch (e) {
       emit(MapGoalsFailure(exception: Exception(e)));
     }
   }
-
-  void observeGoals() {
-    goalService.observeGoals().listen((_) => getDayGoals());
-  }
+  //TODO I removed the stream here because of issues with signing out and the stream/bloc not being closed. We want to get the goals by future instead of stream, because it does not have ot update in real time, only with user intervention.
 }

@@ -23,6 +23,8 @@ class InitPage extends StatelessWidget {
                   child: Column(
                   children: [
                     const Text("Set your target goals"),
+                    const Text(
+                        "TODO only show this screen to first time users"),
                     _goalCardColumn(state.goals),
                     ElevatedButton(
                         onPressed: () => _openMainView(context),
@@ -32,7 +34,12 @@ class InitPage extends StatelessWidget {
         } else if (state is MapGoalsFailure) {
           return _exceptionView(state.exception);
         } else {
-          return LoadingView();
+          return Column(
+            children: [
+              const Text("Init Page Loading"),
+              LoadingView(),
+            ],
+          );
         }
       }),
     );
